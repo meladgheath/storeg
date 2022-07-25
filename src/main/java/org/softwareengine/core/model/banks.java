@@ -38,7 +38,7 @@ public class banks {
 
 
         public void save() throws SQLException {
-            String sql = "INSERT INTO item (name , code) VALUES (?,?)" ;
+            String sql = "INSERT INTO banks (name) VALUES (?)" ;
 
             DatabaseService.openConnection();
             PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);

@@ -42,7 +42,7 @@ import javafx.scene.layout.BorderPane;
 
 
             public ImageView itemImageview          ;
-            public ImageView storeImageview         ;
+            public ImageView bankImageview;
             public ImageView purchaseImageview      ;
             public ImageView deliveryImageview;
             public ImageView settingImageview       ;
@@ -86,7 +86,7 @@ import javafx.scene.layout.BorderPane;
 
                 settingImageview      = new ImageView() ;
                 itemImageview         = new ImageView() ;
-                storeImageview        = new ImageView() ;
+                bankImageview = new ImageView() ;
                 purchaseImageview     = new ImageView() ;
                 deliveryImageview = new ImageView() ;
                 transferImageview     = new ImageView() ;
@@ -203,7 +203,7 @@ import javafx.scene.layout.BorderPane;
 //                itemButton.setTooltip(new Tooltip(resourceBundle.getString("item")));
 
 
-                bankButton.setGraphic(storeImageview);
+                bankButton.setGraphic(bankImageview);
 //                storeButton   .setTooltip(new Tooltip(resourceBundle.getString("store")));
                 
 

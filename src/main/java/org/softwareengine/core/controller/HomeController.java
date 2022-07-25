@@ -30,6 +30,7 @@ import java.util.Locale;
             languages lang = new languages();
 
             view.itemButton     .setTooltip(new Tooltip(lang.getWord("item")));
+            view.bankButton     .setTooltip(new Tooltip(lang.getWord("bank")));
             /*view.storeButton    .setTooltip(new Tooltip(lang.getWord("store")));
             view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
             view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));
@@ -54,7 +55,7 @@ import java.util.Locale;
             view = new Home();
 
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS      .getPath())));
-
+                view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS      .getPath())));
                /* view.driverImageView      .setImage(new Image(getClass().getResourceAsStream(Paths.CUSTOMER   .getPath())));
                 view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
                 view.transferImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.TRANSFER   .getPath())));
@@ -99,7 +100,7 @@ import java.util.Locale;
             view.bankButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    StoreController control = new StoreController() ;
+                    banksController control = new banksController() ;
                     view.root.setCenter(control.view.getRoot());
                 }
             });
