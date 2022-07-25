@@ -1,0 +1,11 @@
+.separator {
+    -fx-background: #e0e5d7;
+}
+
+.navigation-button {
+    -fx-background-color: transparent;
+}
+
+.navigation-button:hover {
+    -fx-background-color: #e0e5d7
+}
