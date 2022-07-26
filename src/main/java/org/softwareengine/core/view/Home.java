@@ -153,14 +153,12 @@ import javafx.scene.layout.BorderPane;
                 right.setSpacing(15);
                 right.setPadding(new Insets(20,20,20,20));
 
-//                right.getChildren().add(settingButton    );
-//                right.getChildren().add(storeButton      );
-//                right.getChildren().add(treasuryButton   );
 
+                right.getChildren().add(typesButton      );
                 right.getChildren().add(itemButton       );
                 right.getChildren().add(bankButton       );
-                right.getChildren().add(typesButton      );
-               /* right.getChildren().add(driverButton     );
+
+                /*
                 right.getChildren().add(storeButton      );
                 right.getChildren().add(amountButton     );
                 right.getChildren().add(transferButton   );
