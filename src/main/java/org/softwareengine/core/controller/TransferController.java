@@ -11,7 +11,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 import org.softwareengine.config.languages;
-import org.softwareengine.core.model.Driver;
+import org.softwareengine.core.model.type;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.core.model.Store;
 import org.softwareengine.core.model.Transfer;
@@ -406,7 +406,7 @@ public class TransferController {
 
 
                 Store store   = new Store();
-                Driver driver = new Driver();
+                type driver = new type();
 
 
                 System.out.println(dialog.listView.getSelectionModel().getSelectedIndex());

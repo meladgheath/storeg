@@ -16,6 +16,8 @@ import java.sql.Statement;
 
         private int id ;
         private int code ;
+        private int type ;
+        private String typeName ;
         private String name ;
         private double value ;
         private int packages ;
@@ -61,8 +63,24 @@ import java.sql.Statement;
             this.value = value;
         }
 
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void setTypeName(String typeName) {
+            this.typeName = typeName;
+        }
+
         public void save() throws SQLException {
-            String sql = "INSERT INTO item (name , code) VALUES (?,?)" ;
+            String sql = "INSERT INTO item (name , code, type) VALUES (?,?,?)" ;
 
             DatabaseService.openConnection();
             PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -72,6 +90,7 @@ import java.sql.Statement;
 //            ps.setInt   (3,this.packages);
             ps.setString(1,this.name);
             ps.setInt(2,this.code);
+            ps.setInt(3,this.type);
 
             ps.executeUpdate();
 
@@ -80,7 +99,9 @@ import java.sql.Statement;
 
         public ObservableList<Item> getInfo() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM item ORDER BY id";
+//            String sql = "SELECT * FROM item ORDER BY id";
+            String sql = "select name , code , (SELECT name from type where id = item.type) as type\n" +
+                    " from item  " ;
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -93,6 +114,7 @@ import java.sql.Statement;
                 one.setId(++i);
                 one.setCode(resultSet.getInt("code"));
                 one.setName(resultSet.getString("name"));
+                one.setTypeName(resultSet.getString("type"));
 //                one.setPackages(resultSet.getInt("package"));
 //                one.setValue(resultSet.getDouble("value"));
                 list.add(one);

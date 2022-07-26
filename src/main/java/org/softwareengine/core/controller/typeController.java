@@ -7,8 +7,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
-import org.softwareengine.core.model.Driver;
+import org.softwareengine.core.model.type;
 import org.softwareengine.config.languages;
+import org.softwareengine.core.view.typeView;
 
 
 import java.io.File;
@@ -19,15 +20,15 @@ import java.sql.SQLException;
 import java.util.Locale;
 
 
-public class DriverController {
+public class typeController {
 
 
-    public org.softwareengine.core.view.Driver view;
+    public typeView view;
     File image ;
 
 
-    public DriverController() {
-        view = new org.softwareengine.core.view.Driver();
+    public typeController() {
+        view = new typeView();
 
 
         try {
@@ -47,12 +48,11 @@ public class DriverController {
         languages lang = new languages();
 
         view.nameTex.setText(lang.getWord("name"));
-        view.phoneTex.setText(lang.getWord("phone"));
+
         view.saveButton.setText(lang.getWord("save"));
 
         ((TableColumn)view.tableView.getColumns().get(0)).setText(lang.getWord("id"));
         ((TableColumn)view.tableView.getColumns().get(1)).setText(lang.getWord("name"));
-        ((TableColumn)view.tableView.getColumns().get(2)).setText(lang.getWord("phone"));
 
         if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
             view.root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -66,7 +66,8 @@ public class DriverController {
     private void initiate() throws SQLException, IOException {
         getTableColum();
 
-//        view.browsImageButton.setOnAction(onBrowseImageButton());
+
+
         view.saveButton.setOnAction(OnSaveButton());
         view.tableView.setOnKeyPressed(onTableKeypressed());
 
@@ -77,34 +78,20 @@ public class DriverController {
             @Override
             public void handle(KeyEvent event) {
 
-                Driver model = new Driver();
+                type model = new type();
                 int index = view.tableView.getSelectionModel().getSelectedIndex();
 
 
 //                DialogDetail dialog = null;
 
-                try {
+                /*try {
                     model.setId(model.getInfoID().get(index).getId());
 //                    model = model.getInfoWHEREid();
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
-                }
+                }*/
 
-                /*try {
-                    dialog = new DialogDetail(view.pane, "employment information . . . ", model.getImage());
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-*/
-  /*              dialog.name.setText(model.getName());
-                dialog.phone.setText(model.getPhoneNo());
-                dialog.salary.setText(model.getSalary() + "");
-                dialog.date.setText(model.getDate());
-                dialog.deserfit.setText(model.getMoney()+"");
-
-
-                dialog.show();*/
 
             }};
     }
@@ -113,9 +100,9 @@ public class DriverController {
     private void getTableColum() throws SQLException, IOException {
 
 
-        TableColumn<Integer, Driver> id = new TableColumn<>("#");
-        TableColumn<String , Driver> name = new TableColumn<>("Name");
-        TableColumn<String , Driver> phoneNo = new TableColumn<>("PhoneNo");
+        TableColumn<Integer, type> id = new TableColumn<>("#");
+        TableColumn<String , type> name = new TableColumn<>("Name");
+
 
 //      TableColumn<Double, main.model.driver> salary = new TableColumn<>("Salary") ;
 //      TableColumn<Double, main.model.driver> date = new TableColumn<>("Date") ;
@@ -124,7 +111,7 @@ public class DriverController {
         id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         name    .setCellValueFactory(new PropertyValueFactory<>("name"));
-        phoneNo .setCellValueFactory(new PropertyValueFactory<>("phoneNo"));
+
 //        salary  .setCellValueFactory(new PropertyValueFactory<>("salary"));
 //        date    .setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -133,7 +120,7 @@ public class DriverController {
 
         view.tableView.getColumns().add(id);
         view.tableView.getColumns().add(name);
-        view.tableView.getColumns().add(phoneNo);
+
 //        view.tableView.getColumns().add(salary);
 //        view.tableView.getColumns().add(date);
 
@@ -141,7 +128,7 @@ public class DriverController {
     }
 
     private void getTableDetail() throws SQLException, IOException {
-        Driver model = new Driver();
+        type model = new type();
 
         view.tableView.setItems(model.getInfo());
 
@@ -156,12 +143,12 @@ public class DriverController {
             public void handle(ActionEvent event) {
 
 
-                Driver model = new Driver();
+                type model = new type();
 
 
 
                 model.setName(view.name.getText());
-                model.setPhoneNo(view.phoneNo.getText());
+
 //                model.setSalary(Double.parseDouble(view.salary.getText()));
 //                model.setDate(view.date.getEditor().getText());
 //                model.setImage(image);
@@ -180,7 +167,7 @@ public class DriverController {
                 }
 
                 view.name.clear();
-                view.phoneNo.clear();
+
 //                view.salary.clear();
 //                view.date.getEditor().clear();
 //                view.date.setValue(null);
@@ -201,7 +188,7 @@ public class DriverController {
                 FileChooser fileChooser = new FileChooser();
 //                fileChooser.showOpenDialog(null) ;
                 image = fileChooser.showOpenDialog(null) ;
-                Driver model = new Driver();
+                type model = new type();
 //                model.setImage(file);
 
 //                view.browsImageButton.setText(image.getAbsolutePath());

@@ -196,7 +196,7 @@ public class DeliverController {
                 dialog = new FXDialog(view.pane, "Drive List . . . ",false);
 
 
-                Driver driver  = new Driver();
+                type driver  = new type();
 
 
                 int i = 0;
@@ -305,7 +305,7 @@ public class DeliverController {
 
         Item item   = new Item();
         Store store  = new Store();
-        Driver driver = new Driver();
+        type driver = new type();
 
 
         System.out.println(dialog.listView.getSelectionModel().getSelectedIndex());

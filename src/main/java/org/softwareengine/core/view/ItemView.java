@@ -22,10 +22,10 @@ import javafx.scene.text.Text;
 
         public TextField code;
         public TextField name ;
+        public TextField type ;
 
-//        public TextField packages ;
 
-
+        public Button Vtype ;
 
         public Button saveButton ;
 
@@ -34,6 +34,7 @@ import javafx.scene.text.Text;
 
         public Text nameTex ;
         public Text codeTex ;
+        public Text typeTex ;
 
 
         public ItemView() {
@@ -46,13 +47,16 @@ import javafx.scene.text.Text;
 
             nameTex = new Text();
             codeTex = new Text();
+            typeTex = new Text();
 
 //            packages = new TextField();
 
             // saveButton  = new Button("save")  ;
             saveButton = new Button();
 
-
+            type = new TextField();
+            type.setDisable(true);
+            Vtype = new Button("V");
 
             Separator line = new Separator();
             line.setOrientation(Orientation.VERTICAL);
@@ -78,6 +82,10 @@ import javafx.scene.text.Text;
 
             down.getChildren().add(codeTex);
             down.getChildren().add(code);
+
+            down.getChildren().add(typeTex);
+            down.getChildren().add(type) ;
+            down.getChildren().add(Vtype);
 
 //            right.add(new Text("pakcage  : "),0,2);
 //            right.add(packages,1,2);
@@ -114,8 +122,6 @@ import javafx.scene.text.Text;
             pane.getChildren().add(root);
             return pane ;
         }
-
-
 
     }
 

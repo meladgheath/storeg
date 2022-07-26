@@ -31,11 +31,12 @@ import java.util.Locale;
 
             view.itemButton     .setTooltip(new Tooltip(lang.getWord("item")));
             view.bankButton     .setTooltip(new Tooltip(lang.getWord("bank")));
+            view.typesButton    .setTooltip(new Tooltip(lang.getWord("types")));
             /*view.storeButton    .setTooltip(new Tooltip(lang.getWord("store")));
             view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
             view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));
             view.amountButton   .setTooltip(new Tooltip(lang.getWord("amounts")));
-            view.driverButton   .setTooltip(new Tooltip(lang.getWord("driver")));*/
+            */
             view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
 
           /*  if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
@@ -56,8 +57,8 @@ import java.util.Locale;
 
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS      .getPath())));
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS      .getPath())));
-               /* view.driverImageView      .setImage(new Image(getClass().getResourceAsStream(Paths.CUSTOMER   .getPath())));
-                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
+                view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE    .getPath())));
+               /* view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
                 view.transferImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.TRANSFER   .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.transactionsImageview.setImage(new Image(getClass().getResourceAsStream(Paths.TRANSACTION.getPath())));
@@ -139,10 +140,10 @@ import java.util.Locale;
                     onTreasuryButton();
                 }
             });
-            view.driverButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.typesButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    onDriverButton();
+                    onTypeButton();
                 }
             });
             view.userButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -227,8 +228,8 @@ import java.util.Locale;
 //            treasury control = new treasury() ;
 //            view.root.setCenter(control.view.getRoot());
         }
-        private void onDriverButton() {
-            DriverController control = new DriverController();
+        private void onTypeButton() {
+            typeController control = new typeController();
             view.root.setCenter(control.view.getRoot());
 //            employment control = new employment() ;
 //            view.root.setCenter(control.view.getRoot());
