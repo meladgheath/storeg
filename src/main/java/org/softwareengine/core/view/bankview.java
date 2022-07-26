@@ -20,6 +20,7 @@ public class bankview {
 
 
         public TextField name ;
+        public TextField referenceNumber ;
 
         public Button saveButton ;
 
@@ -27,6 +28,7 @@ public class bankview {
         public TableView tableView ;
 
         public Text nameTex ;
+        public Text referenceTex ;
 
 
 
@@ -36,8 +38,10 @@ public class bankview {
 
 
             name     = new TextField();
+            referenceNumber = new TextField();
 
-            nameTex = new Text();
+            nameTex      = new Text();
+            referenceTex = new Text();
 
             saveButton = new Button();
 
@@ -58,6 +62,9 @@ public class bankview {
 
             down.getChildren().add(nameTex) ;
             down.getChildren().add(name);
+
+            down.getChildren().add(referenceTex);
+            down.getChildren().add(referenceNumber) ;
 
             down.getChildren().add(saveButton);
 

@@ -16,6 +16,8 @@ public class banks {
 
         private String name ;
 
+        private String referenceNumber ;
+
 
         public int getId() {
             return id;
@@ -37,8 +39,16 @@ public class banks {
         }
 
 
-        public void save() throws SQLException {
-            String sql = "INSERT INTO banks (name) VALUES (?)" ;
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public void save() throws SQLException {
+            String sql = "INSERT INTO banks (name,ref) VALUES (?,?)" ;
 
             DatabaseService.openConnection();
             PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -47,15 +57,16 @@ public class banks {
 //            ps.setString(2,this.name    );
 //            ps.setInt   (3,this.packages);
             ps.setString(1,this.name);
+            ps.setString(2,this.referenceNumber);
 
             ps.executeUpdate();
 
             DatabaseService.CloseConnection();
         }
 
-        public ObservableList<org.softwareengine.core.model.Item> getInfo() throws SQLException {
-            ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM item ORDER BY id";
+        public ObservableList<org.softwareengine.core.model.banks> getInfo() throws SQLException {
+            ObservableList<banks> list = FXCollections.observableArrayList();
+            String sql = "SELECT * FROM banks ORDER BY id";
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -63,13 +74,12 @@ public class banks {
 
             int i = 0 ;
             while (resultSet.next()) {
-                org.softwareengine.core.model.Item one = new org.softwareengine.core.model.Item() ;
+                banks one = new banks() ;
 
                 one.setId(++i);
-                one.setCode(resultSet.getInt("code"));
                 one.setName(resultSet.getString("name"));
-//                one.setPackages(resultSet.getInt("package"));
-//                one.setValue(resultSet.getDouble("value"));
+                one.setReferenceNumber(resultSet.getString("ref"));
+
                 list.add(one);
             }
             return list ;

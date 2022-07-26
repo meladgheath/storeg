@@ -340,7 +340,6 @@ public class ItemController {
 
         type types = new type();
 
-
             try {
                 typeId   = types.getInfo().get(index).getId() ;
 

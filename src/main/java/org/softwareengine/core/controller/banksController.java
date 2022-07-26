@@ -44,12 +44,13 @@ public class banksController {
             languages lang = new languages();
 
             view.nameTex.setText(lang.getWord("name"));
-
+            view.referenceTex.setText(lang.getWord("reference"));
             view.saveButton.setText(lang.getWord("save"));
 
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("name"));//name
+            ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("reference"));//reference number
 
 //            ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord(""));
 //            ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("value"));
@@ -78,17 +79,21 @@ public class banksController {
 
             TableColumn<Integer, banks> id = new TableColumn<>();
             TableColumn<String, banks> name = new TableColumn<>();
+            TableColumn<String, banks> reference = new TableColumn<>();
+
 
 
             id.setCellValueFactory(new PropertyValueFactory<>("id"));
 
             name    .setCellValueFactory(new PropertyValueFactory<>("name"));
+            reference.setCellValueFactory(new PropertyValueFactory<>("referenceNumber"));
 
             id.setMaxWidth(50);
             id.setMinWidth(25);
 
             view.tableView.getColumns().add(id);
             view.tableView.getColumns().add(name);
+            view.tableView.getColumns().add(reference);
 
 
             getTableDetail();
@@ -96,7 +101,7 @@ public class banksController {
         }
 
         private void getTableDetail() throws SQLException {
-            Item model = new Item();
+            banks model = new banks();
 
             view.tableView.setItems(model.getInfo());
 
@@ -211,9 +216,8 @@ public class banksController {
                 public void handle(ActionEvent event) {
                     banks model = new banks();
 
-
-
                     model.setName(view.name.getText());
+                    model.setReferenceNumber(view.referenceNumber.getText());
 
                     try {
                         model.save();
