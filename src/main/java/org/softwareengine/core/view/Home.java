@@ -28,7 +28,7 @@ import javafx.scene.layout.BorderPane;
             public JFXButton itemButton        ;
             public JFXButton bankButton;
             public JFXButton purchaseButton    ;
-            public JFXButton deliveryButton;
+            public JFXButton disbursementButton;
             public JFXButton transferButton    ;
             public JFXButton amountButton;
             public JFXButton moneyButton       ;
@@ -44,7 +44,7 @@ import javafx.scene.layout.BorderPane;
             public ImageView itemImageview          ;
             public ImageView bankImageview;
             public ImageView purchaseImageview      ;
-            public ImageView deliveryImageview;
+            public ImageView disbursementImageview;
             public ImageView settingImageview       ;
             public ImageView transferImageview      ;
             public ImageView amountsImageview;
@@ -72,7 +72,7 @@ import javafx.scene.layout.BorderPane;
                 itemButton        = new JFXButton() ;
                 bankButton = new JFXButton() ;
                 purchaseButton    = new JFXButton() ;
-                deliveryButton = new JFXButton() ;
+                disbursementButton = new JFXButton() ;
                 transferButton    = new JFXButton() ;
                 amountButton = new JFXButton() ;
                 moneyButton       = new JFXButton() ;
@@ -88,7 +88,7 @@ import javafx.scene.layout.BorderPane;
                 itemImageview         = new ImageView() ;
                 bankImageview = new ImageView() ;
                 purchaseImageview     = new ImageView() ;
-                deliveryImageview = new ImageView() ;
+                disbursementImageview = new ImageView() ;
                 transferImageview     = new ImageView() ;
                 amountsImageview = new ImageView() ;
                 moneyImageview        = new ImageView() ;
@@ -115,8 +115,8 @@ import javafx.scene.layout.BorderPane;
                 purchaseButton.setMinWidth(root.getPrefWidth());
                 purchaseButton.setMinHeight(root.getPrefHeight());
 
-                deliveryButton.setMinWidth(root.getPrefWidth());
-                deliveryButton.setMinHeight(root.getPrefHeight());
+                disbursementButton.setMinWidth(root.getPrefWidth());
+                disbursementButton.setMinHeight(root.getPrefHeight());
 
 
                 transferButton.setMinWidth(root.getPrefWidth());
@@ -154,15 +154,16 @@ import javafx.scene.layout.BorderPane;
                 right.setPadding(new Insets(20,20,20,20));
 
 
-                right.getChildren().add(typesButton      );
-                right.getChildren().add(itemButton       );
-                right.getChildren().add(bankButton       );
+                right.getChildren().add(typesButton        );
+                right.getChildren().add(itemButton         );
+                right.getChildren().add(bankButton         );
+                right.getChildren().add(disbursementButton );
+
 
                 /*
-                right.getChildren().add(storeButton      );
                 right.getChildren().add(amountButton     );
                 right.getChildren().add(transferButton   );
-                right.getChildren().add(deliveryButton   );
+
                 right.getChildren().add(transactionButton);*/
                 right.getChildren().add(settingButton    );
 
@@ -209,7 +210,7 @@ import javafx.scene.layout.BorderPane;
                 // purchaseButton.setGraphic(purchaseImageview);
                 // purchaseButton.setTooltip(new Tooltip("purchase"));
 
-                deliveryButton.setGraphic(deliveryImageview);
+                disbursementButton.setGraphic(disbursementImageview);
 //                deliveryButton.setTooltip(new Tooltip(resourceBundle.getString("delivery")));
 
                 transferButton.setGraphic(transferImageview);

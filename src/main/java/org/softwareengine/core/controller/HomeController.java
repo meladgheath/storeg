@@ -29,9 +29,10 @@ import java.util.Locale;
 
             languages lang = new languages();
 
-            view.itemButton     .setTooltip(new Tooltip(lang.getWord("item")));
-            view.bankButton     .setTooltip(new Tooltip(lang.getWord("bank")));
-            view.typesButton    .setTooltip(new Tooltip(lang.getWord("types")));
+            view.itemButton        .setTooltip(new Tooltip(lang.getWord("item")));
+            view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank")));
+            view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
+            view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
             /*view.storeButton    .setTooltip(new Tooltip(lang.getWord("store")));
             view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
             view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));
@@ -55,14 +56,15 @@ import java.util.Locale;
 
             view = new Home();
 
-                view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS      .getPath())));
-                view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS      .getPath())));
-                view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE    .getPath())));
+                view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS       .getPath())));
+                view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
+                view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
+                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
                /* view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
                 view.transferImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.TRANSFER   .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.transactionsImageview.setImage(new Image(getClass().getResourceAsStream(Paths.TRANSACTION.getPath())));
-                view.deliveryImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE    .getPath())));*/
+                */
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
 /*
                 view.settingImageview       .setImage(new Image(new FileInputStream(mypath.SETTING      .getPath())));
@@ -111,7 +113,7 @@ import java.util.Locale;
                     onPurchaseButton();
                 }
             });
-            view.deliveryButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.disbursementButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     onDeliveryButton();

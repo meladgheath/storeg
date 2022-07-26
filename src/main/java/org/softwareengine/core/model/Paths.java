@@ -18,6 +18,7 @@ public enum Paths {
     DEBTBOOK(iconPath()+"icons8-copybook-64.png"),
     ADD(iconPath()+"add.png"),
     PACKAGE(iconPath()+"package.png"),
+    DISBURSEMENT(iconPath()+"icons8-bank-card-missing-64.png"),
 
     SAVE(iconPath()+"icons8-save-50.png"),
     PRINT(iconPath()+"icons8-print-100.png"),
