@@ -126,10 +126,10 @@ public class AmountController {
             int i = 0;
             int size = 0;
             try {
-                size = item.getInfo().size();
+                size = item.getInfoIDs().size();
                 System.out.println("the size is " + size);
 
-                while (i < size) dialog.listView.getItems().add(item.getInfo().get(i++).getName());
+                while (i < size) dialog.listView.getItems().add(item.getInfoIDs().get(i++).getName());
 
                 dialog.show();
                 dialog.listView.setOnKeyPressed(OnListPressed("item"));
@@ -223,7 +223,9 @@ public class AmountController {
 
             switch (thing) {
                 case "item" -> {
-                    itemID = item.getInfo().get(index).getId();
+                    //todo
+                    itemID = item.getInfoIDs().get(index).getId();
+                    System.out.println("this is the item id "+itemID);
                     view.item.setText(item.getInfo().get(index).getName());
                     getTableDetail();
                 }

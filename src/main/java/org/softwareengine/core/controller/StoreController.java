@@ -13,8 +13,6 @@ import javafx.scene.input.KeyEvent;
 import org.softwareengine.core.model.Store;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.view.StoreView;
-
-
 import java.sql.SQLException;
 import java.util.Locale;
 

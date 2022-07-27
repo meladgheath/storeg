@@ -188,8 +188,8 @@ public class Amount {
             Amount one = new Amount() ;
 
             one.setId(++i);
-            one.setStore(resultSet.getString("item"));
-            one.setItem(resultSet.getString("store"));
+            one.setStore(resultSet.getString("store"));
+            one.setItem(resultSet.getString("item"));
             one.setNum(resultSet.getInt("num"));
 
             list.add(one);

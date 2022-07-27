@@ -100,7 +100,7 @@ import java.sql.Statement;
         public ObservableList<Item> getInfo() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
-            String sql = "select name , code , (SELECT name from type where id = item.type) as type\n" +
+            String sql = "select  name , code , (SELECT name from type where id = item.type) as type\n" +
                     " from item  " ;
 
             DatabaseService.openConnection();
@@ -122,6 +122,31 @@ import java.sql.Statement;
             return list ;
         }
 
+
+        public ObservableList<Item> getInfoIDs() throws SQLException {
+            ObservableList<Item> list = FXCollections.observableArrayList();
+//            String sql = "SELECT * FROM item ORDER BY id";
+            String sql = "select  * from item  " ;
+
+            DatabaseService.openConnection();
+            Statement statement = DatabaseService.connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+
+            int i = 0 ;
+            while (resultSet.next()) {
+                Item one = new Item() ;
+
+//                one.setId(++i);
+                one.setId(resultSet.getInt("id"));
+                one.setCode(resultSet.getInt("code"));
+                one.setName(resultSet.getString("name"));
+                one.setTypeName(resultSet.getString("type"));
+//                one.setPackages(resultSet.getInt("package"));
+//                one.setValue(resultSet.getDouble("value"));
+                list.add(one);
+            }
+            return list ;
+        }
 
         public Item getInfoWHEREid() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
