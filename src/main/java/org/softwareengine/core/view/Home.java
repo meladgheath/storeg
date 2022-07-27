@@ -158,9 +158,8 @@ import javafx.scene.layout.BorderPane;
                 right.getChildren().add(itemButton         );
                 right.getChildren().add(bankButton         );
                 right.getChildren().add(storeButton        );
+                right.getChildren().add(amountButton       );
                 right.getChildren().add(disbursementButton );
-                right.getChildren().add(amountButton     );
-
                 /*
                 right.getChildren().add(transferButton   );
                 right.getChildren().add(transactionButton);*/

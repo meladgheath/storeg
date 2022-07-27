@@ -35,7 +35,7 @@ public class DeliverController {
 
     public int itemID   ;
     public int storeID  ;
-    public int driverID ;
+    public int bankID;
 
     public DeliverController() {
         view = new DeliverView();
@@ -56,14 +56,14 @@ public class DeliverController {
 
         view.itemTex.setText(lang.getWord("item"));
         view.numberTex.setText(lang.getWord("number"));
-        view.driverTex.setText(lang.getWord("driver"));
+        view.bankTex.setText(lang.getWord("bank"));
         view.storeTex.setText(lang.getWord("store"));
         view.saveButton.setText(lang.getWord("save"));
 
         ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
         ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
         ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("store"));//store
-        ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("driver"));//driver
+        ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("bank"));//driver
         ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("number"));//num
         ((TableColumn) view.tableView.getColumns().get(5)).setText(lang.getWord("date"));//date
 
@@ -79,7 +79,7 @@ public class DeliverController {
         view.num.setOnKeyReleased(onNumTextPressed());
         view.Vitem.setOnAction(onItem_V_Action());
         view.Vstore.setOnAction(onStore_V_Action());
-        view.VDrive.setOnAction(onDrive_V_Action());
+        view.Vbank.setOnAction(onBank_V_Action());
         view.tableView.setOnKeyPressed(onTablePressed());
         view.saveButton.setOnAction(OnSaveButton());
 
@@ -94,7 +94,7 @@ public class DeliverController {
 
         TableColumn<String, Transaction> store = new TableColumn<>();
 
-        TableColumn<String, Transaction> driver = new TableColumn<>();
+        TableColumn<String, Transaction> bank = new TableColumn<>();
 
         TableColumn<String, Transaction> num = new TableColumn<>();
 
@@ -105,7 +105,7 @@ public class DeliverController {
         item.setCellValueFactory(new PropertyValueFactory<>("item"));
         store.setCellValueFactory(new PropertyValueFactory<>("store"));
         num.setCellValueFactory(new PropertyValueFactory<>("number"));
-        driver.setCellValueFactory(new PropertyValueFactory<>("driver"));
+        bank.setCellValueFactory(new PropertyValueFactory<>("bank"));
         date.setCellValueFactory(new PropertyValueFactory<>("date"));
 
 
@@ -115,7 +115,7 @@ public class DeliverController {
         view.tableView.getColumns().add(id);
         view.tableView.getColumns().add(item);
         view.tableView.getColumns().add(store);
-        view.tableView.getColumns().add(driver);
+        view.tableView.getColumns().add(bank);
         view.tableView.getColumns().add(num);
         view.tableView.getColumns().add(date);
 
@@ -188,31 +188,31 @@ public class DeliverController {
 
     }
 
-    private EventHandler<ActionEvent> onDrive_V_Action () {
+    private EventHandler<ActionEvent> onBank_V_Action() {
         return new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
 
-                dialog = new FXDialog(view.pane, "Drive List . . . ",false);
+                dialog = new FXDialog(view.pane, "Banks List . . . ",false);
 
 
-                type driver  = new type();
+                banks bank  = new banks();
 
 
                 int i = 0;
                 int size = 0;
                 try {
-                    size = driver.getInfo().size();
+                    size = bank.getInfo().size();
                     System.out.println("the size is " + size);
 
                     while (i < size)
-                        dialog.listView.getItems().add(driver.getInfo().get(i++).getName());
+                        dialog.listView.getItems().add(bank.getInfo().get(i++).getName());
 
 
 
                     dialog.show();
-                    dialog.listView.setOnKeyPressed(OnListPressed("driver"));
-                    dialog.listView.setOnMouseClicked(OnMouseClick("driver"));
+                    dialog.listView.setOnKeyPressed(OnListPressed("banks"));
+                    dialog.listView.setOnMouseClicked(OnMouseClick("banks"));
 
                 } catch (SQLException e) {
                     e.printStackTrace();
@@ -305,7 +305,8 @@ public class DeliverController {
 
         Item item   = new Item();
         Store store  = new Store();
-        type driver = new type();
+//        type driver = new type();
+        banks bank = new banks();
 
 
         System.out.println(dialog.listView.getSelectionModel().getSelectedIndex());
@@ -353,9 +354,9 @@ public class DeliverController {
 
 
                     break;
-                case "driver" :
-                    driverID = driver.getInfo().get(index).getId() ;
-                    view.drive.setText(driver.getInfo().get(index).getName());
+                case "banks" :
+                    bankID = bank.getInfo().get(index).getId() ;
+                    view.bank.setText(bank.getInfo().get(index).getName());
                     break;
             }
 
@@ -473,7 +474,7 @@ public class DeliverController {
 //                model.setName(view.store.getText());
                 model.setItemID(itemID);
                 model.setStoreID(storeID);
-                model.setDriverID(driverID);
+                model.setBankID(bankID);
                 model.setDate(view.date.getValue().toString());
 
                 int num = view.num.getValue() ;
@@ -494,7 +495,7 @@ public class DeliverController {
                         view.num.getEditor().clear();
                         view.num.setValueFactory(null);
                         view.item.clear();
-                        view.drive.clear();
+                        view.bank.clear();
 
                     }else
                         Notifications.create().title("error").text("the number is not avalible . . . ").darkStyle().hideAfter(Duration.seconds(5)).showWarning();

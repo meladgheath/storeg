@@ -20,7 +20,7 @@ public class DeliverView {
 
     public TextField store ;
     public TextField item  ;
-    public TextField drive ;
+    public TextField bank;
     public DatePicker date ;
 
     public Spinner<Integer> num ;
@@ -28,7 +28,7 @@ public class DeliverView {
 
     public Button Vstore ;
     public Button Vitem  ;
-    public Button VDrive ;
+    public Button Vbank;
 
     public Button saveButton ;
 
@@ -36,7 +36,7 @@ public class DeliverView {
 
     public Text storeTex  ;
     public Text itemTex   ;
-    public Text driverTex ;
+    public Text bankTex;
     public Text numberTex ;
 
 
@@ -48,12 +48,12 @@ public class DeliverView {
 
         store   = new TextField();
         item    = new TextField();
-        drive   = new TextField();
+        bank = new TextField();
 
 
         storeTex  = new Text();
         itemTex   = new Text();
-        driverTex = new Text();
+        bankTex = new Text();
         numberTex = new Text();
 
         num = new Spinner<>();
@@ -68,7 +68,7 @@ public class DeliverView {
 
         Vstore = new Button("V");
         Vitem  = new Button("V");
-        VDrive = new Button("V");
+        Vbank = new Button("V");
 
         root.setPrefWidth(200);
 
@@ -79,7 +79,7 @@ public class DeliverView {
 
         store.setDisable(true);
         item.setDisable (true);
-        drive.setDisable(true);
+        bank.setDisable(true);
 
 
         HBox top = new HBox( );
@@ -101,9 +101,9 @@ public class DeliverView {
         top.getChildren().add(itemTex) ;
         top.getChildren().add(item);
         top.getChildren().add(Vitem);
-        top.getChildren().add(driverTex) ;
-        top.getChildren().add(drive);
-        top.getChildren().add(VDrive);
+        top.getChildren().add(bankTex) ;
+        top.getChildren().add(bank);
+        top.getChildren().add(Vbank);
         top.getChildren().add(numberTex);
         top.getChildren().add(num);
         top.getChildren().add(date);

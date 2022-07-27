@@ -15,12 +15,12 @@ public class Transaction {
 
     private int itemID;
     private int storeID;
-    private int driverID;
+    private int bankID;
     private int number;
 
     private String item;
     private String store;
-    private String driver;
+    private String bank;
 
     private String date;
 
@@ -32,20 +32,20 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getDriver() {
-        return driver;
+    public String getBank() {
+        return bank;
     }
 
-    public void setDriver(String driver) {
-        this.driver = driver;
+    public void setBank(String bank) {
+        this.bank = bank;
     }
 
-    public int getDriverID() {
-        return driverID;
+    public int getBankID() {
+        return bankID;
     }
 
-    public void setDriverID(int driverID) {
-        this.driverID = driverID;
+    public void setBankID(int bankID) {
+        this.bankID = bankID;
     }
 
     public int getId() {
@@ -97,14 +97,14 @@ public class Transaction {
     }
 
     public void save() throws SQLException {
-        String sql = "INSERT INTO transactions ( item , driver, store , number , date  ) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO transactions ( item , bank, store , number , date  ) VALUES (?,?,?,?,?)";
 
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
 
 
         ps.setInt(1, this.itemID);
-        ps.setInt(2, this.driverID);
+        ps.setInt(2, this.bankID);
         ps.setInt(3, this.storeID);
         ps.setInt(4, this.number);
         ps.setString(5, this.date);
@@ -120,7 +120,7 @@ public class Transaction {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
         String sql = """
-                SELECT (SELECT name FROM driver WHERE id = driver) as driver ,
+                SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
                 (SELECT name FROM item WHERE id = item ) as item ,
                 (SELECT name FROM store WHERE id = store) as store , number , date
                  FROM transactions order by date desc
@@ -137,7 +137,7 @@ public class Transaction {
             one.setId(++i);
             one.setStore(resultSet.getString("store"));
             one.setItem(resultSet.getString("item"));
-            one.setDriver(resultSet.getString("driver"));
+            one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));
             one.setDate(resultSet.getString("date"));
 

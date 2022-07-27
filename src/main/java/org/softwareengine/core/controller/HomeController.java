@@ -10,11 +10,6 @@ import org.softwareengine.core.model.Paths;
 
 import java.util.Locale;
 
-
-//import model.mypath;
-//import net.sf.jasperreports.engine.*;
-
-
     public class HomeController {
 
         public Home view;

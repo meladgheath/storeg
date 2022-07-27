@@ -34,6 +34,7 @@ public class Main extends Application {
 
         primaryStage.show();
     }
+
     public static boolean checkDB() {
         File file = new File(System.getProperty("user.home")+"\\db.db") ;
         return (file.exists()) ;
