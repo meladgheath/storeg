@@ -5,9 +5,9 @@ plugins {
     id 'org.beryx.jlink' version '2.25.0'
 }
 
-def NAME = 'Transport Engine'
+def NAME = 'storeg Engine'
 def VERSION = '0.0.2'
-def MAIN_MODULE = 'transport'
+def MAIN_MODULE = 'storeg'
 def MAIN_PACKAGE = 'org.softwareengine'
 def MAIN_CLASS = 'org.softwareengine.Main'
 def JAVA_VERSION = '17.0.2'
@@ -39,10 +39,12 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
     implementation 'io.github.palexdev:materialfx:11.13.5'
-    implementation 'org.postgresql:postgresql:42.3.4'
     implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
-    implementation 'com.jfoenix:jfoenix:9.0.1'
+    implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'org.controlsfx:controlsfx:11.1.1'
+    implementation 'net.sf.jasperreports:jasperreports:6.20.0'
+    implementation 'com.lowagie:itext:2.1.7'
+//    implementation 'net.sourceforge.dynamicreports:dynamicreports-core:6.12.1'
 }
 
 jar {
