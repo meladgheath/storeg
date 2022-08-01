@@ -2,7 +2,7 @@ package org.softwareengine;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import net.sf.jasperreports.engine.JasperReport;
+
 import org.softwareengine.core.model.Paths;
 import org.softwareengine.core.controller.HomeController;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Main extends Application {
     public static void main(String[] args) {
 
-        JasperReport jr ;
+//        JasperReport jr ;
 
 
         launch(args);

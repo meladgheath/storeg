@@ -11,13 +11,19 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+//import net.sf.jasperreports.engine.*;
+//import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.config.languages;
-import org.softwareengine.core.model.Store;
+
 import org.softwareengine.core.model.type;
 import org.softwareengine.core.view.ItemView;
+import org.softwareengine.utils.service.DatabaseService;
 import org.softwareengine.utils.ui.FXDialog;
-import org.softwareengine.utils.ui.UpdateDialog;
+import org.softwareengine.utils.ui.report;
+
 
 import java.sql.SQLException;
 import java.util.Locale;
@@ -58,6 +64,7 @@ public class ItemController {
 
             view.Vtype.setOnAction(onType_V_Action());
             view.saveButton.setText(lang.getWord("save"));
+            view.printButton.setText(lang.getWord("print"));
 
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
@@ -77,6 +84,7 @@ public class ItemController {
             getTableColum();
 
             view.tableView.setOnKeyPressed(onTablePressed());
+            view.printButton.setOnAction(onPrintButton());
             view.saveButton.setOnAction(OnSaveButton());
 
 
@@ -226,6 +234,30 @@ public class ItemController {
                 }
             };
 
+        }
+
+        private EventHandler<ActionEvent> onPrintButton() {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                   /* JasperReport report = null ;
+                    JasperPrint jp = null ;
+
+                    try {
+                         report = JasperCompileManager.compileReport("Cherry.jrxml");
+                         jp = JasperFillManager.fillReport(report,null,DatabaseService.connection);
+
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }*/
+                    try {
+                        JasperViewer.viewReport(report.getPrint(),false);
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Done here man . . .");
+                }
+            };
         }
 
         private EventHandler<ActionEvent> OnSaveButton() {

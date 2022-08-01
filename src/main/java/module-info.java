@@ -7,8 +7,8 @@ module storeg {
     requires com.jfoenix;
     requires org.controlsfx.controls;
     requires org.xerial.sqlitejdbc;
-//    requires dynamicreports.core;
     requires jasperreports;
+
 
 
     exports org.softwareengine;

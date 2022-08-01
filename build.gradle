@@ -42,9 +42,11 @@ dependencies {
     implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
     implementation 'com.jfoenix:jfoenix:9.0.10'
     implementation 'org.controlsfx:controlsfx:11.1.1'
+    implementation 'org.wicketstuff:jasperreports:1.4.21'
     implementation 'net.sf.jasperreports:jasperreports:6.20.0'
     implementation 'com.lowagie:itext:2.1.7'
 //    implementation 'net.sourceforge.dynamicreports:dynamicreports-core:6.12.1'
+
 }
 
 jar {
