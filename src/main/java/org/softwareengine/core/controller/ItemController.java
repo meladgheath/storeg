@@ -20,11 +20,12 @@ import org.softwareengine.config.languages;
 
 import org.softwareengine.core.model.type;
 import org.softwareengine.core.view.ItemView;
-import org.softwareengine.utils.service.DatabaseService;
+
 import org.softwareengine.utils.ui.FXDialog;
 import org.softwareengine.utils.ui.report;
 
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -250,9 +251,15 @@ public class ItemController {
                     } catch (JRException e) {
                         e.printStackTrace();
                     }*/
+                    report re = new report();
+
                     try {
-                        JasperViewer.viewReport(report.getPrint(),false);
+                        JasperViewer.viewReport(re.getItemReport(),false);
                     } catch (JRException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
                     System.out.println("Done here man . . .");
