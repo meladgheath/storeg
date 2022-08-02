@@ -9,6 +9,7 @@ module storeg {
     requires org.xerial.sqlitejdbc;
     requires jasperreports;
 
+    requires java.desktop;
 
 
     exports org.softwareengine;

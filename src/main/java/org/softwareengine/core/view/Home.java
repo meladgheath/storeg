@@ -16,8 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.*;
 
-        public class Home {
+
+public class Home {
 
 
             public Scene scene ;
@@ -181,7 +183,13 @@ import javafx.scene.layout.BorderPane;
 
                 ////////////////////////////////////////////////////////
                 root.setRight(allRight);
-                scene = new Scene(root , 1349, 952) ;
+                Dimension screensize =Toolkit.getDefaultToolkit().getScreenSize() ;
+                double width = screensize.getWidth() - (screensize.getWidth()/4) ;
+                double height = screensize.getHeight() - (screensize.getHeight()/4);
+
+                System.out.println(width+"   "+screensize.getWidth());
+                System.out.println(height+"  "+screensize.getHeight());
+                scene = new Scene(root , width, height) ;
             }
 
             public Scene getScene() {
