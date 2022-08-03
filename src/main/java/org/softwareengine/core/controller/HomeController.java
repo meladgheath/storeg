@@ -22,14 +22,14 @@ import java.util.Locale;
 
         private void setupLanguages(){
 
-            languages lang = new languages();
+        languages lang = new languages();
 
-            view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
-            view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
-            view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
-            view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
-            view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
-            view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
+        view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
+        view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
+        view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
+        view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
+        view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
+        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
             /*
             view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
             view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));

@@ -34,13 +34,18 @@ public class report {
     public JasperPrint getItemReport () throws JRException, FileNotFoundException, SQLException {
 
 
-        JasperReport report = null ;
+        JasperReport reports = null ;
         JasperPrint jp = null ;
 //        report = JasperCompileManager.compileReport(new FileInputStream(new File("newnew.jrxml")));
 
-        report = JasperCompileManager.compileReport(new FileInputStream(new File("Cherry_2.jrxml")));
+//        report = JasperCompileManager.compileReport(new FileInputStream(new File("Cherry_2.jrxml")));
 
-        jp = JasperFillManager.fillReport(report,null, DatabaseService.connection);
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/itemReport.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
 
         List<Item> list = new ArrayList<Item>();
 
@@ -60,7 +65,7 @@ public class report {
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
 
-        JasperPrint print = JasperFillManager.fillReport(report,null,dataSource);
+        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
 
 //        JasperViewer.viewReport(print,false);
         return print ;
