@@ -41,6 +41,9 @@ public class DeliverView {
     public Text numberTex ;
 
 
+    public ContextMenu tableMenu ;
+
+    public MenuItem printMenu ;
 
 
     public DeliverView() {
@@ -67,6 +70,12 @@ public class DeliverView {
         saveButton  = new Button();
         printButton = new Button();
 
+
+        printMenu = new MenuItem();
+
+        tableMenu = new ContextMenu();
+        tableMenu.getItems().add(printMenu);
+
         Vstore = new Button("V");
         Vitem  = new Button("V");
         Vbank = new Button("V");
@@ -77,6 +86,8 @@ public class DeliverView {
         tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         tableView.setPrefHeight(800);
+
+        tableView.setContextMenu(tableMenu);
 
         store.setDisable(true);
         item.setDisable (true);

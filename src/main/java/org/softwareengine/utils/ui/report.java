@@ -2,6 +2,7 @@ package org.softwareengine.utils.ui;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import org.softwareengine.core.model.Amount;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.core.model.Transaction;
@@ -12,7 +13,9 @@ import org.softwareengine.utils.service.DatabaseService;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class report {
 
@@ -190,6 +193,56 @@ public class report {
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
 
         JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+
+//        JasperViewer.viewReport(print,false);
+        return print ;
+
+    }
+
+    public JasperPrint getCoffee () throws JRException, FileNotFoundException, SQLException {
+
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/Coffee.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+       /* List<Transaction> list = new ArrayList<Transaction>();
+
+        Transaction model = new Transaction();
+
+
+        int size = model.getInfo().size();
+
+        for (int i=0 ; i < size ; i++) {
+            Transaction temp = new Transaction();
+
+            temp.setId(model.getInfoTransactions().get(i).getId());
+            temp.setItem(model.getInfoTransactions().get(i).getItem());
+            temp.setStore(model.getInfoTransactions().get(i).getStore());
+            temp.setBank(model.getInfoTransactions().get(i).getBank());
+            temp.setNumber(model.getInfoTransactions().get(i).getNumber());
+            temp.setDate(model.getInfoTransactions().get(i).getDate());
+
+
+            list.add(temp) ;
+
+        }
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+*/
+//        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(WhenNoDataTypeEnum.NO_DATA_SECTION);
+        reports.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
+        Map<String,Object> para = new HashMap<>();
+        para.put("name","melad") ;
+
+
+        JasperPrint print = JasperFillManager.fillReport(reports,para);
+
 
 //        JasperViewer.viewReport(print,false);
         return print ;
