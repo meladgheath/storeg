@@ -24,7 +24,7 @@ public class bankview {
         public TextField referenceNumber ;
 
         public Button saveButton ;
-        public JFXButton printButton ;
+        public Button printButton ;
 
 
         public TableView tableView ;
@@ -46,7 +46,7 @@ public class bankview {
             referenceTex = new Text();
 
             saveButton  = new Button();
-            printButton = new JFXButton();
+            printButton = new Button();
 
 
 

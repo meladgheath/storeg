@@ -36,7 +36,7 @@ public class DeliverView {
 
     public Text storeTex  ;
     public Text itemTex   ;
-    public Text bankTex;
+    public Text bankTex   ;
     public Text numberTex ;
 
 

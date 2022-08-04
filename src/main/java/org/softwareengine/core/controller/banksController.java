@@ -51,7 +51,7 @@ public class banksController {
             view.nameTex.setText(lang.getWord("name"));
             view.referenceTex.setText(lang.getWord("reference"));
             view.saveButton.setText(lang.getWord("save"));
-            view.printButton.setTooltip(new Tooltip(lang.getWord("print")));
+            view.printButton.setText(lang.getWord("print"));
 
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
@@ -70,6 +70,8 @@ public class banksController {
 
         private void initiate() throws SQLException {
             getTableColum();
+
+
 
             view.tableView.setOnKeyPressed(onTablePressed());
             view.saveButton.setOnAction(OnSaveButton());

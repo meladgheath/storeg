@@ -175,7 +175,7 @@ public class Amount {
 
     public ObservableList<Amount> getInfo() throws SQLException {
         ObservableList<Amount> list = FXCollections.observableArrayList();
-//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+
         String sql = "SELECT  (SELECT name FROM item WHERE id = itemid) as item " +
                 ", (SELECT name FROM store WHERE id = storeid) as store , sum(num) as num  FROM amount   GROUP by itemid" ;
 

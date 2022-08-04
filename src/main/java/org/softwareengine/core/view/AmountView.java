@@ -30,7 +30,8 @@ import javafx.scene.text.Text;
 
         public Button Vstore ;
         public Button Vitem ;
-        public Button saveButton ;
+        public Button saveButton  ;
+        public Button printButton ;
 
         public TableView tableView ;
 
@@ -49,8 +50,9 @@ import javafx.scene.text.Text;
             itemTex  = new Text();
             numTex   = new Text();
 
-//          saveButton     = new Button("save")  ;
-            saveButton = new Button();
+
+            saveButton  = new Button();
+            printButton = new Button();
 
             Vstore = new Button("V");
             Vitem  = new Button("V");
@@ -65,8 +67,6 @@ import javafx.scene.text.Text;
             store.setDisable(true);
             item.setDisable (true);
 
-
-//            GridPane top = new GridPane();
               HBox top = new HBox( );
 
             /*top.add(new Text("name  : "),0,1);
@@ -89,6 +89,7 @@ import javafx.scene.text.Text;
             top.getChildren().add(numTex);
             top.getChildren().add(num);
             top.getChildren().add(saveButton);
+            top.getChildren().add(printButton);
 
             top.setSpacing(6.5);
 

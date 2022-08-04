@@ -10,14 +10,18 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.Amount;
 import org.softwareengine.core.view.AmountView;
 import org.softwareengine.utils.ui.FXDialog;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Store;
+import org.softwareengine.utils.ui.report;
 
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -51,6 +55,7 @@ public class AmountController {
         view.itemTex.setText(lang.getWord("item"));
         view.numTex.setText(lang.getWord("number"));
         view.saveButton.setText(lang.getWord("save"));
+        view.printButton.setText(lang.getWord("print"));
 
         ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
         ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -71,6 +76,7 @@ public class AmountController {
         view.Vstore.setOnAction(onStore_V_Action());
         view.tableView.setOnKeyPressed(onTablePressed());
         view.saveButton.setOnAction(OnSaveButton());
+        view.printButton.setOnAction(onPrintButton());
 
     }
 
@@ -332,4 +338,25 @@ public class AmountController {
             view.item.clear();
         };
     }// save Button
+
+
+    private EventHandler<ActionEvent> onPrintButton() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                report re = new report();
+
+                try {
+                    JasperViewer.viewReport(re.getAmountReport(),false);
+                } catch (JRException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done here man . . .");
+            }
+        };
+    }
 }

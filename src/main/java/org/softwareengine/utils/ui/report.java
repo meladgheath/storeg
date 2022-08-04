@@ -2,6 +2,7 @@ package org.softwareengine.utils.ui;
 
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.softwareengine.core.model.Amount;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.core.model.banks;
 import org.softwareengine.utils.service.DatabaseService;
@@ -109,4 +110,46 @@ public class report {
         return print ;
 
     }
+
+
+    public JasperPrint getAmountReport () throws JRException, FileNotFoundException, SQLException {
+
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/amountReport.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+        List<Amount> list = new ArrayList<Amount>();
+
+        Amount model = new Amount();
+
+
+        int size = model.getInfo().size();
+
+        for (int i=0 ; i < size ; i++) {
+            Amount temp = new Amount();
+
+            temp.setId(model.getInfo().get(i).getId());
+            temp.setItem(model.getInfo().get(i).getItem());
+            temp.setStore(model.getInfo().get(i).getStore());
+            temp.setNum(model.getInfo().get(i).getNum());
+
+            list.add(temp) ;
+
+        }
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+
+        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+
+//        JasperViewer.viewReport(print,false);
+        return print ;
+
+    }
+
 }
