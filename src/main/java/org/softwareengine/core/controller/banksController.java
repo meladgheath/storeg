@@ -5,15 +5,20 @@ import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.core.model.banks;
 import org.softwareengine.core.view.bankview;
 import org.softwareengine.utils.ui.UpdateDialog;
+import org.softwareengine.utils.ui.report;
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -46,6 +51,7 @@ public class banksController {
             view.nameTex.setText(lang.getWord("name"));
             view.referenceTex.setText(lang.getWord("reference"));
             view.saveButton.setText(lang.getWord("save"));
+            view.printButton.setTooltip(new Tooltip(lang.getWord("print")));
 
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
@@ -67,6 +73,7 @@ public class banksController {
 
             view.tableView.setOnKeyPressed(onTablePressed());
             view.saveButton.setOnAction(OnSaveButton());
+            view.printButton.setOnAction(onPrintButton());
 
 
 
@@ -210,7 +217,30 @@ public class banksController {
 
         }
 
-        private EventHandler<ActionEvent> OnSaveButton() {
+
+    private EventHandler<ActionEvent> onPrintButton() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                report re = new report();
+
+                try {
+                    JasperViewer.viewReport(re.getBankBranchs(),false);
+                } catch (JRException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done here man . . .");
+            }
+        };
+    }
+
+
+
+    private EventHandler<ActionEvent> OnSaveButton() {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {

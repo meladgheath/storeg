@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'org.openjfx.javafxplugin' version '0.0.12'
     id 'org.beryx.jlink' version '2.25.0'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 def NAME = 'storeg Engine'
@@ -53,6 +54,17 @@ jar {
     manifest {
         attributes 'Main-Class': MAIN_CLASS
     }
+}
+task fatJar(type:Jar){
+    manifest{
+        attributes 'Main-Class' : 'org.softwareengine.Main',
+        'Implementation-Title' : 'storeg',
+        'Implementation-Version' : '1.0'
+    }
+    from {
+        configurations.compile.collect {it.isDirectory() ? it : zipTree(it)}
+    }
+    with jar
 }
 
 jlink {

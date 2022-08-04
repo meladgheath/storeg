@@ -3,10 +3,10 @@ package org.softwareengine.utils.ui;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.softwareengine.core.model.Item;
+import org.softwareengine.core.model.banks;
 import org.softwareengine.utils.service.DatabaseService;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -58,6 +58,44 @@ public class report {
             Item temp = new Item();
             temp.setName(model.getInfo().get(i).getName());
             temp.setCode(model.getInfo().get(i).getCode());
+            temp.setTypeName(model.getInfo().get(i).getTypeName());
+
+            list.add(temp) ;
+
+        }
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+
+        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+
+//        JasperViewer.viewReport(print,false);
+        return print ;
+
+    }
+    public JasperPrint getBankBranchs () throws JRException, FileNotFoundException, SQLException {
+
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/branchs.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+        List<banks> list = new ArrayList<banks>();
+
+        banks model = new banks();
+
+
+        int size = model.getInfo().size();
+
+        for (int i=0 ; i < size ; i++) {
+            banks temp = new banks();
+            temp.setName(model.getInfo().get(i).getName());
+            temp.setReferenceNumber(model.getInfo().get(i).getReferenceNumber());
+
 
             list.add(temp) ;
 
