@@ -14,13 +14,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Duration;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.*;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.view.DeliverView;
 import org.softwareengine.utils.ui.FXDialog;
 import org.controlsfx.control.Notifications;
+import org.softwareengine.utils.ui.report;
 
 
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -29,7 +33,7 @@ public class DeliverController {
 
     public DeliverView view;
 
-    //    updateDialog dialog ;
+
 
     public FXDialog dialog ;
 
@@ -59,6 +63,7 @@ public class DeliverController {
         view.bankTex.setText(lang.getWord("bank"));
         view.storeTex.setText(lang.getWord("store"));
         view.saveButton.setText(lang.getWord("save"));
+        view.printButton.setText(lang.getWord("print"));
 
         ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
         ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -82,6 +87,7 @@ public class DeliverController {
         view.Vbank.setOnAction(onBank_V_Action());
         view.tableView.setOnKeyPressed(onTablePressed());
         view.saveButton.setOnAction(OnSaveButton());
+        view.printButton.setOnAction(onPrintButton());
 
     }
 
@@ -425,8 +431,6 @@ public class DeliverController {
                     return;
 
                 TextField t = (TextField) event.getSource() ;
-                System.out.println(t.getId());
-                System.out.println(t.getText()+" yes that is mother fucker . . . ");
 
 
                 try {
@@ -508,4 +512,26 @@ public class DeliverController {
             }
         };
     }// save Button
+
+
+    private EventHandler<ActionEvent> onPrintButton() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                report re = new report();
+
+                try {
+                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                } catch (JRException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done here man . . .");
+            }
+        };
+    }
+
 }

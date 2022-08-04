@@ -31,6 +31,7 @@ public class DeliverView {
     public Button Vbank;
 
     public Button saveButton ;
+    public Button printButton ;
 
     public TableView tableView ;
 
@@ -63,8 +64,8 @@ public class DeliverView {
         date = new DatePicker();
 
 
-//        saveButton     = new Button("save")  ;
-        saveButton = new Button();
+        saveButton  = new Button();
+        printButton = new Button();
 
         Vstore = new Button("V");
         Vitem  = new Button("V");
@@ -84,17 +85,6 @@ public class DeliverView {
 
         HBox top = new HBox( );
 
-            /*top.add(new Text("name  : "),0,1);
-            top.add(name,1,1);
-
-            top.add(saveButton,1,3);
-            saveButton.setMinWidth(root.getPrefWidth());
-
-            top.setHgap(12);
-            top.setVgap(12);
-            top.setAlignment(Pos.BASELINE_CENTER);
-
-*/
         top.getChildren().add(storeTex) ;
         top.getChildren().add(store);
         top.getChildren().add(Vstore);
@@ -108,6 +98,7 @@ public class DeliverView {
         top.getChildren().add(num);
         top.getChildren().add(date);
         top.getChildren().add(saveButton);
+        top.getChildren().add(printButton);
 
         top.setSpacing(6.5);
 
@@ -116,9 +107,6 @@ public class DeliverView {
 
         Separator line = new Separator();
         line.setOrientation(Orientation.HORIZONTAL);
-
-//            root.getChildren().add(top);
-//            root.getChildren().add(line);
 
         root.getChildren().add(tableView);
         root.getChildren().add(line);

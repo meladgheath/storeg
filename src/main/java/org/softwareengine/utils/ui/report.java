@@ -4,6 +4,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.softwareengine.core.model.Amount;
 import org.softwareengine.core.model.Item;
+import org.softwareengine.core.model.Transaction;
 import org.softwareengine.core.model.banks;
 import org.softwareengine.utils.service.DatabaseService;
 
@@ -151,5 +152,49 @@ public class report {
         return print ;
 
     }
+
+    public JasperPrint getDistrubumentReport () throws JRException, FileNotFoundException, SQLException {
+
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/disbursementReport.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+        List<Transaction> list = new ArrayList<Transaction>();
+
+        Transaction model = new Transaction();
+
+
+        int size = model.getInfo().size();
+
+        for (int i=0 ; i < size ; i++) {
+            Transaction temp = new Transaction();
+
+            temp.setId(model.getInfoTransactions().get(i).getId());
+            temp.setItem(model.getInfoTransactions().get(i).getItem());
+            temp.setStore(model.getInfoTransactions().get(i).getStore());
+            temp.setBank(model.getInfoTransactions().get(i).getBank());
+            temp.setNumber(model.getInfoTransactions().get(i).getNumber());
+            temp.setDate(model.getInfoTransactions().get(i).getDate());
+
+
+            list.add(temp) ;
+
+        }
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+
+        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+
+//        JasperViewer.viewReport(print,false);
+        return print ;
+
+    }
+
 
 }
