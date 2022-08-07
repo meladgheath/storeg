@@ -199,14 +199,14 @@ public class report {
 
     }
 
-    public JasperPrint getCoffee () throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getCoffee (Transaction model) throws JRException, FileNotFoundException, SQLException {
 
 
         JasperReport reports = null ;
         JasperPrint jp = null ;
 
         reports = JasperCompileManager.compileReport(
-                getClass().getResourceAsStream("/report/Coffee.jrxml")
+                getClass().getResourceAsStream("/report/Invo.jrxml")
         );
 
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
@@ -238,16 +238,16 @@ public class report {
 //        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(WhenNoDataTypeEnum.NO_DATA_SECTION);
         reports.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
         Map<String,Object> para = new HashMap<>();
-        para.put("name","melad") ;
+        para.put("number",model.getNumber()) ;
+        para.put("item",model.getItem());
+        para.put("store",model.getStore());
+        para.put("bank",model.getBank());
+        para.put("date",model.getDate());
+
 
 
         JasperPrint print = JasperFillManager.fillReport(reports,para);
-
-
-//        JasperViewer.viewReport(print,false);
         return print ;
 
     }
-
-
 }

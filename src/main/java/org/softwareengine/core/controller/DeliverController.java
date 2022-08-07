@@ -536,8 +536,9 @@ public class DeliverController {
                     e.printStackTrace();
                 }
                 try {
+                    transaction = transaction.getInfoTransactions().get(view.tableView.getSelectionModel().getSelectedIndex());
 //                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
-                    JasperViewer.viewReport(re.getCoffee(),false);
+                    JasperViewer.viewReport(re.getCoffee(transaction),false);
                 } catch (JRException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {
