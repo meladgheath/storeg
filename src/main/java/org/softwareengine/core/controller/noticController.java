@@ -68,10 +68,10 @@ public class noticController {
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
-            ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("store"));//store
-            ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("bank"));//driver
-            ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("number"));//num
-            ((TableColumn) view.tableView.getColumns().get(5)).setText(lang.getWord("date"));//date
+//            ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("store"));//store
+            ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("bank"));//driver
+            ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("number"));//num
+            ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("date"));//date
 
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
                 view.root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);

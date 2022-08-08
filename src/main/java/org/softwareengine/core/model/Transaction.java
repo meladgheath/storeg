@@ -191,7 +191,7 @@ public void getImagess(File file) throws SQLException, IOException {
                 SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
                 (SELECT name FROM item WHERE id = item ) as item ,
                  number , date
-                 FROM transactions order by date desc
+                 FROM transactionss order by date desc
                  """;
 
         DatabaseService.openConnection();
