@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.softwareengine.utils.service.DatabaseService;
 
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,6 +24,10 @@ public class Transaction {
     private String bank;
 
     private String date;
+
+    private ByteArrayOutputStream img ;
+
+
 
     public String getDate() {
         return date;
@@ -96,8 +101,16 @@ public class Transaction {
         this.store = store;
     }
 
+    public ByteArrayOutputStream getImg() {
+        return img;
+    }
+
+    public void setImg(ByteArrayOutputStream img) {
+        this.img = img;
+    }
+
     public void save() throws SQLException {
-        String sql = "INSERT INTO transactions ( item , bank, store , number , date  ) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO transactions ( item , bank, store , number , date ,img ) VALUES (?,?,?,?,?,?)";
 
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -108,10 +121,30 @@ public class Transaction {
         ps.setInt(3, this.storeID);
         ps.setInt(4, this.number);
         ps.setString(5, this.date);
+        ps.setBytes(6,this.img.toByteArray());
+
+/*
+
+        FileInputStream fin ;
+        int rownum = 0 ;
+        File image = new File("doc.png") ;
+        fin = new FileInputStream(image);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        byte[] buf = new byte[1024] ;
+
+        for (int readnum ; (readnum = fin.read(buf)) != -1 ;)
+        bos.write(buf,0,readnum);
+
+        fin.close();
+
+        ps.setBytes(6,bos.toByteArray());
+
+*/
 
         ps.executeUpdate();
 
         DatabaseService.CloseConnection();
+//        bos.close();
         System.out.println("what happing here melad ");
     }
 

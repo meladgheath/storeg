@@ -20,6 +20,7 @@ public enum Paths {
     PACKAGE(iconPath()+"package.png"),
     DISBURSEMENT(iconPath()+"icons8-bank-card-missing-64.png"),
 
+    ATTUCH(iconPath()+"icons8-attachment-file-32.png"),
     SAVE(iconPath()+"icons8-save-50.png"),
     PRINT(iconPath()+"icons8-print-100.png"),
     SAVE_PURCHASE_BUTTON(iconPath()+"icons8-return-purchase-80.png");

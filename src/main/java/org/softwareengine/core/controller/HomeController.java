@@ -60,31 +60,8 @@ import java.util.Locale;
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
 
-               /* view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
-                view.transferImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.TRANSFER   .getPath())));
 
-                view.transactionsImageview.setImage(new Image(getClass().getResourceAsStream(Paths.TRANSACTION.getPath())));
-                */
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
-/*
-                view.settingImageview       .setImage(new Image(new FileInputStream(mypath.SETTING      .getPath())));
-                view.itemImageview          .setImage(new Image(new FileInputStream(mypath.ITEMS        .getPath())));
-                view.storeImageview         .setImage(new Image(new FileInputStream(mypath.STORE        .getPath())));
-                view.purchaseImageview      .setImage(new Image(new FileInputStream(mypath.PURCHASE     .getPath())));
-                view.salesImageview         .setImage(new Image(new FileInputStream(mypath.SALES        .getPath())));
-                view.transferImageview      .setImage(new Image(new FileInputStream(mypath.TRANSFER     .getPath())));
-                view.customerImageview      .setImage(new Image(new FileInputStream(mypath.CUSTOMER     .getPath())));
-                view.depthBookImageview     .setImage(new Image(new FileInputStream(mypath.DEBTBOOK     .getPath())));
-                view.moneyImageview         .setImage(new Image(new FileInputStream(mypath.MONEY        .getPath())));
-                view.treasuryImageview      .setImage(new Image(new FileInputStream(mypath.TREASURY     .getPath())));
-                view.employmentImageview    .setImage(new Image(new FileInputStream(mypath.EMPLOYMENT   .getPath())));
-                view.userImageview          .setImage(new Image(new FileInputStream(mypath.USERS        .getPath())));
-                view.transactionsImageview  .setImage(new Image(new FileInputStream(mypath.TRANSACTION  .getPath())));
-*/
-
-//            view.permissionsImageview   .setImage(new Image(new FileInputStream(mypath.PERMISSIONS  .getPath())));
-
-
 
 
             view.settingButton.setOnAction(new EventHandler<ActionEvent>() {

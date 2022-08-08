@@ -2,6 +2,7 @@ package org.softwareengine.core.view;
 
 
 
+import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -31,6 +32,7 @@ public class DeliverView {
     public Button Vbank;
 
     public Button saveButton ;
+    public JFXButton attuchemnt ;
     public Button printButton ;
 
     public TableView tableView ;
@@ -68,6 +70,7 @@ public class DeliverView {
 
 
         saveButton  = new Button();
+        attuchemnt  = new JFXButton();
         printButton = new Button();
 
 
@@ -108,6 +111,7 @@ public class DeliverView {
         top.getChildren().add(numberTex);
         top.getChildren().add(num);
         top.getChildren().add(date);
+        top.getChildren().add(attuchemnt);
         top.getChildren().add(saveButton);
         top.getChildren().add(printButton);
 

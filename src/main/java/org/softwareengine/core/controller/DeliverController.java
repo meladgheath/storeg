@@ -10,9 +10,12 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.view.JasperViewer;
@@ -24,7 +27,8 @@ import org.controlsfx.control.Notifications;
 import org.softwareengine.utils.ui.report;
 
 
-import java.io.FileNotFoundException;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -40,6 +44,8 @@ public class DeliverController {
     public int itemID   ;
     public int storeID  ;
     public int bankID;
+
+    ByteArrayOutputStream bos ;
 
     public DeliverController() {
         view = new DeliverView();
@@ -83,6 +89,7 @@ public class DeliverController {
     private void initiate() throws SQLException {
         getTableColum();
 
+        view.attuchemnt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(Paths.ATTUCH.getPath()))));
         view.num.setOnKeyReleased(onNumTextPressed());
         view.Vitem.setOnAction(onItem_V_Action());
         view.Vstore.setOnAction(onStore_V_Action());
@@ -93,6 +100,8 @@ public class DeliverController {
         view.printButton.setOnAction(onPrintButton());
 
         view.printMenu.setOnAction(onPrintMenu());
+        view.attuchemnt.setOnAction(onAttu());
+
 
     }
 
@@ -458,11 +467,11 @@ public class DeliverController {
 
 
                 Transaction model = new Transaction();
-//                model.setName(view.store.getText());
                 model.setItemID(itemID);
                 model.setStoreID(storeID);
                 model.setBankID(bankID);
                 model.setDate(view.date.getValue().toString());
+                model.setImg(bos);
 
                 int num = view.num.getValue() ;
                 model.setNumber(num);
@@ -547,6 +556,49 @@ public class DeliverController {
                     e.printStackTrace();
                 }
                 System.out.println("Done here man . . .");
+            }
+        };
+    }
+
+
+    private EventHandler<ActionEvent> onAttu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                view.saveButton.setDisable(true);
+                view.printButton.setDisable(true);
+
+                FileChooser files = new FileChooser();
+
+//                File file = files.showOpenDialog(null);
+                File file = files.showOpenDialog(null);
+
+
+                FileInputStream in = null;
+                try {
+                    in = new FileInputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                bos = new ByteArrayOutputStream();
+
+                byte[] buf = new byte[1024] ;
+
+                try {
+                int i = 0 ;
+                while ((i = in.read(buf)) != -1 ) {
+                    bos.write(buf, 0, i);
+                }
+                    in.close();
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                view.saveButton.setDisable(false);
+                view.printButton.setDisable(false);
             }
         };
     }
