@@ -59,6 +59,7 @@ public class Transaction {
 
     public void setId(int id) {
         this.id = id;
+
     }
 
     public int getItemID() {
@@ -123,23 +124,24 @@ public class Transaction {
         ps.setString(5, this.date);
         ps.setBytes(6,this.img.toByteArray());
 
-/*
+        ps.executeUpdate();
 
-        FileInputStream fin ;
-        int rownum = 0 ;
-        File image = new File("doc.png") ;
-        fin = new FileInputStream(image);
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        byte[] buf = new byte[1024] ;
+        DatabaseService.CloseConnection();
+//        bos.close();
+        System.out.println("what happing here melad ");
+    }
 
-        for (int readnum ; (readnum = fin.read(buf)) != -1 ;)
-        bos.write(buf,0,readnum);
+    public void saves() throws SQLException {
+        String sql = "INSERT INTO transactionss ( item , bank,  number , date ,img ) VALUES (?,?,?,?,?)";
 
-        fin.close();
+        DatabaseService.openConnection();
+        PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
 
-        ps.setBytes(6,bos.toByteArray());
-
-*/
+        ps.setInt(1, this.itemID);
+        ps.setInt(2, this.bankID);
+        ps.setInt(3, this.number);
+        ps.setString(4, this.date);
+        ps.setBytes(5,this.img.toByteArray());
 
         ps.executeUpdate();
 
@@ -147,6 +149,73 @@ public class Transaction {
 //        bos.close();
         System.out.println("what happing here melad ");
     }
+
+public void getImagess(File file) throws SQLException, IOException {
+
+        String sql = "SELECT img from transactions where id =  "+this.id;
+
+    System.out.println("the id here is "+this.id);
+
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        InputStream in = null;
+        OutputStream out ;
+        int i = 0;
+        while (resultSet.next()){
+            in = resultSet.getBinaryStream(1);
+
+        }
+
+        System.out.println(file.getPath());
+        out = new FileOutputStream(file) ;
+        int readnum = 0 ;
+
+        while ((readnum = in.read()) > -1 )
+            out.write(readnum);
+
+        out.close();
+        in.close();
+        
+        DatabaseService.CloseConnection();
+
+}
+
+
+    public ObservableList<Transaction> getInfoTransactionss() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = """
+                SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
+                (SELECT name FROM item WHERE id = item ) as item ,
+                 number , date
+                 FROM transactions order by date desc
+                 """;
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
 
 
     public ObservableList<Transaction> getInfoTransactions() throws SQLException {

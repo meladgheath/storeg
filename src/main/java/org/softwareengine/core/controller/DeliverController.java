@@ -27,7 +27,7 @@ import org.controlsfx.control.Notifications;
 import org.softwareengine.utils.ui.report;
 
 
-import java.awt.image.BufferedImage;
+
 import java.io.*;
 import java.sql.SQLException;
 import java.util.Locale;
@@ -72,6 +72,7 @@ public class DeliverController {
         view.printButton.setText(lang.getWord("print"));
 
         view.printMenu.setText(lang.getWord("print"));
+        view.detailMenu.setText(lang.getWord("detail"));
 
         ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
         ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -100,7 +101,9 @@ public class DeliverController {
         view.printButton.setOnAction(onPrintButton());
 
         view.printMenu.setOnAction(onPrintMenu());
+        view.detailMenu.setOnAction(onDetailMenu());
         view.attuchemnt.setOnAction(onAttu());
+
 
 
     }
@@ -561,6 +564,40 @@ public class DeliverController {
     }
 
 
+
+    private EventHandler<ActionEvent> onDetailMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                int index = view.tableView.getSelectionModel().getSelectedIndex();
+                Transaction model = new Transaction();
+                try {
+                    model.setId(model.getInfoTransactionsID().get(index).getId());
+
+                    System.out.println("Error . . . .");
+                    System.out.println(index);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                FileChooser file = new FileChooser();
+                file.setInitialFileName("doc.png");
+
+                try {
+
+                    model.getImagess(file.showSaveDialog(null));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+    }
+
     private EventHandler<ActionEvent> onAttu() {
         return new EventHandler<ActionEvent>() {
             @Override
@@ -572,11 +609,9 @@ public class DeliverController {
 
                 FileChooser files = new FileChooser();
 
-//                File file = files.showOpenDialog(null);
                 File file = files.showOpenDialog(null);
-
-
                 FileInputStream in = null;
+
                 try {
                     in = new FileInputStream(file);
                 } catch (FileNotFoundException e) {

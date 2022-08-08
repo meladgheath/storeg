@@ -45,7 +45,8 @@ public class DeliverView {
 
     public ContextMenu tableMenu ;
 
-    public MenuItem printMenu ;
+    public MenuItem printMenu  ;
+    public MenuItem detailMenu ;
 
 
     public DeliverView() {
@@ -74,10 +75,12 @@ public class DeliverView {
         printButton = new Button();
 
 
-        printMenu = new MenuItem();
+        printMenu  = new MenuItem();
+        detailMenu = new MenuItem();
 
         tableMenu = new ContextMenu();
         tableMenu.getItems().add(printMenu);
+        tableMenu.getItems().add(detailMenu);
 
         Vstore = new Button("V");
         Vitem  = new Button("V");

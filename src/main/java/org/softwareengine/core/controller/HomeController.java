@@ -30,18 +30,7 @@ import java.util.Locale;
         view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
         view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
         view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
-            /*
-            view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
-            view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));
-            view.amountButton   .setTooltip(new Tooltip(lang.getWord("amounts")));
-            */
-            view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
-
-          /*  if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
-                view.root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            else
-                view.root.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);*/
-
+        view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
 
         public void initiated() {
@@ -137,10 +126,10 @@ import java.util.Locale;
                     onTransactionButton();
                 }
             });
-            view.customerTypeButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.noticButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    oncustomertypeButton();
+                    onNoticButton();
                 }
             });
             view.depthBookButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -173,9 +162,9 @@ import java.util.Locale;
             StoreController control = new StoreController();
             view.root.setCenter(control.view.getRoot());
         }
-        private void oncustomertypeButton () {
-//            customerType control = new customerType();
-//            view.root.setCenter(control.view.getRoot());
+        private void onNoticButton() {
+            noticController control = new noticController();
+            view.root.setCenter(control.view.getRoot());
         }
         private void onPurchaseButton() {
 //            Purchase control = new Purchase();

@@ -38,7 +38,7 @@ public class Home {
             public JFXButton typesButton;
             public JFXButton userButton        ;
             public JFXButton transactionButton ;
-            public JFXButton customerTypeButton;
+            public JFXButton noticButton;
             public JFXButton permissionsButton ;
             public JFXButton depthBookButton   ;
 
@@ -82,7 +82,7 @@ public class Home {
                 typesButton = new JFXButton() ;
                 userButton        = new JFXButton() ;
                 transactionButton = new JFXButton() ;
-                customerTypeButton= new JFXButton() ;
+                noticButton = new JFXButton() ;
                 permissionsButton = new JFXButton() ;
                 depthBookButton   = new JFXButton() ;
 
@@ -142,8 +142,8 @@ public class Home {
                 transactionButton.setMinWidth(root.getPrefWidth());
                 transactionButton.setMinHeight(root.getPrefHeight());
 
-                customerTypeButton.setMinWidth(root.getPrefWidth());
-                customerTypeButton.setMinHeight(root.getPrefHeight());
+                noticButton.setMinWidth(root.getPrefWidth());
+                noticButton.setMinHeight(root.getPrefHeight());
 
                 depthBookButton.setMinWidth(root.getPrefWidth());
                 depthBookButton.setMinHeight(root.getPrefHeight());
@@ -161,10 +161,9 @@ public class Home {
                 right.getChildren().add(bankButton         );
                 right.getChildren().add(storeButton        );
                 right.getChildren().add(amountButton       );
+                right.getChildren().add(noticButton        );
                 right.getChildren().add(disbursementButton );
-                /*
-                right.getChildren().add(transferButton   );
-                right.getChildren().add(transactionButton);*/
+
                 right.getChildren().add(settingButton    );
 
 

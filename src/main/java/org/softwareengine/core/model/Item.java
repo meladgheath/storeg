@@ -223,7 +223,7 @@ import java.sql.Statement;
 
         public ObservableList<Item> getInfoID() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT id FROM item ORDER BY id";
+            String sql = "SELECT id FROM item ";
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
