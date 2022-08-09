@@ -86,30 +86,22 @@ public class banks {
         }
 
 
-        public org.softwareengine.core.model.Item getInfoWHEREid() throws SQLException {
+        public void  delete() throws SQLException {
             ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM item WHERE id = "+this.id;
+            String sql = "DELETE FROM banks WHERE id = "+this.id;
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
 
-            int i = 0 ;
-            resultSet.next() ;
-            org.softwareengine.core.model.Item one = new org.softwareengine.core.model.Item() ;
 
-            one.setValue(resultSet.getDouble("value"));
-            one.setPackages(resultSet.getInt("package"));
-            DatabaseService.CloseConnection();
-
-            return one ;
+            statement.executeUpdate(sql);
         }
 
 
 
         public ObservableList<org.softwareengine.core.model.Item> getInfoID() throws SQLException {
             ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT id FROM item ORDER BY id";
+            String sql = "SELECT id FROM banks ORDER BY id";
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();

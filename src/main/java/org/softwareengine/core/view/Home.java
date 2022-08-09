@@ -44,20 +44,20 @@ public class Home {
 
 
             public ImageView itemImageview          ;
-            public ImageView bankImageview;
-            public ImageView storeImageview;
-            public ImageView disbursementImageview;
+            public ImageView bankImageview          ;
+            public ImageView storeImageview         ;
+            public ImageView disbursementImageview  ;
             public ImageView settingImageview       ;
             public ImageView transferImageview      ;
-            public ImageView amountsImageview;
+            public ImageView amountsImageview       ;
             public ImageView moneyImageview         ;
             public ImageView treasuryImageview      ;
-            public ImageView typesImageview;
+            public ImageView typesImageview         ;
             public ImageView userImageview          ;
             public ImageView transactionsImageview  ;
             public ImageView customerTypeImageview  ;
             public ImageView permissionsImageview   ;
-            public ImageView depthBookImageview     ;
+            public ImageView noticImageview         ;
 
 
             public Home() {
@@ -100,7 +100,7 @@ public class Home {
                 transactionsImageview = new ImageView() ;
                 customerTypeImageview = new ImageView() ;
                 permissionsImageview  = new ImageView() ;
-                depthBookImageview    = new ImageView() ;
+                noticImageview = new ImageView() ;
 
                 
                 setToolTips();
@@ -159,10 +159,10 @@ public class Home {
                 right.getChildren().add(typesButton        );
                 right.getChildren().add(itemButton         );
                 right.getChildren().add(bankButton         );
-                right.getChildren().add(storeButton        );
+//                right.getChildren().add(storeButton        );
                 right.getChildren().add(amountButton       );
                 right.getChildren().add(noticButton        );
-                right.getChildren().add(disbursementButton );
+//                right.getChildren().add(disbursementButton );
 
                 right.getChildren().add(settingButton    );
 
@@ -250,6 +250,8 @@ public class Home {
 
                 settingButton.setGraphic(settingImageview);
 //                settingButton.setTooltip(new Tooltip(resourceBundle.getString("setting")));
+
+                noticButton.setGraphic(noticImageview);
 
             }
         }

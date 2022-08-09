@@ -376,26 +376,18 @@ public class noticController {
                 public void handle(KeyEvent event) {
 
 
-                    if (!(event.getCode() == KeyCode.ENTER))
+                    if (!(event.getCode() == KeyCode.DELETE))
                         return;
 
-                    String text [] = {
-                            "store Name : "
-                    } ;
-                    Amount model = new Amount() ;
-
-                    int index = view.tableView.getSelectionModel().getSelectedIndex() ;
-
-
-                    String name ;
+                    int index = view.tableView.getSelectionModel().getSelectedIndex();
+                    Transaction model = new Transaction();
                     try {
-                        storeID = model.getInfoID().get(index).getId() ;
-                        System.out.println("the ID = "+ storeID);
-
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                        model.setId(new Transaction().getInfoTransactionssID().get(index).getId());
+                        model.delete();
+                        getTableDetail();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-
                 }} ;
         }
 
@@ -472,6 +464,8 @@ public class noticController {
                             view.item.clear();
                             view.bank.clear();
 
+                            getTableDetail();
+
                         } catch (SQLException ex) {
                         ex.printStackTrace();
                     }
@@ -547,20 +541,24 @@ public class noticController {
                     int index = view.tableView.getSelectionModel().getSelectedIndex();
                     Transaction model = new Transaction();
                     try {
-                        model.setId(model.getInfoTransactionsID().get(index).getId());
+                        model.setId(model.getInfoTransactionssID().get(index).getId());
 
                         System.out.println("Error . . . .");
                         System.out.println(index);
+                        System.out.println(model.getInfoTransactionssID().get(index).getId());
+                        System.out.println(model.getId());
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
 
                     FileChooser file = new FileChooser();
                     file.setInitialFileName("doc.png");
+//                    file.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("*.png"));
 
                     try {
 
-                        model.getImagess(file.showSaveDialog(null));
+                        model.getImagesss(file.showSaveDialog(null));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (IOException e) {

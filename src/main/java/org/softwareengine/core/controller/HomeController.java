@@ -27,9 +27,9 @@ import java.util.Locale;
         view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
         view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
         view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
-        view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
+//        view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
         view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
-        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
+//        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
         view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
 
@@ -45,10 +45,10 @@ import java.util.Locale;
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS       .getPath())));
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
-                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE       .getPath())));
+//                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE       .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
-                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
-
+//                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
+                view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
 
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
 

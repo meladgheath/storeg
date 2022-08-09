@@ -163,15 +163,6 @@ public class ItemController {
                         packages = model.getInfo().get(index).getPackages()+"";
                         value = model.getInfo().get(index).getValue()+"";
 
-//                        dialog.tf1.setText(itemName);//t1 for item name
-//                        dialog.tf2.setText(code); // t2 for code item
-//                        dialog.tf3.setText(packages); // t3 for package
-//                        dialog.tf4.setText(value);// t4 for value or price
-//
-//                        dialog.tf1.setId("name");
-//                        dialog.tf2.setId("code");
-//                        dialog.tf3.setId("package");
-//                        dialog.tf4.setId("value");
 
 
                     } catch (SQLException throwables) {

@@ -127,7 +127,7 @@ public class Transaction {
         ps.executeUpdate();
 
         DatabaseService.CloseConnection();
-//        bos.close();
+
         System.out.println("what happing here melad ");
     }
 
@@ -146,7 +146,7 @@ public class Transaction {
         ps.executeUpdate();
 
         DatabaseService.CloseConnection();
-//        bos.close();
+
         System.out.println("what happing here melad ");
     }
 
@@ -183,6 +183,38 @@ public void getImagess(File file) throws SQLException, IOException {
 
 }
 
+    public void getImagesss(File file) throws SQLException, IOException {
+
+        String sql = "SELECT img from transactionss where id =  "+this.id;
+
+        System.out.println("the id here is "+this.id);
+
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        InputStream in = null;
+        OutputStream out ;
+        int i = 0;
+        while (resultSet.next()){
+            in = resultSet.getBinaryStream(1);
+
+        }
+
+        System.out.println(file.getPath());
+        out = new FileOutputStream(file) ;
+        int readnum = 0 ;
+
+        while ((readnum = in.read()) > -1 )
+            out.write(readnum);
+
+        out.close();
+        in.close();
+
+        DatabaseService.CloseConnection();
+
+    }
 
     public ObservableList<Transaction> getInfoTransactionss() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
@@ -191,8 +223,9 @@ public void getImagess(File file) throws SQLException, IOException {
                 SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
                 (SELECT name FROM item WHERE id = item ) as item ,
                  number , date
-                 FROM transactionss order by date desc
+                 FROM transactionss 
                  """;
+//        order by date desc
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();
@@ -283,6 +316,48 @@ public void getImagess(File file) throws SQLException, IOException {
         DatabaseService.CloseConnection();
         return list;
     }
+
+    public ObservableList<Transaction> getInfoTransactionssID() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = """
+                SELECT id , (SELECT name FROM banks WHERE id = bank) as bank ,
+                (SELECT name FROM item WHERE id = item ) as item ,
+                 number , date
+                 FROM transactionss 
+                 """;
+//        order by date desc
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(resultSet.getInt("id"));
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
+    public void delete() throws SQLException {
+        String sql = "DELETE FROM transactionss WHERE id = "+this.id;
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement() ;
+        statement.executeUpdate(sql);
+
+        DatabaseService.CloseConnection();
+    }
     public ObservableList<Amount> getInfo() throws SQLException {
         ObservableList<Amount> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
@@ -350,25 +425,5 @@ public void getImagess(File file) throws SQLException, IOException {
         DatabaseService.CloseConnection();
         return list;
     }
-/*
-    public main.model.amount getNameByID() throws SQLException {
-        ObservableList<main.model.store> list = FXCollections.observableArrayList();
-        String sql = "SELECT  name  FROM store where id = "+this.id;
-
-        database.openConnection();
-        Statement statement = database.connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-
-        resultSet.next() ;
-
-//            setName(resultSet.getString("name"));
-
-        resultSet.close();
-        statement.close();
-        database.CloseConnection();
-
-        return this ;
-
-    }*/
 
 }

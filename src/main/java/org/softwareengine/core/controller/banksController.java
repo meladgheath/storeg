@@ -121,6 +121,7 @@ public class banksController {
             return new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
+/*
 
 
                     String text [] = {
@@ -167,6 +168,21 @@ public class banksController {
                     dialog.tf2.setOnKeyPressed(onUpdate());
                     dialog.tf3.setOnKeyPressed(onUpdate());
                     dialog.tf4.setOnKeyPressed(onUpdate());
+*/
+                    if (event.getCode() != KeyCode.DELETE)
+                        return;
+
+                    banks model = new banks();
+                    int index = view.tableView.getSelectionModel().getSelectedIndex() ;
+                    try {
+                        model.setId(model.getInfoID().get(index).getId());
+                        model.delete();
+                        getTableDetail();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
+
 
 
                 }} ;
@@ -260,8 +276,8 @@ public class banksController {
                     }
 
                     view.name.clear();
-
-//                    view.packages.clear();
+                    view.referenceNumber.clear();
+                    //                    view.packages.clear();
 
 
                 }
