@@ -41,8 +41,9 @@ public class noticview {
 
         public ContextMenu tableMenu ;
 
-        public MenuItem printMenu  ;
-        public MenuItem detailMenu ;
+        public MenuItem printMenu    ;
+        public MenuItem downloadMenu ;
+        public MenuItem detailMenu   ;
 
 
         public noticview() {
@@ -71,12 +72,17 @@ public class noticview {
             printButton = new Button();
 
 
-            printMenu  = new MenuItem();
-            detailMenu = new MenuItem();
+            printMenu    = new MenuItem();
+            detailMenu   = new MenuItem();
+            downloadMenu = new MenuItem();
 
             tableMenu = new ContextMenu();
             tableMenu.getItems().add(printMenu);
             tableMenu.getItems().add(detailMenu);
+            tableMenu.getItems().add(downloadMenu);
+
+            tableMenu.setPrefHeight(60);
+            tableMenu.setPrefWidth(60);
 
             Vstore = new Button("V");
             Vitem  = new Button("V");

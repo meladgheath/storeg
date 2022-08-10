@@ -140,44 +140,17 @@ public class ItemController {
                 @Override
                 public void handle(KeyEvent event) {
 
-
-                    String text [] = {
-                            "name","code","package","value"
-                    } ;
-//                    dialog = new UpdateDialog(view.pane ,"update item . . . ",3,text) ;
-
-                    Item model = new Item() ;
-
+                    if (event.getCode() != KeyCode.DELETE)
+                        return;
+                    Item model = new Item();
                     int index = view.tableView.getSelectionModel().getSelectedIndex() ;
-
-                    String itemName = "" ;
-                    String code = "" ;
-                    String packages = "" ;
-                    String value = "" ;
                     try {
-                        itemID   = model.getInfoID().get(index).getId() ;
-                        System.out.println("the ID = "+itemID);
-                        itemName = model.getInfo().get(index).getName() ;
-                        System.out.println("the name = "+itemName);
-                        code = model.getInfo().get(index).getCode()+"" ;
-                        packages = model.getInfo().get(index).getPackages()+"";
-                        value = model.getInfo().get(index).getValue()+"";
-
-
-
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                        model.setId(new Item().getInfoIDs().get(index).getId());
+                        model.delete();
+                        getTableDetail();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-
-
-                    dialog.show();
-
-//                    dialog.tf1.setOnKeyPressed(onUpdate());
-//                    dialog.tf2.setOnKeyPressed(onUpdate());
-//                    dialog.tf3.setOnKeyPressed(onUpdate());
-//                    dialog.tf4.setOnKeyPressed(onUpdate());
-
-
                 }} ;
         }
 

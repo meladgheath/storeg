@@ -97,6 +97,18 @@ import java.sql.Statement;
             DatabaseService.CloseConnection();
         }
 
+        public void delete() throws SQLException {
+            String sql = "DELETE FROM item WHERE id = "+ this.id;
+
+            DatabaseService.openConnection();
+            Statement stat = DatabaseService.connection.createStatement();
+
+            stat.executeUpdate(sql);
+
+            DatabaseService.CloseConnection();
+
+        }
+
         public ObservableList<Item> getInfo() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
@@ -210,35 +222,38 @@ import java.sql.Statement;
 
             }
 
-
-
-
             System.out.println(sql);
-
-
 
             DatabaseService.CloseConnection();
 
         }
 
         public ObservableList<Item> getInfoID() throws SQLException {
-            ObservableList<Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT id FROM item ";
 
-            DatabaseService.openConnection();
-            Statement statement = DatabaseService.connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(sql);
+                ObservableList<Item> list = FXCollections.observableArrayList();
+//            String sql = "SELECT * FROM item ORDER BY id";
+                String sql = "select  name , code , (SELECT name from type where id = item.type) as type\n" +
+                        " from item  " ;
 
+                DatabaseService.openConnection();
+                Statement statement = DatabaseService.connection.createStatement();
+                ResultSet resultSet = statement.executeQuery(sql);
 
-            while (resultSet.next()) {
-                Item one = new Item() ;
+                int i = 0 ;
+                while (resultSet.next()) {
+                    Item one = new Item() ;
 
-                one.setId(resultSet.getInt("id"));
-
-                list.add(one);
+                    one.setId(resultSet.getInt("id"));
+                    one.setCode(resultSet.getInt("code"));
+                    one.setName(resultSet.getString("name"));
+                    one.setTypeName(resultSet.getString("type"));
+//                one.setPackages(resultSet.getInt("package"));
+//                one.setValue(resultSet.getDouble("value"));
+                    list.add(one);
+                }
+                return list ;
             }
-            return list ;
-        }
+
 
         public ObservableList<Item> getInfoByCode() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();

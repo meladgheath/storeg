@@ -255,18 +255,13 @@ public class banksController {
             }
         };
     }
-
-
-
     private EventHandler<ActionEvent> OnSaveButton() {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     banks model = new banks();
-
                     model.setName(view.name.getText());
                     model.setReferenceNumber(view.referenceNumber.getText());
-
                     try {
                         model.save();
                         System.out.println("data is saved !");
@@ -274,13 +269,9 @@ public class banksController {
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
                     view.name.clear();
                     view.referenceNumber.clear();
-                    //                    view.packages.clear();
-
-
-                }
+               }
             };
         }// save Button
     }

@@ -216,6 +216,29 @@ public void getImagess(File file) throws SQLException, IOException {
 
     }
 
+    public InputStream getBlob() throws SQLException, IOException {
+
+        String sql = "SELECT img from transactionss where id =  "+this.id;
+
+        System.out.println("the id here is "+this.id);
+
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        InputStream in = null;
+        OutputStream out ;
+        int i = 0;
+        while (resultSet.next()){
+            in = resultSet.getBinaryStream(1);
+
+        }
+
+        DatabaseService.CloseConnection();
+            return in ;
+
+    }
     public ObservableList<Transaction> getInfoTransactionss() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";

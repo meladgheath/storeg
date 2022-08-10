@@ -3,7 +3,7 @@ package org.softwareengine.core.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.SpinnerValueFactory;
+
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,14 +13,15 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.view.JasperViewer;
-import org.controlsfx.control.Notifications;
+
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.noticview;
 import org.softwareengine.utils.ui.FXDialog;
+
 import org.softwareengine.utils.ui.report;
 
 import java.io.*;
@@ -65,10 +66,11 @@ public class noticController {
 
             view.printMenu.setText(lang.getWord("print"));
             view.detailMenu.setText(lang.getWord("detail"));
+            view.downloadMenu.setText(lang.getWord("download"));
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
-//            ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("store"));//store
+
             ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("bank"));//driver
             ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("number"));//num
             ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("date"));//date
@@ -93,6 +95,7 @@ public class noticController {
             view.printButton.setOnAction(onPrintButton());
             view.printMenu.setOnAction(onPrintMenu());
             view.detailMenu.setOnAction(onDetailMenu());
+            view.downloadMenu.setOnAction(onDownloadMenu());
             view.attuchemnt.setOnAction(onAttu());
 
 
@@ -337,15 +340,9 @@ public class noticController {
 
                 switch (thing) {
                     case "item" :
-//                        Amount amount = new Amount();
+
                         Item model = new Item();
-//                        amount.setStoreID(storeID);
 
-//                        int initvalue = 0 , max = model.getInfo().get(index).getNum() , min = 1 ;
-
-//                        initvalue = max ;
-
-//                    itemID = item.getInfo().get(index).getId();
                         itemID = model.getInfoID().get(index).getId() ;
                         view.item.setText(model.getInfo().get(index).getName());
 
@@ -360,8 +357,8 @@ public class noticController {
 
                         break;
                     case "banks" :
-                        bankID = bank.getInfo().get(index).getId() ;
-                        view.bank.setText(bank.getInfo().get(index).getName());
+                        bankID = bank.getInfoIDs().get(index).getId() ;
+                        view.bank.setText(bank.getInfoIDs().get(index).getName());
                         break;
                 }
             } catch (SQLException e) {
@@ -537,6 +534,15 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
+                }
+            };
+        }
+
+        private EventHandler<ActionEvent> onDownloadMenu() {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
 
                     int index = view.tableView.getSelectionModel().getSelectedIndex();
                     Transaction model = new Transaction();
@@ -559,11 +565,13 @@ public class noticController {
                     try {
 
                         model.getImagesss(file.showSaveDialog(null));
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+
 
                 }
             };
