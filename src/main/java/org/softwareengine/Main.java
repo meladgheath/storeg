@@ -25,7 +25,7 @@ public class Main extends Application {
 
         if (!checkDB()) {
             try {
-                System.out.println("here ");
+                System.out.println("here");
                 putItThere();
             } catch (IOException e) {
                 e.printStackTrace();
