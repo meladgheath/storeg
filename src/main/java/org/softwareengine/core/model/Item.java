@@ -232,7 +232,7 @@ import java.sql.Statement;
 
                 ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
-                String sql = "select  name , code , (SELECT name from type where id = item.type) as type\n" +
+                String sql = "select  id ,name , code , (SELECT name from type where id = item.type) as type\n" +
                         " from item  " ;
 
                 DatabaseService.openConnection();
@@ -247,8 +247,7 @@ import java.sql.Statement;
                     one.setCode(resultSet.getInt("code"));
                     one.setName(resultSet.getString("name"));
                     one.setTypeName(resultSet.getString("type"));
-//                one.setPackages(resultSet.getInt("package"));
-//                one.setValue(resultSet.getDouble("value"));
+
                     list.add(one);
                 }
                 return list ;

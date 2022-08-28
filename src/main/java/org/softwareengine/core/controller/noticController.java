@@ -344,7 +344,7 @@ public class noticController {
                         Item model = new Item();
 
                         itemID = model.getInfoID().get(index).getId() ;
-                        view.item.setText(model.getInfo().get(index).getName());
+                        view.item.setText(model.getInfoID().get(index).getName());
 
                         getTableDetail();
                         break;
