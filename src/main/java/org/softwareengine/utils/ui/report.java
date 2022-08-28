@@ -173,14 +173,14 @@ public class report {
         Transaction model = new Transaction();
 
 
-        int size = model.getInfo().size();
+        int size = model.getInfoTransactions().size();
 
         for (int i=0 ; i < size ; i++) {
             Transaction temp = new Transaction();
 
             temp.setId(model.getInfoTransactions().get(i).getId());
             temp.setItem(model.getInfoTransactions().get(i).getItem());
-            temp.setStore(model.getInfoTransactions().get(i).getStore());
+//            temp.setStore(model.getInfoTransactions().get(i).getStore());
             temp.setBank(model.getInfoTransactions().get(i).getBank());
             temp.setNumber(model.getInfoTransactions().get(i).getNumber());
             temp.setDate(model.getInfoTransactions().get(i).getDate());

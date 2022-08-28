@@ -279,9 +279,9 @@ public void getImagess(File file) throws SQLException, IOException {
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
         String sql = """
                 SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
-                (SELECT name FROM item WHERE id = item ) as item ,
-                (SELECT name FROM store WHERE id = store) as store , number , date
-                 FROM transactions order by date desc
+                                (SELECT name FROM item WHERE id = item ) as item ,
+                                number , date
+                                 FROM transactionss order by date desc
                  """;
 
         DatabaseService.openConnection();
@@ -293,7 +293,7 @@ public void getImagess(File file) throws SQLException, IOException {
             Transaction one = new Transaction();
 
             one.setId(++i);
-            one.setStore(resultSet.getString("store"));
+//            one.setStore(resultSet.getString("store"));
             one.setItem(resultSet.getString("item"));
             one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));
@@ -384,7 +384,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Amount> getInfo() throws SQLException {
         ObservableList<Amount> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT  (SELECT name FROM item WHERE id = itemid) as item " + ", (SELECT name FROM store WHERE id = storeid) as store , sum(num) as num  FROM amount   GROUP by itemid";
+        String sql = "SELECT  (SELECT name FROM item WHERE id = itemid) as item " + ", (SELECT name FROM store WHERE id = storeid) as store , sum(num) as num " +
+                " FROM amount   GROUP by itemid";
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();
