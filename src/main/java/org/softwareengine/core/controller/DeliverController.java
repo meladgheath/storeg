@@ -10,17 +10,25 @@ import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.*;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.view.DeliverView;
 import org.softwareengine.utils.ui.FXDialog;
 import org.controlsfx.control.Notifications;
+import org.softwareengine.utils.ui.report;
 
 
+
+import java.io.*;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -29,13 +37,15 @@ public class DeliverController {
 
     public DeliverView view;
 
-    //    updateDialog dialog ;
+
 
     public FXDialog dialog ;
 
     public int itemID   ;
     public int storeID  ;
     public int bankID;
+
+    ByteArrayOutputStream bos ;
 
     public DeliverController() {
         view = new DeliverView();
@@ -59,6 +69,10 @@ public class DeliverController {
         view.bankTex.setText(lang.getWord("bank"));
         view.storeTex.setText(lang.getWord("store"));
         view.saveButton.setText(lang.getWord("save"));
+        view.printButton.setText(lang.getWord("print"));
+
+        view.printMenu.setText(lang.getWord("print"));
+        view.detailMenu.setText(lang.getWord("detail"));
 
         ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
         ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -76,12 +90,21 @@ public class DeliverController {
     private void initiate() throws SQLException {
         getTableColum();
 
+        view.attuchemnt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(Paths.ATTUCH.getPath()))));
         view.num.setOnKeyReleased(onNumTextPressed());
         view.Vitem.setOnAction(onItem_V_Action());
         view.Vstore.setOnAction(onStore_V_Action());
         view.Vbank.setOnAction(onBank_V_Action());
         view.tableView.setOnKeyPressed(onTablePressed());
+        view.tableView.setOnMouseClicked(ontableClick());
         view.saveButton.setOnAction(OnSaveButton());
+        view.printButton.setOnAction(onPrintButton());
+
+        view.printMenu.setOnAction(onPrintMenu());
+        view.detailMenu.setOnAction(onDetailMenu());
+        view.attuchemnt.setOnAction(onAttu());
+
+
 
     }
 
@@ -291,7 +314,17 @@ public class DeliverController {
         } ;
     }
 
+    private EventHandler<MouseEvent> ontableClick () {
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
 
+                if (event.isSecondaryButtonDown())
+                    view.tableMenu.show(view.tableView,event.getScreenX(),event.getScreenY());
+
+            }
+        } ;
+    }
 
     private void ListEvent(String thing) {
 
@@ -331,25 +364,14 @@ public class DeliverController {
 
                     SpinnerValueFactory<Integer> num =   new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initvalue);
 
-//                    view.num.setEditable(true);
-
-
-                    view.num.setValueFactory(num);
+                     view.num.setValueFactory(num);
                     view.num.getValueFactory().wrapAroundProperty().set(true);
-
-//                    view.num.getValueFactory().wrapAroundProperty().set(true);
-//                    view.num.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
-
-//                    view.num.setText(amount.getInfoItemInSpecStore().get(index).getNum()+"");
-//                    view.item.setText(item.getInfo().get(index).getName());
-
                     getTableDetail();
                     break;
                 case "store" :
                     storeID = store.getInfo().get(index).getId() ;
                     view.store.setText(store.getInfo().get(index).getName());
 
-//                    view.num.clear();
                     view.item.clear();
 
 
@@ -359,11 +381,6 @@ public class DeliverController {
                     view.bank.setText(bank.getInfo().get(index).getName());
                     break;
             }
-
-
-//                        getTableDetailTo();
-
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -382,8 +399,6 @@ public class DeliverController {
                 String text [] = {
                         "store Name : "
                 } ;
-//                dialog = new updateDialog(view.pane ,"update item . . . ",1,text) ;
-
                 Amount model = new Amount() ;
 
                 int index = view.tableView.getSelectionModel().getSelectedIndex() ;
@@ -393,24 +408,10 @@ public class DeliverController {
                 try {
                     storeID = model.getInfoID().get(index).getId() ;
                     System.out.println("the ID = "+ storeID);
-//                    name = model.getInfo().get(index).getName() ;
-//                    System.out.println("the name = "+name);
-
-
-//                    dialog.tf1.setText(name);//t1 for item name
-//
-//                    dialog.tf1.setId("name");
-
 
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-
-
-//                dialog.show();
-
-//                dialog.tf1.setOnKeyPressed(onUpdate());
-
 
             }} ;
     }
@@ -425,8 +426,6 @@ public class DeliverController {
                     return;
 
                 TextField t = (TextField) event.getSource() ;
-                System.out.println(t.getId());
-                System.out.println(t.getText()+" yes that is mother fucker . . . ");
 
 
                 try {
@@ -471,11 +470,11 @@ public class DeliverController {
 
 
                 Transaction model = new Transaction();
-//                model.setName(view.store.getText());
                 model.setItemID(itemID);
                 model.setStoreID(storeID);
                 model.setBankID(bankID);
                 model.setDate(view.date.getValue().toString());
+                model.setImg(bos);
 
                 int num = view.num.getValue() ;
                 model.setNumber(num);
@@ -508,4 +507,134 @@ public class DeliverController {
             }
         };
     }// save Button
+
+
+    private EventHandler<ActionEvent> onPrintButton() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                report re = new report();
+
+                try {
+//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                } catch (JRException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done here man . . .");
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> onPrintMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                report re = new report();
+
+
+                Transaction transaction = new Transaction();
+                try {
+                    System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getNumber());
+                    System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getItem());
+                    System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getStore());
+                    System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getBank());
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+                try {
+                    transaction = transaction.getInfoTransactions().get(view.tableView.getSelectionModel().getSelectedIndex());
+//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                    JasperViewer.viewReport(re.getCoffee(transaction),false);
+                } catch (JRException e) {
+                    e.printStackTrace();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("Done here man . . .");
+            }
+        };
+    }
+
+
+
+    private EventHandler<ActionEvent> onDetailMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                int index = view.tableView.getSelectionModel().getSelectedIndex();
+                Transaction model = new Transaction();
+                try {
+                    model.setId(model.getInfoTransactionsID().get(index).getId());
+
+                    System.out.println("Error . . . .");
+                    System.out.println(index);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                FileChooser file = new FileChooser();
+                file.setInitialFileName("doc.png");
+
+                try {
+
+                    model.getImagess(file.showSaveDialog(null));
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> onAttu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+
+                view.saveButton.setDisable(true);
+                view.printButton.setDisable(true);
+
+                FileChooser files = new FileChooser();
+
+                File file = files.showOpenDialog(null);
+                FileInputStream in = null;
+
+                try {
+                    in = new FileInputStream(file);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                bos = new ByteArrayOutputStream();
+
+                byte[] buf = new byte[1024] ;
+
+                try {
+                int i = 0 ;
+                while ((i = in.read(buf)) != -1 ) {
+                    bos.write(buf, 0, i);
+                }
+                    in.close();
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                view.saveButton.setDisable(false);
+                view.printButton.setDisable(false);
+            }
+        };
+    }
 }

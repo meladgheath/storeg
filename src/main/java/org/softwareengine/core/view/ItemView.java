@@ -28,6 +28,7 @@ import javafx.scene.text.Text;
         public Button Vtype ;
 
         public Button saveButton ;
+        public Button printButton ;
 
 
         public TableView tableView ;
@@ -52,7 +53,8 @@ import javafx.scene.text.Text;
 //            packages = new TextField();
 
             // saveButton  = new Button("save")  ;
-            saveButton = new Button();
+            saveButton  = new Button();
+            printButton = new Button();
 
             type = new TextField();
             type.setDisable(true);
@@ -92,7 +94,9 @@ import javafx.scene.text.Text;
 
 
 //            right.add(saveButton,1,3);
+
             down.getChildren().add(saveButton);
+            down.getChildren().add(printButton);
 
 //            saveButton.setMinWidth(root.getPrefWidth());
 

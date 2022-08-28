@@ -2,6 +2,7 @@ package org.softwareengine.core.view;
 
 
 
+import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -31,15 +32,21 @@ public class DeliverView {
     public Button Vbank;
 
     public Button saveButton ;
+    public JFXButton attuchemnt ;
+    public Button printButton ;
 
     public TableView tableView ;
 
     public Text storeTex  ;
     public Text itemTex   ;
-    public Text bankTex;
+    public Text bankTex   ;
     public Text numberTex ;
 
 
+    public ContextMenu tableMenu ;
+
+    public MenuItem printMenu  ;
+    public MenuItem detailMenu ;
 
 
     public DeliverView() {
@@ -63,8 +70,17 @@ public class DeliverView {
         date = new DatePicker();
 
 
-//        saveButton     = new Button("save")  ;
-        saveButton = new Button();
+        saveButton  = new Button();
+        attuchemnt  = new JFXButton();
+        printButton = new Button();
+
+
+        printMenu  = new MenuItem();
+        detailMenu = new MenuItem();
+
+        tableMenu = new ContextMenu();
+        tableMenu.getItems().add(printMenu);
+        tableMenu.getItems().add(detailMenu);
 
         Vstore = new Button("V");
         Vitem  = new Button("V");
@@ -77,6 +93,8 @@ public class DeliverView {
 
         tableView.setPrefHeight(800);
 
+        tableView.setContextMenu(tableMenu);
+
         store.setDisable(true);
         item.setDisable (true);
         bank.setDisable(true);
@@ -84,17 +102,6 @@ public class DeliverView {
 
         HBox top = new HBox( );
 
-            /*top.add(new Text("name  : "),0,1);
-            top.add(name,1,1);
-
-            top.add(saveButton,1,3);
-            saveButton.setMinWidth(root.getPrefWidth());
-
-            top.setHgap(12);
-            top.setVgap(12);
-            top.setAlignment(Pos.BASELINE_CENTER);
-
-*/
         top.getChildren().add(storeTex) ;
         top.getChildren().add(store);
         top.getChildren().add(Vstore);
@@ -107,7 +114,9 @@ public class DeliverView {
         top.getChildren().add(numberTex);
         top.getChildren().add(num);
         top.getChildren().add(date);
+        top.getChildren().add(attuchemnt);
         top.getChildren().add(saveButton);
+        top.getChildren().add(printButton);
 
         top.setSpacing(6.5);
 
@@ -116,9 +125,6 @@ public class DeliverView {
 
         Separator line = new Separator();
         line.setOrientation(Orientation.HORIZONTAL);
-
-//            root.getChildren().add(top);
-//            root.getChildren().add(line);
 
         root.getChildren().add(tableView);
         root.getChildren().add(line);

@@ -26,6 +26,7 @@ public class StoreView {
 
 
     public Button saveButton ;
+    public Button printButton ;
 
     public TableView tableView ;
 
@@ -40,7 +41,8 @@ public class StoreView {
 
 //        saveButton     = new Button("save")  ;
 
-        saveButton = new Button();
+        saveButton  = new Button();
+        printButton = new Button();
 
 
         root.setPrefWidth(200);
@@ -62,6 +64,7 @@ public class StoreView {
 
 
         top.add(saveButton,1,3);
+
         saveButton.setMinWidth(root.getPrefWidth());
 
         top.setHgap(12);

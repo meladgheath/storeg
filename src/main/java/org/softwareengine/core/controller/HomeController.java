@@ -22,26 +22,15 @@ import java.util.Locale;
 
         private void setupLanguages(){
 
-            languages lang = new languages();
+        languages lang = new languages();
 
-            view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
-            view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
-            view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
-            view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
-            view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
-            view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
-            /*
-            view.deliveryButton .setTooltip(new Tooltip(lang.getWord("delivery")));
-            view.transferButton .setTooltip(new Tooltip(lang.getWord("transfer")));
-            view.amountButton   .setTooltip(new Tooltip(lang.getWord("amounts")));
-            */
-            view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
-
-          /*  if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
-                view.root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
-            else
-                view.root.setNodeOrientation(NodeOrientation.LEFT_TO_RIGHT);*/
-
+        view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
+        view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
+        view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
+//        view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
+        view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
+//        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
+        view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
 
         public void initiated() {
@@ -56,35 +45,12 @@ import java.util.Locale;
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS       .getPath())));
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
-                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE       .getPath())));
+//                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE       .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
-                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
+//                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
+                view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
 
-               /* view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE      .getPath())));
-                view.transferImageview    .setImage(new Image(getClass().getResourceAsStream(Paths.TRANSFER   .getPath())));
-
-                view.transactionsImageview.setImage(new Image(getClass().getResourceAsStream(Paths.TRANSACTION.getPath())));
-                */
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
-/*
-                view.settingImageview       .setImage(new Image(new FileInputStream(mypath.SETTING      .getPath())));
-                view.itemImageview          .setImage(new Image(new FileInputStream(mypath.ITEMS        .getPath())));
-                view.storeImageview         .setImage(new Image(new FileInputStream(mypath.STORE        .getPath())));
-                view.purchaseImageview      .setImage(new Image(new FileInputStream(mypath.PURCHASE     .getPath())));
-                view.salesImageview         .setImage(new Image(new FileInputStream(mypath.SALES        .getPath())));
-                view.transferImageview      .setImage(new Image(new FileInputStream(mypath.TRANSFER     .getPath())));
-                view.customerImageview      .setImage(new Image(new FileInputStream(mypath.CUSTOMER     .getPath())));
-                view.depthBookImageview     .setImage(new Image(new FileInputStream(mypath.DEBTBOOK     .getPath())));
-                view.moneyImageview         .setImage(new Image(new FileInputStream(mypath.MONEY        .getPath())));
-                view.treasuryImageview      .setImage(new Image(new FileInputStream(mypath.TREASURY     .getPath())));
-                view.employmentImageview    .setImage(new Image(new FileInputStream(mypath.EMPLOYMENT   .getPath())));
-                view.userImageview          .setImage(new Image(new FileInputStream(mypath.USERS        .getPath())));
-                view.transactionsImageview  .setImage(new Image(new FileInputStream(mypath.TRANSACTION  .getPath())));
-*/
-
-//            view.permissionsImageview   .setImage(new Image(new FileInputStream(mypath.PERMISSIONS  .getPath())));
-
-
 
 
             view.settingButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -160,10 +126,10 @@ import java.util.Locale;
                     onTransactionButton();
                 }
             });
-            view.customerTypeButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.noticButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    oncustomertypeButton();
+                    onNoticButton();
                 }
             });
             view.depthBookButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -196,9 +162,9 @@ import java.util.Locale;
             StoreController control = new StoreController();
             view.root.setCenter(control.view.getRoot());
         }
-        private void oncustomertypeButton () {
-//            customerType control = new customerType();
-//            view.root.setCenter(control.view.getRoot());
+        private void onNoticButton() {
+            noticController control = new noticController();
+            view.root.setCenter(control.view.getRoot());
         }
         private void onPurchaseButton() {
 //            Purchase control = new Purchase();

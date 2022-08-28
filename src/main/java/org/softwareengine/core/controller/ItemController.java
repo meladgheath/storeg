@@ -11,14 +11,21 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+//import net.sf.jasperreports.engine.*;
+//import net.sf.jasperreports.view.JasperViewer;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.config.languages;
-import org.softwareengine.core.model.Store;
+
 import org.softwareengine.core.model.type;
 import org.softwareengine.core.view.ItemView;
-import org.softwareengine.utils.ui.FXDialog;
-import org.softwareengine.utils.ui.UpdateDialog;
 
+import org.softwareengine.utils.ui.FXDialog;
+import org.softwareengine.utils.ui.report;
+
+
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -58,6 +65,7 @@ public class ItemController {
 
             view.Vtype.setOnAction(onType_V_Action());
             view.saveButton.setText(lang.getWord("save"));
+            view.printButton.setText(lang.getWord("print"));
 
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
@@ -77,6 +85,7 @@ public class ItemController {
             getTableColum();
 
             view.tableView.setOnKeyPressed(onTablePressed());
+            view.printButton.setOnAction(onPrintButton());
             view.saveButton.setOnAction(OnSaveButton());
 
 
@@ -131,53 +140,17 @@ public class ItemController {
                 @Override
                 public void handle(KeyEvent event) {
 
-
-                    String text [] = {
-                            "name","code","package","value"
-                    } ;
-//                    dialog = new UpdateDialog(view.pane ,"update item . . . ",3,text) ;
-
-                    Item model = new Item() ;
-
+                    if (event.getCode() != KeyCode.DELETE)
+                        return;
+                    Item model = new Item();
                     int index = view.tableView.getSelectionModel().getSelectedIndex() ;
-
-                    String itemName = "" ;
-                    String code = "" ;
-                    String packages = "" ;
-                    String value = "" ;
                     try {
-                        itemID   = model.getInfoID().get(index).getId() ;
-                        System.out.println("the ID = "+itemID);
-                        itemName = model.getInfo().get(index).getName() ;
-                        System.out.println("the name = "+itemName);
-                        code = model.getInfo().get(index).getCode()+"" ;
-                        packages = model.getInfo().get(index).getPackages()+"";
-                        value = model.getInfo().get(index).getValue()+"";
-
-//                        dialog.tf1.setText(itemName);//t1 for item name
-//                        dialog.tf2.setText(code); // t2 for code item
-//                        dialog.tf3.setText(packages); // t3 for package
-//                        dialog.tf4.setText(value);// t4 for value or price
-//
-//                        dialog.tf1.setId("name");
-//                        dialog.tf2.setId("code");
-//                        dialog.tf3.setId("package");
-//                        dialog.tf4.setId("value");
-
-
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
+                        model.setId(new Item().getInfoIDs().get(index).getId());
+                        model.delete();
+                        getTableDetail();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
                     }
-
-
-                    dialog.show();
-
-//                    dialog.tf1.setOnKeyPressed(onUpdate());
-//                    dialog.tf2.setOnKeyPressed(onUpdate());
-//                    dialog.tf3.setOnKeyPressed(onUpdate());
-//                    dialog.tf4.setOnKeyPressed(onUpdate());
-
-
                 }} ;
         }
 
@@ -226,6 +199,36 @@ public class ItemController {
                 }
             };
 
+        }
+
+        private EventHandler<ActionEvent> onPrintButton() {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                   /* JasperReport report = null ;
+                    JasperPrint jp = null ;
+
+                    try {
+                         report = JasperCompileManager.compileReport("Cherry.jrxml");
+                         jp = JasperFillManager.fillReport(report,null,DatabaseService.connection);
+
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }*/
+                    report re = new report();
+
+                    try {
+                        JasperViewer.viewReport(re.getItemReport(),false);
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("Done here man . . .");
+                }
+            };
         }
 
         private EventHandler<ActionEvent> OnSaveButton() {

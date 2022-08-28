@@ -14,7 +14,8 @@ public class DatabaseService {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"\\db.db");
+//        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"\\db.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"/db.db");
     }
 
     public static void CloseConnection() throws SQLException {

@@ -1,4 +1,4 @@
-module transport {
+module storeg {
     requires java.sql ;
 
     requires javafx.graphics;
@@ -7,6 +7,10 @@ module transport {
     requires com.jfoenix;
     requires org.controlsfx.controls;
     requires org.xerial.sqlitejdbc;
+    requires jasperreports;
+
+    requires java.desktop;
+
 
     exports org.softwareengine;
     exports org.softwareengine.core.model;

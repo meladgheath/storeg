@@ -16,8 +16,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 
+import java.awt.*;
 
-        public class Home {
+
+public class Home {
 
 
             public Scene scene ;
@@ -36,26 +38,26 @@ import javafx.scene.layout.BorderPane;
             public JFXButton typesButton;
             public JFXButton userButton        ;
             public JFXButton transactionButton ;
-            public JFXButton customerTypeButton;
+            public JFXButton noticButton;
             public JFXButton permissionsButton ;
             public JFXButton depthBookButton   ;
 
 
             public ImageView itemImageview          ;
-            public ImageView bankImageview;
-            public ImageView storeImageview;
-            public ImageView disbursementImageview;
+            public ImageView bankImageview          ;
+            public ImageView storeImageview         ;
+            public ImageView disbursementImageview  ;
             public ImageView settingImageview       ;
             public ImageView transferImageview      ;
-            public ImageView amountsImageview;
+            public ImageView amountsImageview       ;
             public ImageView moneyImageview         ;
             public ImageView treasuryImageview      ;
-            public ImageView typesImageview;
+            public ImageView typesImageview         ;
             public ImageView userImageview          ;
             public ImageView transactionsImageview  ;
             public ImageView customerTypeImageview  ;
             public ImageView permissionsImageview   ;
-            public ImageView depthBookImageview     ;
+            public ImageView noticImageview         ;
 
 
             public Home() {
@@ -80,7 +82,7 @@ import javafx.scene.layout.BorderPane;
                 typesButton = new JFXButton() ;
                 userButton        = new JFXButton() ;
                 transactionButton = new JFXButton() ;
-                customerTypeButton= new JFXButton() ;
+                noticButton = new JFXButton() ;
                 permissionsButton = new JFXButton() ;
                 depthBookButton   = new JFXButton() ;
 
@@ -98,7 +100,7 @@ import javafx.scene.layout.BorderPane;
                 transactionsImageview = new ImageView() ;
                 customerTypeImageview = new ImageView() ;
                 permissionsImageview  = new ImageView() ;
-                depthBookImageview    = new ImageView() ;
+                noticImageview = new ImageView() ;
 
                 
                 setToolTips();
@@ -140,8 +142,8 @@ import javafx.scene.layout.BorderPane;
                 transactionButton.setMinWidth(root.getPrefWidth());
                 transactionButton.setMinHeight(root.getPrefHeight());
 
-                customerTypeButton.setMinWidth(root.getPrefWidth());
-                customerTypeButton.setMinHeight(root.getPrefHeight());
+                noticButton.setMinWidth(root.getPrefWidth());
+                noticButton.setMinHeight(root.getPrefHeight());
 
                 depthBookButton.setMinWidth(root.getPrefWidth());
                 depthBookButton.setMinHeight(root.getPrefHeight());
@@ -157,12 +159,11 @@ import javafx.scene.layout.BorderPane;
                 right.getChildren().add(typesButton        );
                 right.getChildren().add(itemButton         );
                 right.getChildren().add(bankButton         );
-                right.getChildren().add(storeButton        );
+//                right.getChildren().add(storeButton        );
                 right.getChildren().add(amountButton       );
-                right.getChildren().add(disbursementButton );
-                /*
-                right.getChildren().add(transferButton   );
-                right.getChildren().add(transactionButton);*/
+                right.getChildren().add(noticButton        );
+//                right.getChildren().add(disbursementButton );
+
                 right.getChildren().add(settingButton    );
 
 
@@ -181,7 +182,13 @@ import javafx.scene.layout.BorderPane;
 
                 ////////////////////////////////////////////////////////
                 root.setRight(allRight);
-                scene = new Scene(root , 1349, 952) ;
+                Dimension screensize =Toolkit.getDefaultToolkit().getScreenSize() ;
+                double width = screensize.getWidth() - (screensize.getWidth()/4) ;
+                double height = screensize.getHeight() - (screensize.getHeight()/4);
+
+                System.out.println(width+"   "+screensize.getWidth());
+                System.out.println(height+"  "+screensize.getHeight());
+                scene = new Scene(root , width, height) ;
             }
 
             public Scene getScene() {
@@ -243,6 +250,8 @@ import javafx.scene.layout.BorderPane;
 
                 settingButton.setGraphic(settingImageview);
 //                settingButton.setTooltip(new Tooltip(resourceBundle.getString("setting")));
+
+                noticButton.setGraphic(noticImageview);
 
             }
         }

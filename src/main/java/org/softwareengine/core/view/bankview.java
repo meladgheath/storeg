@@ -1,5 +1,6 @@
 package org.softwareengine.core.view;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
@@ -23,6 +24,7 @@ public class bankview {
         public TextField referenceNumber ;
 
         public Button saveButton ;
+        public Button printButton ;
 
 
         public TableView tableView ;
@@ -43,7 +45,8 @@ public class bankview {
             nameTex      = new Text();
             referenceTex = new Text();
 
-            saveButton = new Button();
+            saveButton  = new Button();
+            printButton = new Button();
 
 
 
@@ -67,6 +70,7 @@ public class bankview {
             down.getChildren().add(referenceNumber) ;
 
             down.getChildren().add(saveButton);
+            down.getChildren().add(printButton);
 
             HBox right2 = new HBox();
             right2.getChildren().add(line);
