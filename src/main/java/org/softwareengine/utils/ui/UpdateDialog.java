@@ -6,6 +6,8 @@ import com.jfoenix.controls.JFXDialogLayout;
 import javafx.geometry.Pos;
 
 
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -13,22 +15,24 @@ import javafx.scene.text.Text;
 
     public class UpdateDialog {
 
-
         public JFXDialog dialog ;
 
+        public TextField item;
+        public TextField bank;
+        public TextField number;
+        public DatePicker date ;
 
+        public Text  itemTx ;
+        public Text bankTx ;
+        public Text numberTx ;
+        public Text  DateTx ;
 
-        public TextField tf1;
-        public TextField tf2;
-        public TextField tf3;
-        public TextField tf4;
+        public Button Vitem  ;
+        public Button Vbank  ;
 
-        public Text  t1 ;
-        public Text  t2 ;
-        public Text  t3 ;
-        public Text  t4 ;
+        public Button update ;
 
-        public UpdateDialog(StackPane pane , String Heading , int totle, String text[]) {
+        public UpdateDialog(StackPane pane , String Heading ) {
 
 
 
@@ -37,34 +41,33 @@ import javafx.scene.text.Text;
             body.setAlignment(Pos.CENTER_LEFT);
             body.setSpacing(6.5);
 
+            itemTx   = new Text("item   : ") ;
+            bankTx   = new Text("bank   : ") ;
+            numberTx = new Text("number : ") ;
+            DateTx   = new Text("Date   : ") ;
+
+            item = new TextField();
+            bank = new TextField();
+            number = new TextField();
+            date = new DatePicker();
+
+            Vitem = new Button("V") ;
+            Vbank = new Button("V") ;
+            update= new Button("update");
+
+                body.getChildren().add(itemTx);
+                body.getChildren().add(item);
+                body.getChildren().add(Vitem);
+                body.getChildren().add(bankTx);
+                body.getChildren().add(bank);
+                body.getChildren().add(Vbank);
+                body.getChildren().add(numberTx);
+                body.getChildren().add(number);
+                body.getChildren().add(DateTx);
+                body.getChildren().add(date);
+                body.getChildren().add(update);
 
 
-
-            if (totle >= 1) {
-                t1 = new Text(text[0]) ;
-                tf1 = new TextField();
-                body.getChildren().add(t1) ;
-                body.getChildren().add(tf1);
-            }
-            if (totle >= 2) {
-                t2 = new Text(text[1]);
-                tf2 = new TextField();
-                body.getChildren().add(t2);
-                body.getChildren().add(tf2);
-            }
-
-            if (totle >= 3) {
-                t3 = new Text(text[2]);
-                tf3 = new TextField() ;
-                body.getChildren().add(t3);
-                body.getChildren().add(tf3);
-            }
-            if (totle >= 3) {
-                t4 = new Text(text[3]);
-                tf4 = new TextField() ;
-                body.getChildren().add(t4);
-                body.getChildren().add(tf4);
-            }
 
 
             JFXDialogLayout layout = new JFXDialogLayout() ;

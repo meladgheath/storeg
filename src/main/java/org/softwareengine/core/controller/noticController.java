@@ -22,6 +22,7 @@ import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.noticview;
 import org.softwareengine.utils.ui.FXDialog;
 
+import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
 import java.io.*;
@@ -37,6 +38,8 @@ public class noticController {
         public int itemID   ;
         public int storeID  ;
         public int bankID;
+
+        String itemName ;
 
         ByteArrayOutputStream bos ;
 
@@ -67,6 +70,7 @@ public class noticController {
             view.printMenu.setText(lang.getWord("print"));
             view.detailMenu.setText(lang.getWord("detail"));
             view.downloadMenu.setText(lang.getWord("download"));
+            view.updateMenu.setText("update");
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -86,9 +90,9 @@ public class noticController {
 
             view.attuchemnt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(Paths.ATTUCH.getPath()))));
             view.num.setOnKeyReleased(onNumTextPressed());
-            view.Vitem.setOnAction(onItem_V_Action());
+            view.Vitem.setOnAction(onItem_V_Action("item"));
             view.Vstore.setOnAction(onStore_V_Action());
-            view.Vbank.setOnAction(onBank_V_Action());
+            view.Vbank.setOnAction(onBank_V_Action("banks"));
             view.tableView.setOnKeyPressed(onTablePressed());
             view.tableView.setOnMouseClicked(ontableClick());
             view.saveButton.setOnAction(OnSaveButton());
@@ -96,9 +100,8 @@ public class noticController {
             view.printMenu.setOnAction(onPrintMenu());
             view.detailMenu.setOnAction(onDetailMenu());
             view.downloadMenu.setOnAction(onDownloadMenu());
+            view.updateMenu.setOnAction(onUpdateMenu());
             view.attuchemnt.setOnAction(onAttu());
-
-
 
         }
 
@@ -109,8 +112,6 @@ public class noticController {
 
             TableColumn<String, Transaction> item = new TableColumn<>();
 
-//            TableColumn<String, Transaction> store = new TableColumn<>();
-
             TableColumn<String, Transaction> bank = new TableColumn<>();
 
             TableColumn<String, Transaction> num = new TableColumn<>();
@@ -120,7 +121,6 @@ public class noticController {
 
             id.setCellValueFactory(new PropertyValueFactory<>("id"));
             item.setCellValueFactory(new PropertyValueFactory<>("item"));
-//            store.setCellValueFactory(new PropertyValueFactory<>("store"));
             num.setCellValueFactory(new PropertyValueFactory<>("number"));
             bank.setCellValueFactory(new PropertyValueFactory<>("bank"));
             date.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -131,7 +131,6 @@ public class noticController {
 
             view.tableView.getColumns().add(id);
             view.tableView.getColumns().add(item);
-//            view.tableView.getColumns().add(store);
             view.tableView.getColumns().add(bank);
             view.tableView.getColumns().add(num);
             view.tableView.getColumns().add(date);
@@ -153,20 +152,18 @@ public class noticController {
                 @Override
                 public void handle(KeyEvent event) {
 
-//                String text = view.num.getText();
-
-//                if (!text.matches("[0-9]+"))
-//                    view.num.("");
 
                 }
             };
         }
 
-        private EventHandler<ActionEvent> onItem_V_Action () {
+        private EventHandler<ActionEvent> onItem_V_Action (String name) {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
 
+
+                    System.out.println(event.getEventType());
                     dialog = new FXDialog(view.pane, "Item List . . . ",false);
 
                     Item item  = new Item();
@@ -179,18 +176,14 @@ public class noticController {
 
                         amount.setStoreID(storeID);
 
-//                        size = amount.getInfoItemInSpecStore().size();
                         size = item.getInfo().size();
 
-
                         while (i < size)
-//                        dialog.listView.getItems().add(item.getInfo().get(i++).getName());
                             dialog.listView.getItems().add(item.getInfo().get(i++).getName());
 
-
                         dialog.show();
-                        dialog.listView.setOnKeyPressed(OnListPressed("item"));
-                        dialog.listView.setOnMouseClicked(OnMouseClick("item"));
+                        dialog.listView.setOnKeyPressed(OnListPressed(name));
+                        dialog.listView.setOnMouseClicked(OnMouseClick(name));
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -202,7 +195,7 @@ public class noticController {
 
         }
 
-        private EventHandler<ActionEvent> onBank_V_Action() {
+        private EventHandler<ActionEvent> onBank_V_Action(String name ) {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -225,8 +218,8 @@ public class noticController {
 
 
                         dialog.show();
-                        dialog.listView.setOnKeyPressed(OnListPressed("banks"));
-                        dialog.listView.setOnMouseClicked(OnMouseClick("banks"));
+                        dialog.listView.setOnKeyPressed(OnListPressed(name));
+                        dialog.listView.setOnMouseClicked(OnMouseClick(name));
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -258,8 +251,6 @@ public class noticController {
                         while (i < size)
                             dialog.listView.getItems().add(store.getInfo().get(i++).getName());
 
-
-
                         dialog.show();
                         dialog.listView.setOnKeyPressed(OnListPressed("store"));
                         dialog.listView.setOnMouseClicked(OnMouseClick("store"));
@@ -283,8 +274,6 @@ public class noticController {
                     if (!(event.getCode() == KeyCode.ENTER))
                         return;
                     ListEvent(thing);
-
-
 
                     dialog.dialog.close();
 
@@ -359,6 +348,18 @@ public class noticController {
                     case "banks" :
                         bankID = bank.getInfoIDs().get(index).getId() ;
                         view.bank.setText(bank.getInfoIDs().get(index).getName());
+                        break;
+                    case "itemUpdate":
+                        Item update = new Item();
+
+                        itemID = update.getInfoID().get(index).getId() ;
+                        itemName = update.getInfoID().get(index).getName();
+                        updateDialog.item.setText(itemName);
+
+                        break;
+                    case "bankUpdate" :
+                        bankID = bank.getInfoIDs().get(index).getId() ;
+                        updateDialog.bank.setText(bank.getInfoIDs().get(index).getName());
                         break;
                 }
             } catch (SQLException e) {
@@ -576,7 +577,61 @@ public class noticController {
                 }
             };
         }
+    UpdateDialog updateDialog;
+    private EventHandler<ActionEvent> onUpdateMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
+//                String update = {}
+//                UpdateDialog dialog = new UpdateDialog();
+//                dialog.show();
+
+                 updateDialog = new UpdateDialog(view.pane,"update :") ;
+
+                updateDialog.Vitem.setOnAction(onItem_V_Action("itemUpdate"));
+                updateDialog.Vbank.setOnAction(onBank_V_Action("bankUpdate"));
+
+                updateDialog.update.setOnAction(onUpdateAction());
+
+                updateDialog.show();
+
+
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> onUpdateAction(){
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                Transaction model = new Transaction();
+                int index = view.tableView.getSelectionModel().getSelectedIndex();
+
+
+                try {
+                    int id = model.getInfoTransactionssID().get(index).getId();
+                    model.setId(id);
+                    model.setBankID(bankID);
+                    model.setItemID(itemID);
+                    model.setDate(updateDialog.date.getValue().toString());
+                    model.setNumber(Integer.parseInt(updateDialog.number.getText()));
+
+                    model.update();
+
+                    updateDialog.dialog.close();
+                    getTableDetail();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+
+
+
+            }
+        };
+    }
         private EventHandler<ActionEvent> onAttu() {
             return new EventHandler<ActionEvent>() {
                 @Override

@@ -128,7 +128,22 @@ public class Transaction {
 
         DatabaseService.CloseConnection();
 
-        System.out.println("what happing here melad ");
+
+    }
+
+    public void update () throws SQLException {
+        String sql = "UPDATE transactionss SET item = ? , bank = ? , number = ? , date = ?  WHERE id = "+this.id ;
+
+        DatabaseService.openConnection();
+        PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
+        ps.setInt(1, this.itemID);
+        ps.setInt(2, this.bankID);
+        ps.setInt(3, this.number);
+        ps.setString(4, this.date);
+        ps.executeUpdate();
+        DatabaseService.CloseConnection();
+        System.out.println("updated !!");
+
     }
 
     public void saves() throws SQLException {
@@ -408,23 +423,7 @@ public void getImagess(File file) throws SQLException, IOException {
         return list;
     }
 
-    public void update() throws SQLException {
 
-        String sql = "";
-
-
-        DatabaseService.openConnection();
-
-        sql = "delete FROM  amount  where num = 0 or num < 0 ";
-
-        PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
-//            ps.setString(1,this.name);
-//            ps.setInt   (2,this.id  );
-
-        ps.executeUpdate();
-
-
-    }
 
 
     public ObservableList<Store> getInfoID() throws SQLException {
