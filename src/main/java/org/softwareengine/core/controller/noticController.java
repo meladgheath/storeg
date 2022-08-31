@@ -70,7 +70,7 @@ public class noticController {
             view.printMenu.setText(lang.getWord("print"));
             view.detailMenu.setText(lang.getWord("detail"));
             view.downloadMenu.setText(lang.getWord("download"));
-            view.updateMenu.setText("update");
+            view.updateMenu.setText(lang.getWord("update"));
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item

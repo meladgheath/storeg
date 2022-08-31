@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
 import javafx.geometry.Pos;
 
+import org.softwareengine.config.languages;
 
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -34,6 +35,7 @@ import javafx.scene.text.Text;
 
         public UpdateDialog(StackPane pane , String Heading ) {
 
+            languages lang = new languages();
 
 
             VBox body = new VBox();
@@ -53,7 +55,10 @@ import javafx.scene.text.Text;
 
             Vitem = new Button("V") ;
             Vbank = new Button("V") ;
-            update= new Button("update");
+            update= new Button(lang.getWord("update"));
+
+            item.setDisable(true);
+            bank.setDisable(true);
 
                 body.getChildren().add(itemTx);
                 body.getChildren().add(item);
