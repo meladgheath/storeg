@@ -3,7 +3,7 @@ package org.softwareengine.core.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
-
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -13,15 +13,13 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
-
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.view.JasperViewer;
-
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.*;
+import org.softwareengine.core.view.listview;
 import org.softwareengine.core.view.noticview;
 import org.softwareengine.utils.ui.FXDialog;
-
 import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
@@ -29,9 +27,9 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Locale;
 
-public class noticController {
+public class listController {
 
-        public noticview view;
+        public listview view;
 
         public FXDialog dialog ;
 
@@ -43,8 +41,8 @@ public class noticController {
 
         ByteArrayOutputStream bos ;
 
-        public noticController() {
-            view = new noticview();
+        public listController() {
+            view = new listview();
 
 
             try {
@@ -61,10 +59,8 @@ public class noticController {
             languages lang = new languages();
 
             view.itemTex.setText(lang.getWord("item"));
-            view.numberTex.setText(lang.getWord("number"));
+
             view.bankTex.setText(lang.getWord("bank"));
-            view.storeTex.setText(lang.getWord("store"));
-            view.saveButton.setText(lang.getWord("save"));
             view.printButton.setText(lang.getWord("print"));
 
             view.printMenu.setText(lang.getWord("print"));
@@ -88,20 +84,14 @@ public class noticController {
         private void initiate() throws SQLException {
             getTableColum();
 
-            view.attuchemnt.setGraphic(new ImageView(new Image(getClass().getResourceAsStream(Paths.ATTUCH.getPath()))));
-            view.num.setOnKeyReleased(onNumTextPressed());
+
             view.Vitem.setOnAction(onItem_V_Action("item"));
-            view.Vstore.setOnAction(onStore_V_Action());
+
             view.Vbank.setOnAction(onBank_V_Action("banks"));
             view.tableView.setOnKeyPressed(onTablePressed());
             view.tableView.setOnMouseClicked(ontableClick());
-            view.saveButton.setOnAction(OnSaveButton());
+
             view.printButton.setOnAction(onPrintButton());
-            view.printMenu.setOnAction(onPrintMenu());
-            view.detailMenu.setOnAction(onDetailMenu());
-            view.downloadMenu.setOnAction(onDownloadMenu());
-            view.updateMenu.setOnAction(onUpdateMenu());
-            view.attuchemnt.setOnAction(onAttu());
 
         }
 
@@ -135,27 +125,28 @@ public class noticController {
             view.tableView.getColumns().add(num);
             view.tableView.getColumns().add(date);
 
-            getTableDetail();
+
 
         }
 
         private void getTableDetail() throws SQLException {
 
             Transaction model = new Transaction();
+            model.setItemID(itemID);
 
-            view.tableView.setItems(model.getInfoTransactionss());
+           /* if (itemID == 0 )
+            {
+                Alert message = new Alert(Alert.AlertType.ERROR);
+                message.setTitle("خطأ");
+                message.setContentText("أدخل المنتج أولا و حاولا مجددا");
+                message.show();
+            }
+            else*/
+            view.tableView.setItems(model.getInfoWHEREitemID());
 
         }
 
-        private EventHandler<KeyEvent> onNumTextPressed () {
-            return new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
 
-
-                }
-            };
-        }
 
         private EventHandler<ActionEvent> onItem_V_Action (String name) {
             return new EventHandler<ActionEvent>() {
@@ -337,14 +328,7 @@ public class noticController {
 
                         getTableDetail();
                         break;
-                    case "store" :
-                        storeID = store.getInfo().get(index).getId() ;
-                        view.store.setText(store.getInfo().get(index).getName());
 
-                        view.item.clear();
-
-
-                        break;
                     case "banks" :
                         bankID = bank.getInfoIDs().get(index).getId() ;
                         view.bank.setText(bank.getInfoIDs().get(index).getName());
@@ -424,57 +408,6 @@ public class noticController {
             return false ;
         }
 
-        private EventHandler<ActionEvent> OnSaveButton() {
-            return new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-
-                    Amount amount = new Amount();
-
-                    amount.setItemID(itemID);
-                    amount.setStoreID(storeID);
-
-                    int amountNumber = 0 ;
-                    try {
-                        amountNumber = amount.getInfoNumber().getNum() ;
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-
-                    Transaction model = new Transaction();
-                    model.setItemID(itemID);
-                    model.setStoreID(storeID);
-                    model.setBankID(bankID);
-                    model.setDate(view.date.getValue().toString());
-
-                    model.setImg((bos == null) ? null : bos);
-
-                    int num = Integer.parseInt(view.num.getText());
-                    model.setNumber(num);
-
-                    try {
-
-
-                            model.saves();
-                            model.update();
-
-                            view.num.clear();
-                            view.item.clear();
-                            view.bank.clear();
-
-                            getTableDetail();
-
-                        } catch (SQLException ex) {
-                        ex.printStackTrace();
-                    }
-
-
-                }
-            };
-        }// save Button
-
-
         private EventHandler<ActionEvent> onPrintButton() {
             return new EventHandler<ActionEvent>() {
                 @Override
@@ -482,8 +415,8 @@ public class noticController {
                     report re = new report();
 
                     try {
-//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
-                        JasperViewer.viewReport(re.getDistrubumentReport(),false);
+
+                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems()),false);
                     } catch (JRException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -633,43 +566,5 @@ public class noticController {
             }
         };
     }
-        private EventHandler<ActionEvent> onAttu() {
-            return new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
 
-
-                    view.saveButton.setDisable(true);
-                    view.printButton.setDisable(true);
-
-                    FileChooser files = new FileChooser();
-
-                    File file = files.showOpenDialog(null);
-                    FileInputStream in = null;
-
-                    try {
-                        in = new FileInputStream(file);
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-
-                    bos = new ByteArrayOutputStream();
-
-                    byte[] buf = new byte[1024] ;
-
-                    try {
-                        int i = 0 ;
-                        while ((i = in.read(buf)) != -1 ) {
-                            bos.write(buf, 0, i);
-                        }
-                        in.close();
-                        bos.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    view.saveButton.setDisable(false);
-                    view.printButton.setDisable(false);
-                }
-            };
-        }
     }

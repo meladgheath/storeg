@@ -15,7 +15,7 @@ public enum Paths {
     LOCK(iconPath()+"icons8-lock-512.png"),
     UNLOCK(iconPath()+"icons8-padlock-512.png"),
     PERMISSIONS(iconPath()+"icons8-user-rights-64.png"),
-    DEBTBOOK(iconPath()+"icons8-copybook-64.png"),
+    LIST(iconPath()+"icons8-list-64.png"),
     ADD(iconPath()+"add.png"),
     PACKAGE(iconPath()+"package.png"),
     DISBURSEMENT(iconPath()+"icons8-bank-card-missing-64.png"),

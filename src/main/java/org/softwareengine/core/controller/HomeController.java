@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import org.softwareengine.core.view.Home;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Paths;
+import org.softwareengine.core.view.listview;
 
 import java.util.Locale;
 
@@ -27,7 +28,7 @@ import java.util.Locale;
         view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
         view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
         view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
-//        view.storeButton       .setTooltip(new Tooltip(lang.getWord("store")));
+        /*view.listButton        .setTooltip(new Tooltip(lang.getWord("list")));*/
         view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
 //        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
         view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
@@ -45,11 +46,9 @@ import java.util.Locale;
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS       .getPath())));
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
-//                view.storeImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.STORE       .getPath())));
+                view.listImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.LIST        .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
-//                view.disbursementImageview.setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
                 view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
-
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
 
 
@@ -73,10 +72,10 @@ import java.util.Locale;
                     view.root.setCenter(control.view.getRoot());
                 }
             });
-            view.storeButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.listButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    onStoreButton();
+                    onListButton();
                 }
             });
             view.disbursementButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -158,8 +157,8 @@ import java.util.Locale;
             System.out.println("height = "+view.getScene().getHeight());
 
         }
-        private void onStoreButton () {
-            StoreController control = new StoreController();
+        private void onListButton() {
+            listController control = new listController();
             view.root.setCenter(control.view.getRoot());
         }
         private void onNoticButton() {

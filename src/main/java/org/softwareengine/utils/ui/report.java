@@ -199,6 +199,37 @@ public class report {
 
     }
 
+    public JasperPrint getDistrubumentReport (List<Transaction> lists ) throws JRException, FileNotFoundException, SQLException {
+
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/disbursementReport.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+        List<Transaction> list = new ArrayList<Transaction>();
+
+        Transaction model = new Transaction();
+
+
+        int size = model.getInfoTransactions().size();
+
+
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lists);
+
+        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+
+
+        return print ;
+
+    }
+
+
     public JasperPrint getCoffee (Transaction model) throws JRException, FileNotFoundException, SQLException {
 
 

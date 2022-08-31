@@ -21,15 +21,13 @@ import java.awt.*;
 
 public class Home {
 
-
             public Scene scene ;
             public  BorderPane root ;
-
 
             public JFXButton settingButton     ;
             public JFXButton itemButton        ;
             public JFXButton bankButton;
-            public JFXButton storeButton;
+            public JFXButton listButton;
             public JFXButton disbursementButton;
             public JFXButton transferButton    ;
             public JFXButton amountButton;
@@ -45,7 +43,7 @@ public class Home {
 
             public ImageView itemImageview          ;
             public ImageView bankImageview          ;
-            public ImageView storeImageview         ;
+            public ImageView listImageview;
             public ImageView disbursementImageview  ;
             public ImageView settingImageview       ;
             public ImageView transferImageview      ;
@@ -73,7 +71,7 @@ public class Home {
                 settingButton     = new JFXButton() ;
                 itemButton        = new JFXButton() ;
                 bankButton = new JFXButton() ;
-                storeButton = new JFXButton() ;
+                listButton = new JFXButton() ;
                 disbursementButton = new JFXButton() ;
                 transferButton    = new JFXButton() ;
                 amountButton = new JFXButton() ;
@@ -89,7 +87,7 @@ public class Home {
                 settingImageview      = new ImageView() ;
                 itemImageview         = new ImageView() ;
                 bankImageview = new ImageView() ;
-                storeImageview = new ImageView() ;
+                listImageview = new ImageView() ;
                 disbursementImageview = new ImageView() ;
                 transferImageview     = new ImageView() ;
                 amountsImageview = new ImageView() ;
@@ -114,8 +112,8 @@ public class Home {
                 bankButton.setMinWidth(root.getPrefWidth());
                 bankButton.setMinHeight(root.getPrefHeight());
 
-                storeButton.setMinWidth(root.getPrefWidth());
-                storeButton.setMinHeight(root.getPrefHeight());
+                listButton.setMinWidth(root.getPrefWidth());
+                listButton.setMinHeight(root.getPrefHeight());
 
                 disbursementButton.setMinWidth(root.getPrefWidth());
                 disbursementButton.setMinHeight(root.getPrefHeight());
@@ -155,17 +153,13 @@ public class Home {
                 right.setSpacing(15);
                 right.setPadding(new Insets(20,20,20,20));
 
-
                 right.getChildren().add(typesButton        );
                 right.getChildren().add(itemButton         );
                 right.getChildren().add(bankButton         );
-//                right.getChildren().add(storeButton        );
                 right.getChildren().add(amountButton       );
                 right.getChildren().add(noticButton        );
-//                right.getChildren().add(disbursementButton );
-
-                right.getChildren().add(settingButton    );
-
+                right.getChildren().add(listButton         );
+                right.getChildren().add(settingButton      );
 
                 ////////////////////////////////////////////////
                 HBox allRight = new HBox() ;
@@ -196,62 +190,17 @@ public class Home {
             }
 
             public void setToolTips() {
-                // settingButton .setGraphic(settingImageview);
-                // settingButton .setTooltip(new Tooltip("setting"));
-                // String setting = resourceBundle.getString("setting") ;
-                // settingButton.setTooltip(new Tooltip(setting)) ;
 
-                
-
-
-                itemButton    .setGraphic(itemImageview );
-//                itemButton.setTooltip(new Tooltip(resourceBundle.getString("item")));
-
-
-                bankButton.setGraphic(bankImageview);
-//                storeButton   .setTooltip(new Tooltip(resourceBundle.getString("store")));
-                
-
-                storeButton.setGraphic(storeImageview);
-                // purchaseButton.setTooltip(new Tooltip("purchase"));
-
+                itemButton        .setGraphic(itemImageview );
+                bankButton        .setGraphic(bankImageview);
+                listButton.setGraphic(listImageview);
                 disbursementButton.setGraphic(disbursementImageview);
-//                deliveryButton.setTooltip(new Tooltip(resourceBundle.getString("delivery")));
-
-                transferButton.setGraphic(transferImageview);
-//                transferButton.setTooltip(new Tooltip(resourceBundle.getString("transfer")));
-
-                amountButton.setGraphic(amountsImageview);
-//                amountButton.setTooltip(new Tooltip(resourceBundle.getString("amounts")));
-
-                /*moneyButton   .setGraphic(moneyImageview);
-                moneyButton   .setTooltip(new Tooltip("money"));*/
-
-                // treasuryButton.setGraphic(treasuryImageview);
-                // treasuryButton.setTooltip(new Tooltip("treasury"));
-
-                typesButton.setGraphic(typesImageview);
-//                driverButton.setTooltip(new Tooltip(resourceBundle.getString("driver")));
-
-                // userButton      .setGraphic(userImageview);
-                // userButton      .setTooltip(new Tooltip("user"));
-
-                transactionButton.setGraphic(transactionsImageview);
-//                transactionButton.setTooltip(new Tooltip("transaction list"));
-
-                // customerTypeButton.setGraphic(customerTypeImageview);
-                // customerTypeButton.setTooltip(new Tooltip("customer type"));
-
-                // permissionsButton.setGraphic(permissionsImageview);
-                // permissionsButton.setTooltip(new Tooltip("permissions"));
-
-                // depthBookButton.setGraphic(depthBookImageview);
-                // depthBookButton.setTooltip(new Tooltip("depth Book"));
-
-                settingButton.setGraphic(settingImageview);
-//                settingButton.setTooltip(new Tooltip(resourceBundle.getString("setting")));
-
-                noticButton.setGraphic(noticImageview);
+                transferButton    .setGraphic(transferImageview);
+                amountButton      .setGraphic(amountsImageview);
+                typesButton       .setGraphic(typesImageview);
+                transactionButton .setGraphic(transactionsImageview);
+                settingButton     .setGraphic(settingImageview);
+                noticButton       .setGraphic(noticImageview);
 
             }
         }
