@@ -111,6 +111,9 @@ public class listController {
                         view.top.getChildren().add(0, view.bankTex);
                         view.top.getChildren().add(1, view.bank);
                         view.top.getChildren().add(2, view.Vbank);
+
+                        view.item.clear();
+                        itemID=0 ;
                     }else
                     {
                         System.out.println(view.top.getChildren().remove(view.bank));
@@ -120,6 +123,9 @@ public class listController {
                         view.top.getChildren().add(0,view.itemTex);
                         view.top.getChildren().add(1,view.item);
                         view.top.getChildren().add(2,view.Vitem);
+
+                        view.bank.clear();
+                        bankID = 0 ;
                     }
                 }
             };
