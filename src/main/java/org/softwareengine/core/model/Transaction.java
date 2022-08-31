@@ -161,8 +161,6 @@ public class Transaction {
         ps.executeUpdate();
 
         DatabaseService.CloseConnection();
-
-        System.out.println("what happing here melad ");
     }
 
 public void getImagess(File file) throws SQLException, IOException {
@@ -317,6 +315,35 @@ public void getImagess(File file) throws SQLException, IOException {
         return list;
     }
 
+    public ObservableList<Transaction> getInfoWHEREbankID() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
+                "number , date FROM transactionss where bank = "+bankID ;
+
+//        order by date desc
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
 
     public ObservableList<Transaction> getInfoTransactions() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();

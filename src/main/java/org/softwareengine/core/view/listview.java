@@ -13,23 +13,22 @@ public class listview {
 
         public static StackPane pane ;
         public VBox root;
-
+        public HBox top ;
 
         public TextField item  ;
         public TextField bank;
 
+        public CheckBox checkBox;
 
 
         public Button Vitem  ;
         public Button Vbank;
 
-//        public Button saveButton ;
-//        public JFXButton attuchemnt ;
+        public Button saveButton ;
+
         public Button printButton ;
 
         public TableView tableView ;
-
-//        public Text storeTex  ;
         public Text itemTex   ;
         public Text bankTex   ;
 
@@ -58,6 +57,7 @@ public class listview {
 
 
             printButton = new Button();
+            saveButton  = new Button();
 
 
             updateMenu   = new MenuItem();
@@ -70,6 +70,7 @@ public class listview {
 
             Vitem  = new Button("V");
             Vbank = new Button("V");
+            checkBox = new CheckBox();
 
             root.setPrefWidth(200);
 
@@ -83,13 +84,13 @@ public class listview {
             item.setDisable (true);
             bank.setDisable(true);
 
-            HBox top = new HBox( );
+             top = new HBox( );
 
             top.getChildren().add(itemTex) ;
             top.getChildren().add(item);
             top.getChildren().add(Vitem);
-
             top.getChildren().add(printButton);
+            top.getChildren().add(checkBox);
             top.setSpacing(6.5);
 
             root.setPadding(new Insets(20));

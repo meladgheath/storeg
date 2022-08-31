@@ -3,12 +3,9 @@ package org.softwareengine.core.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -18,7 +15,6 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.listview;
-import org.softwareengine.core.view.noticview;
 import org.softwareengine.utils.ui.FXDialog;
 import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
@@ -88,12 +84,47 @@ public class listController {
             view.Vitem.setOnAction(onItem_V_Action("item"));
 
             view.Vbank.setOnAction(onBank_V_Action("banks"));
-            view.tableView.setOnKeyPressed(onTablePressed());
+
             view.tableView.setOnMouseClicked(ontableClick());
 
             view.printButton.setOnAction(onPrintButton());
+            view.checkBox.setOnAction(onCheck());
+            view.saveButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                }
+            });
 
         }
+
+        private EventHandler<ActionEvent> onCheck() {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                    if (view.checkBox.isSelected()) {
+                        System.out.println(view.top.getChildren().remove(view.item));
+                        System.out.println(view.top.getChildren().remove(view.itemTex));
+                        System.out.println(view.top.getChildren().remove(view.Vitem));
+
+                        view.top.getChildren().add(0, view.bankTex);
+                        view.top.getChildren().add(1, view.bank);
+                        view.top.getChildren().add(2, view.Vbank);
+                    }else
+                    {
+                        System.out.println(view.top.getChildren().remove(view.bank));
+                        System.out.println(view.top.getChildren().remove(view.bankTex));
+                        System.out.println(view.top.getChildren().remove(view.Vbank));
+
+                        view.top.getChildren().add(0,view.itemTex);
+                        view.top.getChildren().add(1,view.item);
+                        view.top.getChildren().add(2,view.Vitem);
+                    }
+                }
+            };
+        }
+
 
         private void getTableColum() throws SQLException {
 
@@ -129,20 +160,22 @@ public class listController {
 
         }
 
-        private void getTableDetail() throws SQLException {
+        private void getTableDetail(String name ) throws SQLException {
 
             Transaction model = new Transaction();
-            model.setItemID(itemID);
 
-           /* if (itemID == 0 )
-            {
-                Alert message = new Alert(Alert.AlertType.ERROR);
-                message.setTitle("خطأ");
-                message.setContentText("أدخل المنتج أولا و حاولا مجددا");
-                message.show();
+            switch (name) {
+                case "item" :
+                    model.setItemID(itemID);
+                    view.tableView.setItems(model.getInfoWHEREitemID());
+                    break ;
+                case "bank" :
+                    System.out.println("we are here ");
+                    model.setBankID(bankID);
+                    view.tableView.setItems(model.getInfoWHEREbankID());
+                    break;
             }
-            else*/
-            view.tableView.setItems(model.getInfoWHEREitemID());
+
 
         }
 
@@ -326,25 +359,15 @@ public class listController {
                         itemID = model.getInfoID().get(index).getId() ;
                         view.item.setText(model.getInfoID().get(index).getName());
 
-                        getTableDetail();
+                        getTableDetail("item");
                         break;
 
                     case "banks" :
                         bankID = bank.getInfoIDs().get(index).getId() ;
                         view.bank.setText(bank.getInfoIDs().get(index).getName());
+                        getTableDetail("bank");
                         break;
-                    case "itemUpdate":
-                        Item update = new Item();
 
-                        itemID = update.getInfoID().get(index).getId() ;
-                        itemName = update.getInfoID().get(index).getName();
-                        updateDialog.item.setText(itemName);
-
-                        break;
-                    case "bankUpdate" :
-                        bankID = bank.getInfoIDs().get(index).getId() ;
-                        updateDialog.bank.setText(bank.getInfoIDs().get(index).getName());
-                        break;
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -352,58 +375,7 @@ public class listController {
 
         }
 
-        private EventHandler<KeyEvent> onTablePressed () {
-            return new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-
-
-                    if (!(event.getCode() == KeyCode.DELETE))
-                        return;
-
-                    int index = view.tableView.getSelectionModel().getSelectedIndex();
-                    Transaction model = new Transaction();
-                    try {
-                        model.setId(new Transaction().getInfoTransactionssID().get(index).getId());
-                        model.delete();
-                        getTableDetail();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                }} ;
-        }
-
-
-        private EventHandler<KeyEvent> onUpdate() {
-            return new EventHandler<KeyEvent>() {
-                @Override
-                public void handle(KeyEvent event) {
-
-                    if (!(event.getCode()== KeyCode.ENTER))
-                        return;
-
-                    TextField t = (TextField) event.getSource() ;
-
-
-                    try {
-                        Amount model = new Amount();
-                        System.out.println(storeID);
-                        model.setId(storeID);
-//                    model.setName(t.getText());
-                        model.update();
-                        System.out.println("data is updated . . . ");
-//                    dialog.dialog.close();
-                        getTableDetail();
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
-
-                }
-            };
-
-        }
-
-        private boolean get() {
+         private boolean get() {
             Amount amount = new Amount() ;
             return false ;
         }
@@ -511,60 +483,5 @@ public class listController {
                 }
             };
         }
-    UpdateDialog updateDialog;
-    private EventHandler<ActionEvent> onUpdateMenu() {
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-//                String update = {}
-//                UpdateDialog dialog = new UpdateDialog();
-//                dialog.show();
-
-                 updateDialog = new UpdateDialog(view.pane,"update :") ;
-
-                updateDialog.Vitem.setOnAction(onItem_V_Action("itemUpdate"));
-                updateDialog.Vbank.setOnAction(onBank_V_Action("bankUpdate"));
-
-                updateDialog.update.setOnAction(onUpdateAction());
-
-                updateDialog.show();
-
-
-            }
-        };
-    }
-
-    private EventHandler<ActionEvent> onUpdateAction(){
-        return new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-
-                Transaction model = new Transaction();
-                int index = view.tableView.getSelectionModel().getSelectedIndex();
-
-
-                try {
-                    int id = model.getInfoTransactionssID().get(index).getId();
-                    model.setId(id);
-                    model.setBankID(bankID);
-                    model.setItemID(itemID);
-                    model.setDate(updateDialog.date.getValue().toString());
-                    model.setNumber(Integer.parseInt(updateDialog.number.getText()));
-
-                    model.update();
-
-                    updateDialog.dialog.close();
-                    getTableDetail();
-
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }
-
-
-
-            }
-        };
-    }
 
     }

@@ -14,7 +14,6 @@ import java.util.Locale;
     public class HomeController {
 
         public Home view;
-
         public HomeController() {
             initiated();
             setupLanguages() ;
