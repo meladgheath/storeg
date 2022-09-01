@@ -18,5 +18,9 @@ public class languages {
         return resourceBundle.getString(key) ;
     }
 
+    public ResourceBundle get() {
+        return resourceBundle ;
+    }
+
 
 }

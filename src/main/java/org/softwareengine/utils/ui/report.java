@@ -5,6 +5,7 @@ import javafx.scene.layout.StackPane;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
+import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Amount;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.core.model.Transaction;
@@ -224,7 +225,12 @@ public class report {
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lists);
 
-        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+        languages lang = new languages();
+
+        HashMap params = new HashMap();
+        params.put("REPORT_RESOURCE_BUNDLE", lang.get());
+
+        JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
 
 
         return print ;

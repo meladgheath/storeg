@@ -24,7 +24,7 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="141" splitType="Stretch">
+		<band height="193" splitType="Stretch">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="95" backcolor="#002300" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
@@ -74,68 +74,69 @@
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[#]]></text>
 			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="210" y="0" width="150" height="25" uuid="249dfe91-26ac-4ac3-9e68-a3c7a57f108a">
-					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+			<textField>
+				<reportElement style="Column header" x="360" y="0" width="90" height="25" uuid="8a1cd945-189f-409f-9806-cbce237cec97">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[العنصر/ المنتج]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="360" y="0" width="90" height="25" uuid="f4c49ebc-c01b-404c-93a4-ec424d5f920e">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1c973cb3-f805-490d-a6c2-a35b387705a1"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[العدد]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="30" y="0" width="180" height="25" uuid="75bf2fcf-95f3-4bd9-ba4a-12204f6338ae">
-					<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<text><![CDATA[فروع / إدرات]]></text>
-			</staticText>
-			<staticText>
-				<reportElement style="Column header" x="450" y="0" width="105" height="25" uuid="8a72497f-2a61-4156-b7d4-dc877ef31709">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0afd0ac2-9e09-42e3-b31c-d32cb7a49ca0"/>
-					<property name="com.jaspersoft.studio.unit.x" value="pixel"/>
+				<textFieldExpression><![CDATA[$R{number}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="210" y="0" width="150" height="25" uuid="dd9004b9-86f4-4ae1-96a8-baa2f615ac5d">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$R{item}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="450" y="0" width="105" height="25" uuid="dcb31c2c-b1cd-4742-9b6e-64693e881175">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$R{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Column header" x="30" y="0" width="180" height="25" uuid="263caa0d-91c5-4487-b35a-1344958a0397">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
 					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
 					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
 					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
 					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
 				</box>
 				<textElement textAlignment="Center"/>
-				<text><![CDATA[التاريخ]]></text>
-			</staticText>
+				<textFieldExpression><![CDATA[$R{bank}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
