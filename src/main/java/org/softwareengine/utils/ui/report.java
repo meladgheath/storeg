@@ -1,5 +1,7 @@
 package org.softwareengine.utils.ui;
 
+import javafx.scene.Node;
+import javafx.scene.layout.StackPane;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
@@ -199,7 +201,7 @@ public class report {
 
     }
 
-    public JasperPrint getDistrubumentReport (List<Transaction> lists ) throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getDistrubumentReport (List<Transaction> lists) throws JRException, FileNotFoundException, SQLException {
 
 
         JasperReport reports = null ;

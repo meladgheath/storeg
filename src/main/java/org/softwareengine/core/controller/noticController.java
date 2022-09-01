@@ -71,6 +71,7 @@ public class noticController {
             view.detailMenu.setText(lang.getWord("detail"));
             view.downloadMenu.setText(lang.getWord("download"));
             view.updateMenu.setText(lang.getWord("update"));
+            view.deleteMenu.setText(lang.getWord("delete"));
 
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
@@ -101,6 +102,7 @@ public class noticController {
             view.detailMenu.setOnAction(onDetailMenu());
             view.downloadMenu.setOnAction(onDownloadMenu());
             view.updateMenu.setOnAction(onUpdateMenu());
+            view.deleteMenu.setOnAction(onDeleteMenu());
             view.attuchemnt.setOnAction(onAttu());
 
         }
@@ -378,15 +380,21 @@ public class noticController {
                         return;
 
                     int index = view.tableView.getSelectionModel().getSelectedIndex();
-                    Transaction model = new Transaction();
-                    try {
-                        model.setId(new Transaction().getInfoTransactionssID().get(index).getId());
-                        model.delete();
-                        getTableDetail();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+                    delelteRecord(index);
+
                 }} ;
+        }
+
+        private void delelteRecord(int index) {
+            Transaction model = new Transaction();
+            try {
+                model.setId(new Transaction().getInfoTransactionssID().get(index).getId());
+                model.delete();
+                getTableDetail();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         }
 
 
@@ -482,8 +490,7 @@ public class noticController {
                     report re = new report();
 
                     try {
-//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
-                        JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems()),false);
                     } catch (JRException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -515,7 +522,6 @@ public class noticController {
                     }
                     try {
                         transaction = transaction.getInfoTransactions().get(view.tableView.getSelectionModel().getSelectedIndex());
-//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
                         JasperViewer.viewReport(re.getCoffee(transaction),false);
                     } catch (JRException e) {
                         e.printStackTrace();
@@ -602,6 +608,17 @@ public class noticController {
         };
     }
 
+    private EventHandler<ActionEvent> onDeleteMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+                int index = view.tableView.getSelectionModel().getSelectedIndex() ;
+                delelteRecord(index);
+
+            }
+        };
+    }
     private EventHandler<ActionEvent> onUpdateAction(){
         return new EventHandler<ActionEvent>() {
             @Override

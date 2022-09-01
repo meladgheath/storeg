@@ -45,6 +45,7 @@ public class noticview {
         public MenuItem downloadMenu ;
         public MenuItem detailMenu   ;
         public MenuItem updateMenu   ;
+        public MenuItem deleteMenu   ;
 
 
         public noticview() {
@@ -74,14 +75,17 @@ public class noticview {
 
 
             updateMenu   = new MenuItem();
+            deleteMenu   = new MenuItem();
             printMenu    = new MenuItem();
             detailMenu   = new MenuItem();
             downloadMenu = new MenuItem();
 
 
+
             tableMenu = new ContextMenu();
 
             tableMenu.getItems().add(updateMenu);
+            tableMenu.getItems().add(deleteMenu);
             tableMenu.getItems().add(new SeparatorMenuItem());
             tableMenu.getItems().add(printMenu);
             tableMenu.getItems().add(detailMenu);

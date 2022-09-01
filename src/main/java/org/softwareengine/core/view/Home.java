@@ -16,8 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.BorderPane;
 
-import java.awt.*;
 
+import java.awt.Dimension ;
+import java.awt.Toolkit ;
 
 public class Home {
 
@@ -156,7 +157,7 @@ public class Home {
                 right.getChildren().add(typesButton        );
                 right.getChildren().add(itemButton         );
                 right.getChildren().add(bankButton         );
-                right.getChildren().add(amountButton       );
+//                right.getChildren().add(amountButton       );
                 right.getChildren().add(noticButton        );
                 right.getChildren().add(listButton         );
                 right.getChildren().add(settingButton      );
