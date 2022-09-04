@@ -11,7 +11,6 @@ module storeg {
 
     requires java.desktop;
 
-
     exports org.softwareengine;
     exports org.softwareengine.core.model;
     exports org.softwareengine.core.controller;

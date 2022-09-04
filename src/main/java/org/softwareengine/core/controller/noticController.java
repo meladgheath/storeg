@@ -1,5 +1,6 @@
 package org.softwareengine.core.controller;
 
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -17,6 +18,7 @@ import javafx.stage.FileChooser;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.view.JasperViewer;
 
+
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.noticview;
@@ -29,6 +31,7 @@ import java.io.*;
 import java.sql.SQLException;
 import java.util.Locale;
 
+
 public class noticController {
 
         public noticview view;
@@ -40,6 +43,7 @@ public class noticController {
         public int bankID;
 
         String itemName ;
+        String ref ;
 
         ByteArrayOutputStream bos ;
 
@@ -202,7 +206,7 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
-                    dialog = new FXDialog(view.pane, "Banks List . . . ",false);
+                    dialog = new FXDialog(view.pane, "Banks List . . . ",true);
 
 
                     banks bank  = new banks();
@@ -223,6 +227,8 @@ public class noticController {
                         dialog.listView.setOnKeyPressed(OnListPressed(name));
                         dialog.listView.setOnMouseClicked(OnMouseClick(name));
 
+                        dialog.textField.setOnAction(DialogTextField());
+
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -231,6 +237,35 @@ public class noticController {
             };
 
 
+        }
+
+        private EventHandler<ActionEvent> DialogTextField() {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                    dialog.listView.getItems().clear();
+
+                    int id = Integer.parseInt(dialog.textField.getText()) ;
+
+                    banks model = new banks();
+                    model.setReferenceNumber(dialog.textField.getText());
+                    System.out.println(model.getReferenceNumber());
+
+                    try {
+                        int size = model.getInfoWHEREref().size();
+                        System.out.println(size);
+                        System.out.println(dialog.textField.getText());
+                        ref = model.getInfoWHEREref().get(0).getReferenceNumber();
+                        dialog.listView.getItems().add(model.getInfoWHEREref().get(0).getName());
+
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    dialog.listView.setOnKeyPressed(OnListPressed("store"));
+                    dialog.listView.setOnMouseClicked(OnMouseClick("store"));
+                }
+            } ;
         }
 
         private EventHandler<ActionEvent> onStore_V_Action () {
@@ -320,7 +355,6 @@ public class noticController {
 
             Item item   = new Item();
             Store store  = new Store();
-//        type driver = new type();
             banks bank = new banks();
 
 
@@ -340,11 +374,11 @@ public class noticController {
                         getTableDetail();
                         break;
                     case "store" :
-                        storeID = store.getInfo().get(index).getId() ;
-                        view.store.setText(store.getInfo().get(index).getName());
+                        System.out.println("where ref is  . "+ref);
+                        bank.setReferenceNumber(ref);
+                        bankID = bank.getInfoWHEREref().get(0).getId();
 
-                        view.item.clear();
-
+                        view.bank.setText(bank.getInfoWHEREref().get(0).getName());
 
                         break;
                     case "banks" :
@@ -655,6 +689,12 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
+
+
+
+
+                    if (1==1)
+                        return;
 
                     view.saveButton.setDisable(true);
                     view.printButton.setDisable(true);

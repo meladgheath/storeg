@@ -9,6 +9,10 @@ import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Paths;
 import org.softwareengine.core.view.listview;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.Base64;
 import java.util.Locale;
 
     public class HomeController {
@@ -49,6 +53,7 @@ import java.util.Locale;
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
+
 
 
             view.settingButton.setOnAction(new EventHandler<ActionEvent>() {
