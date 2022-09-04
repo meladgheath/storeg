@@ -179,52 +179,18 @@ import java.sql.Statement;
             return one ;
         }
 
-        public void update (String cases) throws SQLException {
+        public void update () throws SQLException {
 
-            String sql = "" ;
-
-
+//            String sql = "UPDATE item SET name = ? , bank = ? , number = ? , date = ?  WHERE id = "+this.id ;
+            String sql = "UPDATE item SET name = ?   WHERE id = "+this.id ;
 
             DatabaseService.openConnection();
-
-
-            PreparedStatement ps ;
-            switch (cases) {
-                case "name" :
-                    sql = "UPDATE item SET name = ? where id = ?" ;
-                    ps = DatabaseService.connection.prepareStatement(sql);
-                    ps.setString(1,this.name);
-                    ps.setInt   (2,this.id  );
-                    ps.executeUpdate();
-                    break;
-
-                case "code" :
-                    sql = "UPDATE item SET code = ? where id = ?" ;
-                    ps = DatabaseService.connection.prepareStatement(sql);
-                    ps.setInt(1,this.code);
-                    ps.setInt(2,this.id  );
-                    ps.executeUpdate();
-                    break;
-                case "package" :
-                    sql = "UPDATE item SET package = ? where id = ?" ;
-                    ps = DatabaseService.connection.prepareStatement(sql);
-                    ps.setInt(1,this.packages);
-                    ps.setInt(2,this.id  );
-                    ps.executeUpdate();
-                    break;
-                case "value":
-                    sql = "UPDATE item SET value = ? where id = ?" ;
-                    ps = DatabaseService.connection.prepareStatement(sql);
-                    ps.setDouble(1,this.value);
-                    ps.setInt(2 ,this.id  );
-                    ps.executeUpdate();
-                    break;
-
-            }
-
-            System.out.println(sql);
-
+            PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
+            ps.setString(1, this.name);
+            ps.executeUpdate();
             DatabaseService.CloseConnection();
+            System.out.println("updated !!");
+
 
         }
 

@@ -231,8 +231,6 @@ public class report {
         params.put("REPORT_RESOURCE_BUNDLE", lang.get());
 
         JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
-
-
         return print ;
 
     }

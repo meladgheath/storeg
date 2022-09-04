@@ -223,7 +223,7 @@ public class banksController {
 
 
                     try {
-                        model.update(t.getId());
+//                        model.update(t.getId());
                         dialog.dialog.close();
                         getTableDetail();
                     } catch (SQLException throwables) {

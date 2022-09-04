@@ -4,10 +4,7 @@ package org.softwareengine.core.view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox ;
 import javafx.scene.layout.HBox ;
@@ -37,22 +34,24 @@ import javafx.scene.text.Text;
         public Text codeTex ;
         public Text typeTex ;
 
+        public ContextMenu tableMenu ;
+        public MenuItem update ;
 
         public ItemView() {
 
             root     = new VBox();
-
             code     = new TextField();
-
             name     = new TextField();
 
             nameTex = new Text();
             codeTex = new Text();
             typeTex = new Text();
 
-//            packages = new TextField();
+            update = new MenuItem();
 
-            // saveButton  = new Button("save")  ;
+            tableMenu = new ContextMenu();
+            tableMenu.getItems().add(update);
+
             saveButton  = new Button();
             printButton = new Button();
 
@@ -63,21 +62,13 @@ import javafx.scene.text.Text;
             Separator line = new Separator();
             line.setOrientation(Orientation.VERTICAL);
 
-
-
             root.setPrefWidth(200);
 
             tableView = new TableView();
             tableView.setPrefHeight(700);
             tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-//            GridPane right = new GridPane();
             HBox down = new HBox();
-
-
-//            right.add(new Text("code :  "),0,0);
-//            right.add(code,1,0);
-
 
             down.getChildren().add(nameTex) ;
             down.getChildren().add(name);
@@ -88,6 +79,7 @@ import javafx.scene.text.Text;
             down.getChildren().add(typeTex);
             down.getChildren().add(type) ;
             down.getChildren().add(Vtype);
+
 
 //            right.add(new Text("pakcage  : "),0,2);
 //            right.add(packages,1,2);
@@ -105,6 +97,8 @@ import javafx.scene.text.Text;
 
             down.setSpacing(8);
             down.setPadding(new Insets(10,0,0,0));
+
+            tableView.setContextMenu(tableMenu);
 
             BorderPane pane = new BorderPane();
 

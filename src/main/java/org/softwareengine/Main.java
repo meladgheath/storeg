@@ -17,16 +17,6 @@ import java.util.Objects;
 public class Main extends Application {
     public static void main(String[] args) throws IOException {
 
-   /*   byte[] b = Files.readAllBytes(java.nio.file.Paths.get("add.png"));
-        String base = Base64.getEncoder().encodeToString(b);
-        System.out.println(base);
-
-        byte [] c = Base64.getDecoder().decode(base);
-        System.out.println(c.length);
-
-        FileOutputStream out  = new FileOutputStream("melad.png");
-        out.write(c);*/
-
         launch(args);
     }
 

@@ -18,11 +18,14 @@ import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.config.languages;
 
+import org.softwareengine.core.model.Transaction;
 import org.softwareengine.core.model.type;
 import org.softwareengine.core.view.ItemView;
 
 import org.softwareengine.utils.ui.FXDialog;
+import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
+import org.softwareengine.utils.ui.updateItem;
 
 
 import java.io.FileNotFoundException;
@@ -62,6 +65,7 @@ public class ItemController {
             view.nameTex.setText(lang.getWord("name"));
             view.codeTex.setText(lang.getWord("code"));
             view.typeTex.setText(lang.getWord("types"));
+            view.update.setText(lang.getWord("update"));
 
             view.Vtype.setOnAction(onType_V_Action());
             view.saveButton.setText(lang.getWord("save"));
@@ -85,9 +89,10 @@ public class ItemController {
             getTableColum();
 
             view.tableView.setOnKeyPressed(onTablePressed());
+            view.tableView.setOnMouseClicked(ontableClick());
             view.printButton.setOnAction(onPrintButton());
             view.saveButton.setOnAction(OnSaveButton());
-
+            view.update.setOnAction(onUpdateMenu());
 
 
         }
@@ -134,6 +139,18 @@ public class ItemController {
 
         }
 
+    private EventHandler<MouseEvent> ontableClick () {
+        return new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+
+                if (event.isSecondaryButtonDown())
+                    view.tableMenu.show(view.tableView,event.getScreenX(),event.getScreenY());
+
+            }
+        } ;
+    }
 
         private EventHandler<KeyEvent> onTablePressed () {
             return new EventHandler<KeyEvent>() {
@@ -154,8 +171,60 @@ public class ItemController {
                 }} ;
         }
 
+        updateItem updateDialog ;
+    private EventHandler<ActionEvent> onUpdateMenu() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
-        private EventHandler<KeyEvent> onUpdate() {
+//                String update = {}
+//                UpdateDialog dialog = new UpdateDialog();
+//                dialog.show();
+
+//                updateDialog = new UpdateDialog(view.pane,"update :") ;
+                updateDialog = new updateItem(view.pane,"update") ;
+
+
+//                updateDialog.Vitem.setOnAction(onItem_V_Action("itemUpdate"));
+//                updateDialog.Vbank.setOnAction(onBank_V_Action("bankUpdate"));
+
+                updateDialog.update.setOnAction(onUpdateAction());
+
+                updateDialog.show();
+
+
+            }
+        };
+    }
+
+    private EventHandler<ActionEvent> onUpdateAction(){
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+
+//                Transaction model = new Transaction();
+                Item model = new Item();
+                int index = view.tableView.getSelectionModel().getSelectedIndex();
+
+
+                try {
+                    int id = model.getInfoID().get(index).getId();
+                    model.setId(id);
+                    model.setName(updateDialog.item.getText());
+
+                    model.update();
+
+                    updateDialog.dialog.close();
+                    getTableDetail();
+
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        };
+    }
+
+    private EventHandler<KeyEvent> onUpdate() {
             return new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
@@ -189,7 +258,7 @@ public class ItemController {
 
 
                     try {
-                        model.update(t.getId());
+//                        model.update(t.getId());
                         dialog.dialog.close();
                         getTableDetail();
                     } catch (SQLException throwables) {
@@ -239,11 +308,10 @@ public class ItemController {
 
 
 
-//                    model.setCode(Integer.parseInt(view.code.getText()));
+
                     model.setCode(Integer.parseInt(view.code.getText()));
                     model.setName(view.name.getText());
                     model.setType(typeId);
-//                    model.setPackages(Integer.parseInt(view.packages.getText()));
 
                     try {
                         model.save();
