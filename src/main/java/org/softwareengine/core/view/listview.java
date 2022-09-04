@@ -18,7 +18,9 @@ public class listview {
         public TextField item  ;
         public TextField bank;
 
+
         public CheckBox checkBox;
+        public CheckBox orderby ;
 
 
         public Button Vitem  ;
@@ -70,7 +72,9 @@ public class listview {
 
             Vitem  = new Button("V");
             Vbank = new Button("V");
+
             checkBox = new CheckBox();
+            orderby  = new CheckBox("order by");
 
             root.setPrefWidth(200);
 
@@ -91,6 +95,7 @@ public class listview {
             top.getChildren().add(Vitem);
             top.getChildren().add(printButton);
             top.getChildren().add(checkBox);
+            top.getChildren().add(orderby);
             top.setSpacing(6.5);
 
             root.setPadding(new Insets(20));

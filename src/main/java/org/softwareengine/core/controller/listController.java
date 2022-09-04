@@ -80,22 +80,33 @@ public class listController {
         private void initiate() throws SQLException {
             getTableColum();
 
-
             view.Vitem.setOnAction(onItem_V_Action("item"));
-
             view.Vbank.setOnAction(onBank_V_Action("banks"));
-
             view.tableView.setOnMouseClicked(ontableClick());
 
             view.printButton.setOnAction(onPrintButton());
             view.checkBox.setOnAction(onCheck());
-            view.saveButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.orderby.setOnAction(onOrderBy());
+
+
+        }
+
+        private EventHandler<ActionEvent> onOrderBy() {
+            return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
 
-                }
-            });
+                    if (view.orderby.isSelected()) {
+                        System.out.println("here is selected . . . ");
+                        try {
+                            getTableDetail("orderby");
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
 
+                }
+            };
         }
 
         private EventHandler<ActionEvent> onCheck() {
@@ -176,9 +187,12 @@ public class listController {
                     view.tableView.setItems(model.getInfoWHEREitemID());
                     break ;
                 case "bank" :
-                    System.out.println("we are here ");
+
                     model.setBankID(bankID);
                     view.tableView.setItems(model.getInfoWHEREbankID());
+                    break;
+                case "orderby" :
+                    view.tableView.setItems(model.getInfoTransactionssORDERBY());
                     break;
             }
 
@@ -426,7 +440,6 @@ public class listController {
                     }
                     try {
                         transaction = transaction.getInfoTransactions().get(view.tableView.getSelectionModel().getSelectedIndex());
-//                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
                         JasperViewer.viewReport(re.getCoffee(transaction),false);
                     } catch (JRException e) {
                         e.printStackTrace();
@@ -435,7 +448,6 @@ public class listController {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Done here man . . .");
                 }
             };
         }
@@ -462,7 +474,6 @@ public class listController {
                     try {
                         model.setId(model.getInfoTransactionssID().get(index).getId());
 
-                        System.out.println("Error . . . .");
                         System.out.println(index);
                         System.out.println(model.getInfoTransactionssID().get(index).getId());
                         System.out.println(model.getId());
@@ -473,7 +484,6 @@ public class listController {
 
                     FileChooser file = new FileChooser();
                     file.setInitialFileName("doc.png");
-//                    file.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("*.png"));
 
                     try {
 

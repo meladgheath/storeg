@@ -252,6 +252,73 @@ public void getImagess(File file) throws SQLException, IOException {
             return in ;
 
     }
+
+    public ObservableList<Transaction> getInfoTransactionssORDERBYwhereDATE(String first , String second) throws SQLException {
+
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank ,\n" +
+                "                (SELECT name FROM item WHERE id = item ) as item ,\n" +
+                "    sum(number) as number , date " +
+                "    FROM transactionss " +
+                "    WHERE date BETWEEN DATE(?) AND DATE(?) " +
+                "    GROUP by bank , item , date" ;
+
+        DatabaseService.openConnection();
+        PreparedStatement statement = DatabaseService.connection.prepareStatement(sql);
+        statement.setString(1,first);
+        statement.setString(2,second);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
+    public ObservableList<Transaction> getInfoTransactionssORDERBY() throws SQLException {
+
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , " +
+                "                (SELECT name FROM item WHERE id = item ) as item , " +
+                "                 sum(number) as number , date " +
+                "                 FROM transactionss " +
+                " GROUP by bank , item " ;
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
     public ObservableList<Transaction> getInfoTransactionss() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
@@ -259,7 +326,7 @@ public void getImagess(File file) throws SQLException, IOException {
                 SELECT (SELECT name FROM banks WHERE id = bank) as bank ,
                 (SELECT name FROM item WHERE id = item ) as item ,
                  number , date
-                 FROM transactionss 
+                 FROM transactionss
                  """;
 //        order by date desc
 

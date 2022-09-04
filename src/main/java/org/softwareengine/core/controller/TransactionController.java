@@ -12,7 +12,6 @@ import java.sql.SQLException;
 
 public class TransactionController {
 
-
     public TransactionView view;
 
 //    updateDialog dialog ;
