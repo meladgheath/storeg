@@ -7,12 +7,7 @@ import javafx.scene.image.Image;
 import org.softwareengine.core.view.Home;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Paths;
-import org.softwareengine.core.view.listview;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.Base64;
 import java.util.Locale;
 
     public class HomeController {
@@ -50,6 +45,7 @@ import java.util.Locale;
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
                 view.listImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.LIST        .getPath())));
+                view.listOrderImageview   .setImage(new Image(getClass().getResourceAsStream(Paths.LIST2       .getPath())));
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
@@ -82,6 +78,13 @@ import java.util.Locale;
                     onListButton();
                 }
             });
+            view.listOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+               @Override
+               public void handle(ActionEvent event) {
+                   
+
+                }
+            });
             view.disbursementButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -105,7 +108,7 @@ import java.util.Locale;
                     onMoneyButton();
                 }
             });
-            view.treasuryButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.listOrderButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     onTreasuryButton();

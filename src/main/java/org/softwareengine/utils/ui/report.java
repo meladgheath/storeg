@@ -202,14 +202,14 @@ public class report {
 
     }
 
-    public JasperPrint getDistrubumentReport (List<Transaction> lists) throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getDistrubumentReport (List<Transaction> lists,String report) throws JRException, FileNotFoundException, SQLException {
 
 
         JasperReport reports = null ;
         JasperPrint jp = null ;
 
         reports = JasperCompileManager.compileReport(
-                getClass().getResourceAsStream("/report/disbursementReport.jrxml")
+                getClass().getResourceAsStream("/report/"+report)
         );
 
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);

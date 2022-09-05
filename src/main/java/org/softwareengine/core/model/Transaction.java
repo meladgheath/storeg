@@ -294,7 +294,7 @@ public void getImagess(File file) throws SQLException, IOException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
         String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , " +
                 "                (SELECT name FROM item WHERE id = item ) as item , " +
-                "                 sum(number) as number , date " +
+                "                 sum(number) as number  " +
                 "                 FROM transactionss " +
                 " GROUP by bank , item " ;
 
@@ -310,7 +310,7 @@ public void getImagess(File file) throws SQLException, IOException {
             one.setItem(resultSet.getString("item"));
             one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));
-            one.setDate(resultSet.getString("date"));
+//            one.setDate(resultSet.getString("date"));
 
             list.add(one);
         }

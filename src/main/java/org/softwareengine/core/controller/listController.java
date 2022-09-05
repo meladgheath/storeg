@@ -362,7 +362,6 @@ public class listController {
 
             Item item   = new Item();
             Store store  = new Store();
-//        type driver = new type();
             banks bank = new banks();
 
 
@@ -407,8 +406,11 @@ public class listController {
                     report re = new report();
 
                     try {
+                    if (view.orderby.isSelected())
+                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport2.jrxml"),false);
+                        else
+                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
 
-                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems()),false);
                     } catch (JRException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -416,8 +418,7 @@ public class listController {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Done here man . . .");
-                }
+                    }
             };
         }
 

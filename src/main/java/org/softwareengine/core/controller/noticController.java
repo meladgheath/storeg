@@ -524,7 +524,7 @@ public class noticController {
                     report re = new report();
 
                     try {
-                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems()),false);
+                        JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
                     } catch (JRException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {
@@ -532,7 +532,6 @@ public class noticController {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Done here man . . .");
                 }
             };
         }
@@ -550,7 +549,6 @@ public class noticController {
                         System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getItem());
                         System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getStore());
                         System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getBank());
-
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -564,7 +562,6 @@ public class noticController {
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-                    System.out.println("Done here man . . .");
                 }
             };
         }

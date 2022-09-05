@@ -52,21 +52,16 @@ public class listview {
             item    = new TextField();
             bank = new TextField();
 
-
-
             itemTex   = new Text();
             bankTex = new Text();
 
-
             printButton = new Button();
             saveButton  = new Button();
-
 
             updateMenu   = new MenuItem();
             printMenu    = new MenuItem();
             detailMenu   = new MenuItem();
             downloadMenu = new MenuItem();
-
 
             tableMenu = new ContextMenu();
 
