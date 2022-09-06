@@ -1,6 +1,5 @@
 package org.softwareengine.core.view;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
@@ -13,7 +12,8 @@ public class listview {
 
         public static StackPane pane ;
         public VBox root;
-        public HBox top ;
+        public HBox top;
+        public HBox  reportWithBrnID;
 
         public TextField item  ;
         public TextField bank;
@@ -34,6 +34,7 @@ public class listview {
         public Text itemTex   ;
         public Text bankTex   ;
 
+        public ComboBox<String> reportChanger ;
 
 
         public ContextMenu tableMenu ;
@@ -68,8 +69,8 @@ public class listview {
             Vitem  = new Button("V");
             Vbank = new Button("V");
 
-            checkBox = new CheckBox();
-            orderby  = new CheckBox("order by");
+
+            reportChanger = new ComboBox<>();
 
             root.setPrefWidth(200);
 
@@ -83,15 +84,9 @@ public class listview {
             item.setDisable (true);
             bank.setDisable(true);
 
-             top = new HBox( );
+            top = new HBox();
 
-            top.getChildren().add(itemTex) ;
-            top.getChildren().add(item);
-            top.getChildren().add(Vitem);
-            top.getChildren().add(printButton);
-            top.getChildren().add(checkBox);
-            top.getChildren().add(orderby);
-            top.setSpacing(6.5);
+            getTop("item");
 
             root.setPadding(new Insets(20));
             root.setSpacing(5);
@@ -99,10 +94,45 @@ public class listview {
             Separator line = new Separator();
             line.setOrientation(Orientation.HORIZONTAL);
 
+            root.getChildren().add(reportChanger);
             root.getChildren().add(top) ;
             root.getChildren().add(line);
             root.getChildren().add(tableView);
         }
+
+        public void getTop(String name) {
+
+
+         top.getChildren().removeAll(top.getChildren());
+
+            switch (name){
+                case "item" :
+                    top.getChildren().add(itemTex) ;
+                    top.getChildren().add(item);
+                    top.getChildren().add(Vitem);
+                    top.getChildren().add(printButton);
+                    top.setSpacing(6.5);
+                    break;
+                case "brn" :
+                    top.getChildren().add(bankTex) ;
+                    top.getChildren().add(bank);
+                    top.getChildren().add(Vbank);
+                    top.getChildren().add(printButton);
+                    top.setSpacing(6.5);
+                    break;
+                case "group" :
+                    top.getChildren().add(printButton);
+                    break;
+
+
+            }
+        }
+
+    public void removeall() {
+        top.getChildren().removeAll();
+    }
+
+
         public StackPane getRoot() {
             pane = new StackPane();
             pane.getChildren().add(root);

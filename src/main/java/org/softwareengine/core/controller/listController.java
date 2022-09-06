@@ -4,7 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -16,7 +15,6 @@ import org.softwareengine.config.languages;
 import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.listview;
 import org.softwareengine.utils.ui.FXDialog;
-import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
 import java.io.*;
@@ -64,6 +62,13 @@ public class listController {
             view.downloadMenu.setText(lang.getWord("download"));
             view.updateMenu.setText(lang.getWord("update"));
 
+            view.reportChanger.getItems().add(lang.getWord("reportBank"));
+            view.reportChanger.getItems().add(lang.getWord("reportItem"));
+            view.reportChanger.getItems().add(lang.getWord("reportGroupby"));
+
+//            reportChanger.getItems().add("report with BrnID");
+//            reportChanger.getItems().add("report with itemID");
+
             ((TableColumn) view.tableView.getColumns().get(0)).setText(lang.getWord("id"));//id
             ((TableColumn) view.tableView.getColumns().get(1)).setText(lang.getWord("item"));//item
 
@@ -85,8 +90,36 @@ public class listController {
             view.tableView.setOnMouseClicked(ontableClick());
 
             view.printButton.setOnAction(onPrintButton());
-            view.checkBox.setOnAction(onCheck());
-            view.orderby.setOnAction(onOrderBy());
+            view.reportChanger.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    int ch = view.reportChanger.getSelectionModel().getSelectedIndex() ;
+
+                    switch (ch) {
+
+                        case 0 : // with bank id
+
+                            view.getTop("brn");
+                        break;
+
+                        case 1:// with item id
+
+                            view.getTop("item");
+                            break;
+                        case 2 : // with group by
+                            view.getTop("group");
+                            try {
+                                getTableDetail("orderby");
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                    }
+                }
+            });
+
+//            view.checkBox.setOnAction(onCheck());
+//            view.orderby.setOnAction(onOrderBy());
 
 
         }
@@ -406,7 +439,8 @@ public class listController {
                     report re = new report();
 
                     try {
-                    if (view.orderby.isSelected())
+
+                        if (view.top.getChildren().size()==1)
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport2.jrxml"),false);
                         else
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
