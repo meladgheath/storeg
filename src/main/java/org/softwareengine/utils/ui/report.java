@@ -243,7 +243,7 @@ public class report {
         JasperPrint jp = null ;
 
         reports = JasperCompileManager.compileReport(
-                getClass().getResourceAsStream("/report/Invo.jrxml")
+                getClass().getResourceAsStream("/report/Coffee.jrxml")
         );
 
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
@@ -275,11 +275,12 @@ public class report {
 //        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(WhenNoDataTypeEnum.NO_DATA_SECTION);
         reports.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
         Map<String,Object> para = new HashMap<>();
-        para.put("number",model.getNumber()) ;
-        para.put("item",model.getItem());
-        para.put("store",model.getStore());
-        para.put("bank",model.getBank());
-        para.put("date",model.getDate());
+//        para.put("number",model.getNumber()) ;
+//        para.put("item",model.getItem());
+//        para.put("store",model.getStore());
+//        para.put("bank",model.getBank());
+//        para.put("date",model.getDate());
+        para.put("name","name");
 
 
 

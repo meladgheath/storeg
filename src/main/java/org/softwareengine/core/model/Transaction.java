@@ -24,10 +24,18 @@ public class Transaction {
     private String bank;
 
     private String date;
+    private int userid ;
 
     private ByteArrayOutputStream img ;
 
 
+    public int getUserid() {
+        return userid;
+    }
+
+    public void setUserid(int userid) {
+        this.userid = userid;
+    }
 
     public String getDate() {
         return date;
@@ -111,7 +119,7 @@ public class Transaction {
     }
 
     public void save() throws SQLException {
-        String sql = "INSERT INTO transactions ( item , bank, store , number , date ,img ) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO transactions ( item , bank, store , number , date ,img, userid ) VALUES (?,?,?,?,?,?,?)";
 
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -123,6 +131,7 @@ public class Transaction {
         ps.setInt(4, this.number);
         ps.setString(5, this.date);
         ps.setBytes(6,this.img.toByteArray());
+        ps.setInt(7,user.getId());
 
         ps.executeUpdate();
 
@@ -147,7 +156,7 @@ public class Transaction {
     }
 
     public void saves() throws SQLException {
-        String sql = "INSERT INTO transactionss ( item , bank,  number , date ,img ) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO transactionss ( item , bank,  number , date ,img,userid ) VALUES (?,?,?,?,?,?)";
 
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -157,6 +166,7 @@ public class Transaction {
         ps.setInt(3, this.number);
         ps.setString(4, this.date);
         ps.setBytes(5,(this.img != null ) ? this.img.toByteArray() : null);
+        ps.setInt(6,user.getId());
 
         ps.executeUpdate();
 

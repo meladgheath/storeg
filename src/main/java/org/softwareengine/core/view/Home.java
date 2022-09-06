@@ -184,6 +184,11 @@ public class Home {
 
                 System.out.println(width+"   "+screensize.getWidth());
                 System.out.println(height+"  "+screensize.getHeight());
+
+                double y = width - screensize.getWidth() ;
+                double x = height - screensize.getHeight();
+
+
                 scene = new Scene(root , width, height) ;
             }
 

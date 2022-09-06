@@ -26,12 +26,9 @@ import java.util.Locale;
         view.itemButton        .setTooltip(new Tooltip(lang.getWord("item") ));
         view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
         view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
-        /*view.listButton        .setTooltip(new Tooltip(lang.getWord("list")));*/
         view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
-//        view.disbursementButton.setTooltip(new Tooltip(lang.getWord("disbursement")));
         view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
-
         public void initiated() {
 
             
@@ -81,7 +78,7 @@ import java.util.Locale;
             view.listOrderButton.setOnAction(new EventHandler<ActionEvent>() {
                @Override
                public void handle(ActionEvent event) {
-                   
+
 
                 }
             });

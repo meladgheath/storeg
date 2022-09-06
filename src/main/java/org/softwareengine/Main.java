@@ -2,11 +2,14 @@ package org.softwareengine;
 
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import org.softwareengine.core.controller.loginController;
 import org.softwareengine.core.model.Paths;
 import org.softwareengine.core.controller.HomeController;
+
 
 
 import java.io.*;
@@ -21,11 +24,11 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        HomeController control = new HomeController();
+    public void start(Stage primaryStage) throws FileNotFoundException {
+      /*  HomeController control = new HomeController();
         primaryStage.setScene(control.view.getScene());
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Paths.ICONS.getPath()))));
-
+*/
         if (!checkDB()) {
             try {
                 putItThere();
@@ -34,7 +37,11 @@ public class Main extends Application {
             }
         }
 
-        primaryStage.show();
+//        primaryStage.show();
+        loginController control = new loginController(primaryStage);
+//        primaryStage.setScene(control.view.getScene());
+//        primaryStage.show();
+
 
     }
 
