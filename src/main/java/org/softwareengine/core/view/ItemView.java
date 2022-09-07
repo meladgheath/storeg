@@ -72,25 +72,13 @@ import javafx.scene.text.Text;
 
             down.getChildren().add(nameTex) ;
             down.getChildren().add(name);
-
             down.getChildren().add(codeTex);
             down.getChildren().add(code);
-
             down.getChildren().add(typeTex);
             down.getChildren().add(type) ;
             down.getChildren().add(Vtype);
-
-
-//            right.add(new Text("pakcage  : "),0,2);
-//            right.add(packages,1,2);
-
-
-//            right.add(saveButton,1,3);
-
             down.getChildren().add(saveButton);
             down.getChildren().add(printButton);
-
-//            saveButton.setMinWidth(root.getPrefWidth());
 
             HBox right2 = new HBox();
             right2.getChildren().add(line);
@@ -105,15 +93,9 @@ import javafx.scene.text.Text;
             pane.setCenter(tableView);
             pane.setBottom(down);
 
-
-
             root.setPadding(new Insets(20));
             root.setSpacing(5);
-
-
             root.getChildren().add(pane);
-
-
         }
         public StackPane getRoot() {
             pane = new StackPane();

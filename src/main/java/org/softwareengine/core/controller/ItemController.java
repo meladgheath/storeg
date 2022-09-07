@@ -10,23 +10,17 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-
-//import net.sf.jasperreports.engine.*;
-//import net.sf.jasperreports.view.JasperViewer;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.view.JasperViewer;
 import org.softwareengine.core.model.Item;
 import org.softwareengine.config.languages;
 
-import org.softwareengine.core.model.Transaction;
 import org.softwareengine.core.model.type;
 import org.softwareengine.core.view.ItemView;
 
 import org.softwareengine.utils.ui.FXDialog;
-import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 import org.softwareengine.utils.ui.updateItem;
-
 
 import java.io.FileNotFoundException;
 import java.sql.SQLException;

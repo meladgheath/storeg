@@ -244,7 +244,8 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
-                    dialog.listView.getItems().clear();
+//                    dialog.listView.getItems().clear();
+                    dialog.listView.getItems().removeAll(dialog.listView.getItems());
 
                     int id = Integer.parseInt(dialog.textField.getText()) ;
 
@@ -254,10 +255,13 @@ public class noticController {
 
                     try {
                         int size = model.getInfoWHEREref().size();
-                        System.out.println(size);
                         System.out.println(dialog.textField.getText());
                         ref = model.getInfoWHEREref().get(0).getReferenceNumber();
-                        dialog.listView.getItems().add(model.getInfoWHEREref().get(0).getName());
+//                        dialog.listView.getItems().add(model.getInfoWHEREref().get(0).getName());
+
+                        int i = 0 ;
+                        while (i < size)
+                        dialog.listView.getItems().add(model.getInfoWHEREref().get(i++).getName());
 
                     } catch (SQLException e) {
                         e.printStackTrace();
@@ -345,14 +349,9 @@ public class noticController {
 
         private void ListEvent(String thing) {
 
-
             int index;
 
-
             index = dialog.listView.getSelectionModel().getSelectedIndex();
-
-
-
             Item item   = new Item();
             Store store  = new Store();
             banks bank = new banks();
@@ -376,9 +375,8 @@ public class noticController {
                     case "store" :
                         System.out.println("where ref is  . "+ref);
                         bank.setReferenceNumber(ref);
-                        bankID = bank.getInfoWHEREref().get(0).getId();
-
-                        view.bank.setText(bank.getInfoWHEREref().get(0).getName());
+                        bankID = bank.getInfoWHEREref().get(index).getId();
+                        view.bank.setText(bank.getInfoWHEREref().get(index).getName());
 
                         break;
                     case "banks" :
@@ -447,10 +445,8 @@ public class noticController {
                         Amount model = new Amount();
                         System.out.println(storeID);
                         model.setId(storeID);
-//                    model.setName(t.getText());
                         model.update();
                         System.out.println("data is updated . . . ");
-//                    dialog.dialog.close();
                         getTableDetail();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -504,6 +500,7 @@ public class noticController {
                             view.num.clear();
                             view.item.clear();
                             view.bank.clear();
+                            view.date.getEditor().clear();
 
                             getTableDetail();
 

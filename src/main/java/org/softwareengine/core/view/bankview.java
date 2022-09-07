@@ -1,12 +1,9 @@
 package org.softwareengine.core.view;
 
-import com.jfoenix.controls.JFXButton;
+
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.control.Button;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -32,6 +29,8 @@ public class bankview {
         public Text nameTex ;
         public Text referenceTex ;
 
+        public ContextMenu tableMenu ;
+        public MenuItem update ;
 
 
         public bankview() {
@@ -49,6 +48,11 @@ public class bankview {
             printButton = new Button();
 
 
+            update = new MenuItem();
+
+            tableMenu = new ContextMenu();
+            tableMenu.getItems().add(update);
+
 
             Separator line = new Separator();
             line.setOrientation(Orientation.VERTICAL);
@@ -60,6 +64,8 @@ public class bankview {
             tableView = new TableView();
             tableView.setPrefHeight(700);
             tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+            tableView.setContextMenu(tableMenu);
 
             HBox down = new HBox();
 
@@ -82,6 +88,8 @@ public class bankview {
 
             pane.setCenter(tableView);
             pane.setBottom(down);
+
+
 
             root.setPadding(new Insets(20));
             root.setSpacing(5);

@@ -161,6 +161,20 @@ public class banks {
         }
 
 
+    public void update () throws SQLException {
+
+
+        String sql = "UPDATE banks SET name = ?   WHERE id = "+this.id ;
+
+        DatabaseService.openConnection();
+        PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
+        ps.setString(1, this.name);
+        ps.executeUpdate();
+        DatabaseService.CloseConnection();
+        System.out.println("updated !!");
+
+
+    }
 
         public ObservableList<org.softwareengine.core.model.Item> getInfoID() throws SQLException {
             ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
