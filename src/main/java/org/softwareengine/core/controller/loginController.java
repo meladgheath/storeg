@@ -32,16 +32,9 @@ public class loginController {
         }
         public void initiate () throws FileNotFoundException {
 
-//            primaryStage = new Stage();
-//            primaryStage.setTitle("Login . . .");
-
 
             view = new loginView();
-
-//            view.lock.setImage(new Image(new FileInputStream(Paths.LOCK.getPath())));
             view.lock.setImage(new Image(getClass().getResourceAsStream(Paths.LOCK.getPath())));
-
-
 
             primaryStage.setScene(view.getScene());
             primaryStage.show();

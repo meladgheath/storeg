@@ -78,7 +78,6 @@ public class listview {
             tableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
             tableView.setPrefHeight(800);
-
             tableView.setContextMenu(tableMenu);
 
             item.setDisable (true);
@@ -95,6 +94,7 @@ public class listview {
             line.setOrientation(Orientation.HORIZONTAL);
 
             root.getChildren().add(reportChanger);
+            root.getChildren().add(new Separator());
             root.getChildren().add(top) ;
             root.getChildren().add(line);
             root.getChildren().add(tableView);

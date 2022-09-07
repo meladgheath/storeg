@@ -31,13 +31,14 @@ import java.util.Locale;
         }
         public void initiated() {
 
-            
-
-            Locale lang = new Locale("en") ;
+            //initiated language locale
+            //english init
+//            Locale lang = new Locale("en") ;
+            //arabic init
+            Locale lang = new Locale("ar") ;
             Locale.setDefault(lang);
 
             view = new Home();
-
                 view.itemImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.ITEMS       .getPath())));
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
@@ -46,9 +47,6 @@ import java.util.Locale;
                 view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
                 view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
                 view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
-
-
-
             view.settingButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -59,7 +57,6 @@ import java.util.Locale;
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     onItemButton();
-
                 }
             });
             view.bankButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -73,13 +70,6 @@ import java.util.Locale;
                 @Override
                 public void handle(ActionEvent event) {
                     onListButton();
-                }
-            });
-            view.listOrderButton.setOnAction(new EventHandler<ActionEvent>() {
-               @Override
-               public void handle(ActionEvent event) {
-
-
                 }
             });
             view.disbursementButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -135,31 +125,10 @@ import java.util.Locale;
                     onNoticButton();
                 }
             });
-            view.depthBookButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    onDepthBookButton();
-                }
-            });
-            view.permissionsButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-//                    permissions control = new permissions();
-//                    view.root.setCenter(control.view.getDown());
-                }
-            });
-
         }
-
-
-
         private void onItemButton () {
             ItemController control = new ItemController();
             view.root.setCenter(control.view.getRoot());
-
-            System.out.println("width  = "+view.getScene().getWidth());
-            System.out.println("height = "+view.getScene().getHeight());
-
         }
         private void onListButton() {
             listController control = new listController();
@@ -168,10 +137,6 @@ import java.util.Locale;
         private void onNoticButton() {
             noticController control = new noticController();
             view.root.setCenter(control.view.getRoot());
-        }
-        private void onPurchaseButton() {
-//            Purchase control = new Purchase();
-//            view.root.setCenter(control.view.getRoot());
         }
         private void onDeliveryButton() {
             DeliverController control = new DeliverController();
@@ -189,29 +154,19 @@ import java.util.Locale;
         private void onAmountButton() {
             AmountController control = new AmountController() ;
             view.root.setCenter(control.view.getRoot());
-
         }
         private void onMoneyButton() {
-//            payANDcatch control = new payANDcatch() ;
-//            view.root.setCenter(control.view.getRoot());
         }
         private void onTreasuryButton() {
-//            treasury control = new treasury() ;
-//            view.root.setCenter(control.view.getRoot());
         }
         private void onTypeButton() {
             typeController control = new typeController();
             view.root.setCenter(control.view.getRoot());
-//            employment control = new employment() ;
-//            view.root.setCenter(control.view.getRoot());
         }
         private void onUserButton() {
-//            user control = new user() ;
-//            view.root.setCenter(control.view.getRoot());
         }
         private void onDepthBookButton() {
-//            depthBook control = new depthBook();
-//            view.root.setCenter(control.view.getRoot());
+
         }
         private void onTransactionButton() {
             TransactionController control = new TransactionController();

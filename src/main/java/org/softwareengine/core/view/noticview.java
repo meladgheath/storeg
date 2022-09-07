@@ -37,6 +37,7 @@ public class noticview {
         public Text itemTex   ;
         public Text bankTex   ;
         public Text numberTex ;
+        public Text dateTex   ;
 
 
         public ContextMenu tableMenu ;
@@ -61,6 +62,7 @@ public class noticview {
             itemTex   = new Text();
             bankTex = new Text();
             numberTex = new Text();
+            dateTex   = new Text();
 
             num = new TextField();
 
@@ -123,7 +125,7 @@ public class noticview {
             top.getChildren().add(Vbank);
             top.getChildren().add(numberTex);
             top.getChildren().add(num);
-//            top.getChildren().add(dateTex);
+            top.getChildren().add(dateTex);
             top.getChildren().add(date);
             top.getChildren().add(attuchemnt);
             top.getChildren().add(saveButton);

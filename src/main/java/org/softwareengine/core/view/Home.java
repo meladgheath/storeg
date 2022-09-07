@@ -160,7 +160,7 @@ public class Home {
 
                 right.getChildren().add(noticButton        );
                 right.getChildren().add(listButton         );
-                right.getChildren().add(listOrderButton);
+//                right.getChildren().add(listOrderButton);
                 right.getChildren().add(settingButton      );
 
                 ////////////////////////////////////////////////

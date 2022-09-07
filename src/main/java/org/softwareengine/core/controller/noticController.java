@@ -67,10 +67,10 @@ public class noticController {
             view.itemTex.setText(lang.getWord("item"));
             view.numberTex.setText(lang.getWord("number"));
             view.bankTex.setText(lang.getWord("bank"));
-            view.storeTex.setText(lang.getWord("store"));
+//            view.storeTex.setText(lang.getWord("store"));
             view.saveButton.setText(lang.getWord("save"));
             view.printButton.setText(lang.getWord("print"));
-
+            view.dateTex.setText(lang.getWord("date"));
             view.printMenu.setText(lang.getWord("print"));
             view.detailMenu.setText(lang.getWord("detail"));
             view.downloadMenu.setText(lang.getWord("download"));

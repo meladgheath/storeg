@@ -25,10 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
-      /*  HomeController control = new HomeController();
-        primaryStage.setScene(control.view.getScene());
 
-*/
         if (!checkDB()) {
             try {
                 putItThere();
@@ -37,12 +34,9 @@ public class Main extends Application {
             }
         }
 
-//        primaryStage.show();
+
         loginController control = new loginController(primaryStage);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Paths.ICONS.getPath()))));
-//        primaryStage.setScene(control.view.getScene());
-//        primaryStage.show();
-
 
     }
 
