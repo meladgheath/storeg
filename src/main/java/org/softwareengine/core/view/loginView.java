@@ -13,7 +13,7 @@ public class loginView {
         public TextField userName ;
         public TextField password ;
 
-
+        public VBox root ;
 
         public final Scene scene ;
         public ImageView lock ;
@@ -27,11 +27,11 @@ public class loginView {
 
 
 
-            VBox root = new VBox();
+            root = new VBox();
 
             root.getChildren().add(lock)    ;
             root.getChildren().add(userName);
-            root.getChildren().add(password);
+//            root.getChildren().add(password);
 
             root.setAlignment(Pos.CENTER);
             root.setPadding(new Insets(30));

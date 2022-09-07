@@ -64,9 +64,12 @@ public class loginController {
                         throw new RuntimeException(e);
                     }
 
-                    if (view.userName.getText().equalsIgnoreCase(user.getId()+""))
+                    if (view.userName.getText().equalsIgnoreCase(user.getId()+"")) {
+                        view.root.getChildren().add(view.password) ;
                         view.password.requestFocus();
+                    }
                     else {
+                        view.root.getChildren().remove(view.password);
                         TranslateTransition firstTransition = new TranslateTransition();
                         firstTransition.setNode(view.userName);
                         firstTransition.setToX(10);
