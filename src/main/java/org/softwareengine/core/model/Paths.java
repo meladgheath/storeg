@@ -16,7 +16,7 @@ public enum Paths {
     UNLOCK(iconPath()+"icons8-padlock-512.png"),
     PERMISSIONS(iconPath()+"icons8-user-rights-64.png"),
     LIST(iconPath()+"icons8-list-64.png"),
-    LIST2(iconPath()+"icons8-list-view-64.png"),
+    LOGOUT(iconPath()+"logout.png"),
     ADD(iconPath()+"add.png"),
     PACKAGE(iconPath()+"package.png"),
     DISBURSEMENT(iconPath()+"icons8-bank-card-missing-64.png"),

@@ -147,20 +147,13 @@ public class loginController {
                             transition.setOnFinished(new EventHandler<ActionEvent>() {
                                 @Override
                                 public void handle(ActionEvent event) {
-
-
                                     transition2.play();
-
                                 }
                             });
-
-
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-//                    primaryStage.setScene(view.getScene());
                 }} ;
         }
         public EventHandler<WorkerStateEvent> onSucceeded () {
@@ -168,15 +161,15 @@ public class loginController {
                 @Override
                 public void handle(WorkerStateEvent event) {
 
-                    HomeController control = new HomeController();
+                    HomeController control = new HomeController(primaryStage);
 
                     primaryStage.setScene(control.view.getScene());
 
                     Dimension screensize =Toolkit.getDefaultToolkit().getScreenSize() ;
 
 
-                    double x = (screensize.getWidth()  - primaryStage.getWidth())/2 ;
-                    double y = (screensize.getHeight() - primaryStage.getHeight()  )/2;
+                    double x = (screensize.getWidth ()  - primaryStage.getWidth()) /2 ;
+                    double y = (screensize.getHeight() - primaryStage.getHeight()) /2 ;
 
                     primaryStage.setX(x);
                     primaryStage.setY(y);

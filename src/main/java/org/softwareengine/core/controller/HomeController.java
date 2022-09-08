@@ -4,16 +4,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
+import javafx.stage.Stage;
 import org.softwareengine.core.view.Home;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Paths;
 
+import java.io.FileNotFoundException;
 import java.util.Locale;
 
     public class HomeController {
 
+        public Stage primaryStage ;
         public Home view;
-        public HomeController() {
+        public HomeController(Stage primaryStage) {
+            this.primaryStage = primaryStage ;
             initiated();
             setupLanguages() ;
 
@@ -27,6 +31,7 @@ import java.util.Locale;
         view.bankButton        .setTooltip(new Tooltip(lang.getWord("bank") ));
         view.typesButton       .setTooltip(new Tooltip(lang.getWord("types")));
         view.amountButton      .setTooltip(new Tooltip(lang.getWord("amounts")));
+        view.logoutButton      .setTooltip(new Tooltip(lang.getWord("logout")));
         view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
         public void initiated() {
@@ -43,10 +48,10 @@ import java.util.Locale;
                 view.bankImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.BANKS       .getPath())));
                 view.typesImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.PACKAGE     .getPath())));
                 view.listImageview        .setImage(new Image(getClass().getResourceAsStream(Paths.LIST        .getPath())));
-                view.listOrderImageview   .setImage(new Image(getClass().getResourceAsStream(Paths.LIST2       .getPath())));
-                view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD        .getPath())));
+                view.logoutImageview      .setImage(new Image(getClass().getResourceAsStream(Paths.LOGOUT      .getPath())));
+                view.amountsImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.ADD         .getPath())));
                 view.noticImageview       .setImage(new Image(getClass().getResourceAsStream(Paths.DISBURSEMENT.getPath())));
-                view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING    .getPath())));
+                view.settingImageview     .setImage(new Image(getClass().getResourceAsStream(Paths.SETTING     .getPath())));
             view.settingButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -92,10 +97,10 @@ import java.util.Locale;
             view.moneyButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    onMoneyButton();
+                    onLogoutButton();
                 }
             });
-            view.listOrderButton.setOnAction(new EventHandler<ActionEvent>() {
+            view.logoutButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
                     onTreasuryButton();
@@ -123,6 +128,19 @@ import java.util.Locale;
                 @Override
                 public void handle(ActionEvent event) {
                     onNoticButton();
+                }
+            });
+            view.logoutButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+
+                    primaryStage.close();
+                    try {
+                        new loginController(primaryStage);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 }
             });
         }
@@ -155,7 +173,8 @@ import java.util.Locale;
             AmountController control = new AmountController() ;
             view.root.setCenter(control.view.getRoot());
         }
-        private void onMoneyButton() {
+        private void onLogoutButton() {
+
         }
         private void onTreasuryButton() {
         }

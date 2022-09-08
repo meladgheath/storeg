@@ -33,7 +33,7 @@ public class Home {
             public JFXButton transferButton    ;
             public JFXButton amountButton;
             public JFXButton moneyButton       ;
-            public JFXButton listOrderButton;
+            public JFXButton logoutButton      ;
             public JFXButton typesButton;
             public JFXButton userButton        ;
             public JFXButton transactionButton ;
@@ -50,7 +50,7 @@ public class Home {
             public ImageView transferImageview      ;
             public ImageView amountsImageview       ;
             public ImageView moneyImageview         ;
-            public ImageView listOrderImageview;
+            public ImageView logoutImageview;
             public ImageView typesImageview         ;
             public ImageView userImageview          ;
             public ImageView transactionsImageview  ;
@@ -77,7 +77,7 @@ public class Home {
                 transferButton    = new JFXButton() ;
                 amountButton = new JFXButton() ;
                 moneyButton       = new JFXButton() ;
-                listOrderButton = new JFXButton() ;
+                logoutButton = new JFXButton() ;
                 typesButton = new JFXButton() ;
                 userButton        = new JFXButton() ;
                 transactionButton = new JFXButton() ;
@@ -93,7 +93,7 @@ public class Home {
                 transferImageview     = new ImageView() ;
                 amountsImageview = new ImageView() ;
                 moneyImageview        = new ImageView() ;
-                listOrderImageview = new ImageView() ;
+                logoutImageview = new ImageView() ;
                 typesImageview = new ImageView() ;
                 userImageview         = new ImageView() ;
                 transactionsImageview = new ImageView() ;
@@ -129,8 +129,8 @@ public class Home {
                 moneyButton.setMinWidth(root.getPrefWidth()  );
                 moneyButton.setMinHeight(root.getPrefHeight());
 
-                listOrderButton.setMinWidth(root.getPrefWidth()  );
-                listOrderButton.setMinHeight(root.getPrefHeight());
+                logoutButton.setMinWidth(root.getPrefWidth()  );
+                logoutButton.setMinHeight(root.getPrefHeight());
 
                 typesButton.setMinWidth(root.getPrefWidth()  );
                 typesButton.setMinHeight(root.getPrefHeight());
@@ -160,22 +160,19 @@ public class Home {
 
                 right.getChildren().add(noticButton        );
                 right.getChildren().add(listButton         );
-//                right.getChildren().add(listOrderButton);
+                right.getChildren().add(logoutButton       );
                 right.getChildren().add(settingButton      );
 
                 ////////////////////////////////////////////////
                 HBox allRight = new HBox() ;
                 Separator LineMid = new Separator() ;
                 LineMid.setOrientation(Orientation.VERTICAL);
-
                 LineMid.setStyle("-fx-background-color: #9ACD32;");
 
                 allRight.getChildren().add(LineMid) ;
                 allRight.getChildren().add(right) ;
                 allRight.setStyle("-fx-background-color: rgb(0,200,0)");
-
                 ///////////////////////////////////////////
-
                 ////////////////////////////////////////////////////////
                 root.setRight(allRight);
                 Dimension screensize =Toolkit.getDefaultToolkit().getScreenSize() ;
@@ -201,7 +198,7 @@ public class Home {
                 itemButton        .setGraphic(itemImageview );
                 bankButton        .setGraphic(bankImageview);
                 listButton        .setGraphic(listImageview);
-                listOrderButton   .setGraphic(listOrderImageview);
+                logoutButton      .setGraphic(logoutImageview);
                 disbursementButton.setGraphic(disbursementImageview);
                 transferButton    .setGraphic(transferImageview);
                 amountButton      .setGraphic(amountsImageview);
