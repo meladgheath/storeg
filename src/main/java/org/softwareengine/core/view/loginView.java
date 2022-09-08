@@ -22,17 +22,13 @@ public class loginView {
 
             lock     = new ImageView()     ;
             userName = new TextField()     ;
+            userName.setPromptText("UserName : ");
             password = new PasswordField() ;
-
-
-
-
+            password.setPromptText("Password : ");
             root = new VBox();
 
             root.getChildren().add(lock)    ;
             root.getChildren().add(userName);
-//            root.getChildren().add(password);
-
             root.setAlignment(Pos.CENTER);
             root.setPadding(new Insets(30));
             root.setSpacing(15);
@@ -41,14 +37,9 @@ public class loginView {
             lock.setFitHeight(170);
 
             scene = new Scene(root,361,450);
-
-
         }
 
         public Scene getScene() {
             return scene ;
         }
     }
-
-
-

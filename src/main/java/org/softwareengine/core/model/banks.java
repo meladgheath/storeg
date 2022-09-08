@@ -126,8 +126,6 @@ public class banks {
         }
         return list ;
     }
-
-
     public ObservableList<org.softwareengine.core.model.banks> getInfoWHEREref() throws SQLException {
         ObservableList<banks> list = FXCollections.observableArrayList();
         String sql = "SELECT * FROM banks WHERE ref ='"+this.referenceNumber+"'";

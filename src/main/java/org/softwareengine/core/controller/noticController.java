@@ -492,8 +492,6 @@ public class noticController {
                     model.setNumber(num);
 
                     try {
-
-
                             model.saves();
                             model.update();
 
@@ -522,6 +520,7 @@ public class noticController {
 
                     try {
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
+
                     } catch (JRException e) {
                         e.printStackTrace();
                     } catch (SQLException e) {

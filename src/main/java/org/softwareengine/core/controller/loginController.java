@@ -13,7 +13,8 @@ import org.softwareengine.core.model.user;
 import org.softwareengine.core.view.loginView;
 
 
-import java.awt.*;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.FileNotFoundException;
 import java.sql.SQLException;
 
@@ -35,6 +36,7 @@ public class loginController {
 
             view = new loginView();
             view.lock.setImage(new Image(getClass().getResourceAsStream(Paths.LOCK.getPath())));
+//            view.password.setVisible(false);
 
             primaryStage.setScene(view.getScene());
             primaryStage.show();
@@ -58,6 +60,7 @@ public class loginController {
                     }
 
                     if (view.userName.getText().equalsIgnoreCase(user.getId()+"")) {
+                        if (!view.root.getChildren().contains(view.password))
                         view.root.getChildren().add(view.password) ;
                         view.password.requestFocus();
                     }
