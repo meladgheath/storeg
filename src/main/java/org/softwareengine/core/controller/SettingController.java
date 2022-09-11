@@ -6,17 +6,18 @@ import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 import javafx.stage.FileChooser;
 import org.softwareengine.config.languages;
+import org.softwareengine.core.model.user;
 import org.softwareengine.core.view.SettingView;
 
 
 import java.io.*;
 
+import java.sql.SQLException;
 import java.util.Locale;
 
 public class SettingController {
 
     SettingView view ;
-
 
     public SettingController() {
         view = new SettingView();
@@ -50,11 +51,7 @@ public class SettingController {
 
         view.backUp.setOnAction(onBackupButton());
         view.importDB.setOnAction(onImportDatabaseButton()) ;
-
         view.languages.setOnAction(onLanguageChange());
-
-
-
     }
 
     private void getComboBox() {
@@ -69,12 +66,22 @@ public class SettingController {
             public void handle(ActionEvent event) {
                 Locale locale ;
 
+
                 if (view.languages.getSelectionModel().getSelectedIndex() == 0 )
                     locale = new Locale("ar") ;
                 else
                     locale = new Locale("en");
 
-              Locale.setDefault(locale);
+
+
+
+                try {
+                    Locale.setDefault(locale);
+                    user.setLang(locale.getLanguage());
+                    user.updateLanguages();
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
 //              initiate();
                 setupLanguages();
             }

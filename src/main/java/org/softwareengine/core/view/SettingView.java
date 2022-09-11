@@ -24,16 +24,11 @@ public class SettingView {
 
     public SettingView() {
 
-//        backUp = new Button("BackUp") ;
         backUp = new Button();
-//        importDB = new Button("Import Data");
         importDB = new Button();
-
-
 
         languages = new ComboBox();
         languagesTex = new Text();
-
 
         root = new VBox();
 
@@ -42,22 +37,15 @@ public class SettingView {
         root.getChildren().add(backUp);
         root.getChildren().add(importDB);
 
-        //////////////////////////// languages row
         languagesRow.getChildren().add(languagesTex);
         languagesRow.getChildren().add(languages);
-
-//        languagesRow.setPadding(new Insets(5));
         languagesRow.setSpacing(5);
         languagesRow.setAlignment(Pos.BASELINE_CENTER);
 
         root.getChildren().add(languagesRow) ;
-
-        //////////////////////////////////////////////
-
         root.setAlignment(Pos.BASELINE_CENTER);
         root.setSpacing(12);
         root.setPadding(new Insets(25));
-
     }
 
     public StackPane getRoot() {

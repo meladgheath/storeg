@@ -5,20 +5,27 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.softwareengine.core.model.user;
 import org.softwareengine.core.view.Home;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.Paths;
 
 import java.io.FileNotFoundException;
+import java.sql.SQLException;
 import java.util.Locale;
 
     public class HomeController {
 
         public Stage primaryStage ;
         public Home view;
+
         public HomeController(Stage primaryStage) {
             this.primaryStage = primaryStage ;
-            initiated();
+            try {
+                initiated();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             setupLanguages() ;
 
         }
@@ -34,13 +41,14 @@ import java.util.Locale;
         view.logoutButton      .setTooltip(new Tooltip(lang.getWord("logout")));
         view.settingButton  .setTooltip(new Tooltip(lang.getWord("setting")));
         }
-        public void initiated() {
+        public void initiated() throws SQLException {
 
             //initiated language locale
             //english init
 //            Locale lang = new Locale("en") ;
             //arabic init
-            Locale lang = new Locale("ar") ;
+
+            Locale lang = new Locale(user.getLang()) ;
             Locale.setDefault(lang);
 
             view = new Home();
