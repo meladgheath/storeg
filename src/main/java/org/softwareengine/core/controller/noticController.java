@@ -1,6 +1,5 @@
 package org.softwareengine.core.controller;
-
-
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -27,9 +26,15 @@ import org.softwareengine.utils.ui.FXDialog;
 import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException ;
+import java.io.FileInputStream ;
+import java.io.ByteArrayOutputStream ;
+import java.io.IOException ;
+
 import java.sql.SQLException;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 
 public class noticController {
@@ -46,6 +51,8 @@ public class noticController {
         String ref ;
 
         ByteArrayOutputStream bos ;
+
+        ObservableList<banks> list ;
 
         public noticController() {
             view = new noticview();
@@ -215,6 +222,8 @@ public class noticController {
                     int i = 0;
                     int size = 0;
                     try {
+
+
                         size = bank.getInfo().size();
                         System.out.println("the size is " + size);
 
@@ -244,28 +253,36 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
-//                    dialog.listView.getItems().clear();
+                    banks model = new banks();
                     dialog.listView.getItems().removeAll(dialog.listView.getItems());
 
-                    int id = Integer.parseInt(dialog.textField.getText()) ;
+                    if (Pattern.matches("[0-9]+",dialog.textField.getText())) {
+                        try {
+                            int id = Integer.parseInt(dialog.textField.getText()) ;
+                            model.setReferenceNumber(dialog.textField.getText());
+                            list = model.getInfoWHEREref();
+                            ref = model.getInfoWHEREref().get(0).getReferenceNumber();
+                        } catch (SQLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }else
+                        if (Pattern.matches("[\\w|\\W]+",dialog.textField.getText()))
+                        {
+                            try {
+                                model.setName(dialog.textField.getText());
+                                list = model.getWHERElike();
+                            } catch (SQLException e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
 
-                    banks model = new banks();
-                    model.setReferenceNumber(dialog.textField.getText());
-                    System.out.println(model.getReferenceNumber());
 
-                    try {
-                        int size = model.getInfoWHEREref().size();
-                        System.out.println(dialog.textField.getText());
-                        ref = model.getInfoWHEREref().get(0).getReferenceNumber();
-//                        dialog.listView.getItems().add(model.getInfoWHEREref().get(0).getName());
+                    int size = list.size();
 
-                        int i = 0 ;
-                        while (i < size)
-                        dialog.listView.getItems().add(model.getInfoWHEREref().get(i++).getName());
+                    int i = 0 ;
+                    while (i < size)
+                    dialog.listView.getItems().add(list.get(i++).getName());
 
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
                     dialog.listView.setOnKeyPressed(OnListPressed("store"));
                     dialog.listView.setOnMouseClicked(OnMouseClick("store"));
                 }
@@ -373,10 +390,12 @@ public class noticController {
                         getTableDetail();
                         break;
                     case "store" :
-                        System.out.println("where ref is  . "+ref);
+
                         bank.setReferenceNumber(ref);
-                        bankID = bank.getInfoWHEREref().get(index).getId();
-                        view.bank.setText(bank.getInfoWHEREref().get(index).getName());
+//                        bankID = bank.getInfoWHEREref().get(index).getId();
+                        bankID = list.get(index).getId();
+//                        view.bank.setText(bank.getInfoWHEREref().get(index).getName());
+                        view.bank.setText(list.get(index).getName());
 
                         break;
                     case "banks" :
