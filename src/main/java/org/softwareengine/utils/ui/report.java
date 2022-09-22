@@ -233,10 +233,7 @@ public class report {
         JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
 
         return print ;
-
     }
-
-
     public JasperPrint getCoffee (Transaction model) throws JRException, FileNotFoundException, SQLException {
 
 
@@ -249,38 +246,10 @@ public class report {
 
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
 
-       /* List<Transaction> list = new ArrayList<Transaction>();
 
-        Transaction model = new Transaction();
-
-
-        int size = model.getInfo().size();
-
-        for (int i=0 ; i < size ; i++) {
-            Transaction temp = new Transaction();
-
-            temp.setId(model.getInfoTransactions().get(i).getId());
-            temp.setItem(model.getInfoTransactions().get(i).getItem());
-            temp.setStore(model.getInfoTransactions().get(i).getStore());
-            temp.setBank(model.getInfoTransactions().get(i).getBank());
-            temp.setNumber(model.getInfoTransactions().get(i).getNumber());
-            temp.setDate(model.getInfoTransactions().get(i).getDate());
-
-
-            list.add(temp) ;
-
-        }
-
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
-*/
-//        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(WhenNoDataTypeEnum.NO_DATA_SECTION);
         reports.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
         Map<String,Object> para = new HashMap<>();
-//        para.put("number",model.getNumber()) ;
-//        para.put("item",model.getItem());
-//        para.put("store",model.getStore());
-//        para.put("bank",model.getBank());
-//        para.put("date",model.getDate());
+
         para.put("name","name");
 
 

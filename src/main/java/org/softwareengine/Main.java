@@ -49,9 +49,9 @@ public class Main extends Application {
         InputStream in = Main.class.getResourceAsStream("/database/db.db") ;
         OutputStream out = new FileOutputStream(System.getProperty("user.home")+"/db.db");
         int i  ;
-
-        while ((i=in.read()) != -1)
-            out.write(i);
+        byte[] buf = new byte[1024] ;
+        while ((i=in.read(buf)) != -1)
+            out.write(buf , 0 , i);
 
         out.close();
         in.close();

@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ public class SettingView {
     public ComboBox languages ;
 
     public Text   languagesTex ;
+    public ProgressBar progressBar ;
 
     public SettingView() {
 
@@ -31,6 +33,7 @@ public class SettingView {
         languagesTex = new Text();
 
         root = new VBox();
+        progressBar = new ProgressBar();
 
         HBox languagesRow = new HBox();
 
@@ -43,6 +46,8 @@ public class SettingView {
         languagesRow.setAlignment(Pos.BASELINE_CENTER);
 
         root.getChildren().add(languagesRow) ;
+//        root.getChildren().add(progressBar);
+
         root.setAlignment(Pos.BASELINE_CENTER);
         root.setSpacing(12);
         root.setPadding(new Insets(25));

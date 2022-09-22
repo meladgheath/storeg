@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 
 import javafx.geometry.NodeOrientation;
 import javafx.stage.FileChooser;
+import org.softwareengine.Main;
 import org.softwareengine.config.languages;
 import org.softwareengine.core.model.user;
 import org.softwareengine.core.view.SettingView;
@@ -107,16 +108,19 @@ public class SettingController {
                 File location = saveBox.showSaveDialog(null);
 
 
-                InputStream file =  getClass().getResourceAsStream("/database/Me.db");
+                InputStream file =  getClass().getResourceAsStream("/database/db.db");
                 OutputStream out  = null ;
 
+                int j = 0 ;
                 try {
                     out = new FileOutputStream(location) ;
 
 
                     int i ;
-                    while ((i=file.read())!= -1 )
-                        out.write(i);
+                    byte[] buf = new byte[1024] ;
+
+                    while ((i=file.read(buf))!= -1 )
+                        out.write(buf,0,i);
 
                     file.close();
 
@@ -126,6 +130,7 @@ public class SettingController {
                     e.printStackTrace();
                 }
 
+                System.out.println("the j is "+j);
 
 
             }
@@ -153,23 +158,41 @@ public class SettingController {
                 File location  = openBox.showOpenDialog(null) ;
 
 
-                // InputStream file =  getClass().getResourceAsStream("/database/Me.db");
+
                 InputStream file = null ;
-                // OutputStream out  = getClass().getResourceAsStream("/database/Me.db"); ;
+
                 OutputStream out = null ;
 
                 try {
 
-                    System.out.println(getClass().getResource("/database/Me.db").getFile());
+
                     file = new FileInputStream(location);
-                    out = new FileOutputStream(getClass().getResource("/database/Me.db").getFile()) ;
+                    out = new FileOutputStream(getClass().getResource("/database/db.db").getFile()) ;
 
 
                     int i ;
-                    while ((i=file.read())!= -1 )
-                        out.write(i);
+                    byte[] buf = new byte[1024] ;
+
+                    while ((i=file.read(buf))!= -1 )
+                        out.write(buf,0,i);
+                    System.out.println("file imported !");
 
                     file.close();
+
+
+                    File db = new File(System.getProperty("user.home")+"/db.db") ;
+                    System.out.println("File delete : "+db.delete());
+
+
+                    InputStream in = getClass().getResourceAsStream("/database/db.db") ;
+
+                    OutputStream ou = new FileOutputStream(System.getProperty("user.home")+"/db.db");
+
+                    while ((i=in.read(buf)) != -1)
+                        ou.write(buf,0,i);
+
+
+                    in.close();
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
