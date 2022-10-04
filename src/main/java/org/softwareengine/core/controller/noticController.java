@@ -436,15 +436,12 @@ public class noticController {
         private void delelteRecord(int index) {
             Transaction model = new Transaction();
             try {
-                ObservableList<Transaction> trans = view.tableView.getItems() ;
+//                ObservableList<Transaction> trans = view.tableView.getItems() ;
 
-                System.out.println(trans.get(index).getId());
-                System.out.println(trans.get(index).getBank());
-                System.out.println(trans.get(index).getItem());
-                System.out.println(trans.get(index).getNumber());
-                System.out.println(trans.get(index).getDate());
+                 Transaction trans = (Transaction) view.tableView.getItems().get(index) ;
 
-                model.setId(trans.get(index).getId());
+
+                model.setId(trans.getId());
                 model.delete();
                 getTableDetail();
             } catch (SQLException e) {
