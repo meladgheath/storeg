@@ -13,7 +13,7 @@ import java.sql.Statement;
 public class Transaction {
 
     private int id;
-
+    private int seq ;
     private int itemID;
     private int storeID;
     private int bankID;
@@ -28,6 +28,14 @@ public class Transaction {
 
     private ByteArrayOutputStream img ;
 
+
+    public int getSeq() {
+        return seq;
+    }
+
+    public void setSeq(int seq) {
+        this.seq = seq;
+    }
 
     public int getUserid() {
         return userid;
@@ -349,6 +357,40 @@ public void getImagess(File file) throws SQLException, IOException {
             Transaction one = new Transaction();
 
             one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
+    public ObservableList<Transaction> getInfoORDERBYdate() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = """
+                SELECT id , (SELECT name FROM banks WHERE id = bank) as bank ,
+                (SELECT name FROM item WHERE id = item ) as item ,
+                 number , date
+                 FROM transactionss ORDER BY date
+                 """;
+//        order by date desc
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setSeq(++i);
+            one.setId(resultSet.getInt("id"));
             one.setItem(resultSet.getString("item"));
             one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));

@@ -132,7 +132,7 @@ public class noticController {
             TableColumn<String, Transaction> date = new TableColumn<>();
 
 
-            id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            id.setCellValueFactory(new PropertyValueFactory<>("seq"));
             item.setCellValueFactory(new PropertyValueFactory<>("item"));
             num.setCellValueFactory(new PropertyValueFactory<>("number"));
             bank.setCellValueFactory(new PropertyValueFactory<>("bank"));
@@ -153,11 +153,8 @@ public class noticController {
         }
 
         private void getTableDetail() throws SQLException {
-
             Transaction model = new Transaction();
-
-            view.tableView.setItems(model.getInfoTransactionss());
-
+            view.tableView.setItems(model.getInfoORDERBYdate());
         }
 
         private EventHandler<KeyEvent> onNumTextPressed () {
@@ -439,7 +436,15 @@ public class noticController {
         private void delelteRecord(int index) {
             Transaction model = new Transaction();
             try {
-                model.setId(new Transaction().getInfoTransactionssID().get(index).getId());
+                ObservableList<Transaction> trans = view.tableView.getItems() ;
+
+                System.out.println(trans.get(index).getId());
+                System.out.println(trans.get(index).getBank());
+                System.out.println(trans.get(index).getItem());
+                System.out.println(trans.get(index).getNumber());
+                System.out.println(trans.get(index).getDate());
+
+                model.setId(trans.get(index).getId());
                 model.delete();
                 getTableDetail();
             } catch (SQLException e) {
