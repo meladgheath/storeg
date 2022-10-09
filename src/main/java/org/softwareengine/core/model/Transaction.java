@@ -151,6 +151,7 @@ public class Transaction {
     public void update () throws SQLException {
         String sql = "UPDATE transactionss SET item = ? , bank = ? , number = ? , date = ?  WHERE id = "+this.id ;
 
+        System.out.println(id + " the id is here ");
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
         ps.setInt(1, this.itemID);
@@ -244,6 +245,39 @@ public void getImagess(File file) throws SQLException, IOException {
         in.close();
 
         DatabaseService.CloseConnection();
+
+    }
+
+    public InputStream getImage() throws SQLException, IOException {
+
+        String sql = "SELECT img from transactionss where id =  "+this.id;
+
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        InputStream in = null;
+        OutputStream out ;
+        int i = 0;
+        while (resultSet.next()){
+            in = resultSet.getBinaryStream(1);
+
+        }
+
+//        System.out.println(file.getPath());
+//        out = new FileOutputStream(file) ;
+//        int readnum = 0 ;
+//
+//        while ((readnum = in.read()) > -1 )
+//            out.write(readnum);
+//
+//        out.close();
+//        in.close();
+
+        DatabaseService.CloseConnection();
+
+        return in ;
 
     }
 

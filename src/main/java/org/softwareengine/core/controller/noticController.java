@@ -26,11 +26,7 @@ import org.softwareengine.utils.ui.FXDialog;
 import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
-import java.io.File;
-import java.io.FileNotFoundException ;
-import java.io.FileInputStream ;
-import java.io.ByteArrayOutputStream ;
-import java.io.IOException ;
+import java.io.*;
 
 import java.sql.SQLException;
 import java.util.Locale;
@@ -105,8 +101,10 @@ public class noticController {
             view.Vitem.setOnAction(onItem_V_Action("item"));
             view.Vstore.setOnAction(onStore_V_Action());
             view.Vbank.setOnAction(onBank_V_Action("banks"));
+
             view.tableView.setOnKeyPressed(onTablePressed());
             view.tableView.setOnMouseClicked(ontableClick());
+
             view.saveButton.setOnAction(OnSaveButton());
             view.printButton.setOnAction(onPrintButton());
             view.printMenu.setOnAction(onPrintMenu());
@@ -122,13 +120,9 @@ public class noticController {
 
 
             TableColumn<Integer, Transaction> id = new TableColumn<>();
-
             TableColumn<String, Transaction> item = new TableColumn<>();
-
             TableColumn<String, Transaction> bank = new TableColumn<>();
-
             TableColumn<String, Transaction> num = new TableColumn<>();
-
             TableColumn<String, Transaction> date = new TableColumn<>();
 
 
@@ -317,9 +311,7 @@ public class noticController {
                 }
             };
 
-
         }
-
 
         private EventHandler<KeyEvent> OnListPressed(String thing){
             return new EventHandler<KeyEvent>() {
@@ -357,6 +349,8 @@ public class noticController {
                     if (event.isSecondaryButtonDown())
                         view.tableMenu.show(view.tableView,event.getScreenX(),event.getScreenY());
 
+                    if (!(view.tableView.getSelectionModel().getSelectedIndex() == -1) )
+                        image();
                 }
             } ;
         }
@@ -402,8 +396,10 @@ public class noticController {
                     case "itemUpdate":
                         Item update = new Item();
 
+
                         itemID = update.getInfoID().get(index).getId() ;
-                        itemName = update.getInfoID().get(index).getName();
+//                        itemName = update.getInfoID().get(index).getName();
+                        itemName = dialog.listView.getItems().get(index);
                         updateDialog.item.setText(itemName);
 
                         break;
@@ -417,11 +413,35 @@ public class noticController {
             }
 
         }
+        public void image()  {
 
+            int index = view.tableView.getSelectionModel().getSelectedIndex();
+
+                Transaction model = (Transaction) view.tableView.getItems().get(index);
+                model.setId(model.getId());
+
+            InputStream inputStream = null;
+            try {
+                inputStream = model.getImage();
+                System.out.println("here man ");
+                view.imageView.setImage(new Image(inputStream));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }catch (NullPointerException e) {
+                view.imageView.setImage(null);
+                throw new RuntimeException(e) ;
+            }
+
+        }
         private EventHandler<KeyEvent> onTablePressed () {
             return new EventHandler<KeyEvent>() {
                 @Override
                 public void handle(KeyEvent event) {
+
+                    if (!(view.tableView.getSelectionModel().getSelectedIndex() == -1) )
+                        image();
 
 
                     if (!(event.getCode() == KeyCode.DELETE))
@@ -429,21 +449,20 @@ public class noticController {
 
                     int index = view.tableView.getSelectionModel().getSelectedIndex();
                     delelteRecord(index);
-
                 }} ;
         }
+
+
 
         private void delelteRecord(int index) {
             Transaction model = new Transaction();
             try {
-//                ObservableList<Transaction> trans = view.tableView.getItems() ;
-
                  Transaction trans = (Transaction) view.tableView.getItems().get(index) ;
-
 
                 model.setId(trans.getId());
                 model.delete();
-                getTableDetail();
+
+                view.tableView.getItems().remove(trans);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -461,13 +480,10 @@ public class noticController {
 
                     TextField t = (TextField) event.getSource() ;
 
-
                     try {
                         Amount model = new Amount();
-                        System.out.println(storeID);
                         model.setId(storeID);
                         model.update();
-                        System.out.println("data is updated . . . ");
                         getTableDetail();
                     } catch (SQLException throwables) {
                         throwables.printStackTrace();
@@ -475,7 +491,6 @@ public class noticController {
 
                 }
             };
-
         }
 
         private boolean get() {
@@ -502,26 +517,32 @@ public class noticController {
 
 
                     Transaction model = new Transaction();
+
+
                     model.setItemID(itemID);
+                    model.setItem(view.item.getText());
                     model.setStoreID(storeID);
                     model.setBankID(bankID);
                     model.setDate(view.date.getValue().toString());
+                    model.setBank(view.bank.getText());
+
+                    model.setSeq(view.tableView.getItems().size()+1) ;
 
                     model.setImg((bos == null) ? null : bos);
 
                     int num = Integer.parseInt(view.num.getText());
                     model.setNumber(num);
 
+
                     try {
                             model.saves();
-                            model.update();
 
                             view.num.clear();
                             view.item.clear();
                             view.bank.clear();
                             view.date.getEditor().clear();
-
-                            getTableDetail();
+//                            getTableDetail();
+                        view.tableView.getItems().add(model);
 
                         } catch (SQLException ex) {
                         ex.printStackTrace();
@@ -561,14 +582,7 @@ public class noticController {
 
 
                     Transaction transaction = new Transaction();
-                    try {
-                        System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getNumber());
-                        System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getItem());
-                        System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getStore());
-                        System.out.println(transaction.getInfoTransactionsID().get(view.tableView.getSelectionModel().getSelectedIndex()).getBank());
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
+
                     try {
                         transaction = transaction.getInfoTransactions().get(view.tableView.getSelectionModel().getSelectedIndex());
                         JasperViewer.viewReport(re.getCoffee(transaction),false);
@@ -677,7 +691,11 @@ public class noticController {
 
 
                 try {
-                    int id = model.getInfoTransactionssID().get(index).getId();
+
+                    Transaction transaction = (Transaction) view.tableView.getItems().get(index);
+                    int id = transaction.getId();
+
+
                     model.setId(id);
                     model.setBankID(bankID);
                     model.setItemID(itemID);
@@ -704,11 +722,6 @@ public class noticController {
                 public void handle(ActionEvent event) {
 
 
-
-
-
-                    if (1==1)
-                        return;
 
                     view.saveButton.setDisable(true);
                     view.printButton.setDisable(true);

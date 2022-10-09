@@ -4,15 +4,21 @@ import com.jfoenix.controls.JFXButton;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.softwareengine.core.model.Paths;
+
 
 public class noticview {
 
         public static StackPane pane ;
         public VBox root;
+        public BorderPane Root ;
 
         public TextField store ;
         public TextField item  ;
@@ -48,6 +54,7 @@ public class noticview {
         public MenuItem updateMenu   ;
         public MenuItem deleteMenu   ;
 
+        public ImageView imageView ;
 
         public noticview() {
 
@@ -69,6 +76,9 @@ public class noticview {
             num.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
             date = new DatePicker();
+
+            imageView = new ImageView();
+
 
 
             saveButton  = new Button();
@@ -139,14 +149,23 @@ public class noticview {
             Separator line = new Separator();
             line.setOrientation(Orientation.HORIZONTAL);
 
-            root.getChildren().add(tableView);
+
+            Root = new BorderPane();
+            Root.setRight(new StackPane(imageView));
+            Root.setCenter(tableView);
+
+            root.getChildren().add(Root);
             root.getChildren().add(line);
             root.getChildren().add(top) ;
+
+
+
 
         }
         public StackPane getRoot() {
             pane = new StackPane();
             pane.getChildren().add(root);
+//            pane.getChildren().add(Root);
             return pane ;
         }
     }
