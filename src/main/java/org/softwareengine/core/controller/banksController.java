@@ -1,5 +1,6 @@
 package org.softwareengine.core.controller;
 
+import com.google.zxing.WriterException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -20,6 +21,7 @@ import org.softwareengine.utils.ui.report;
 import org.softwareengine.utils.ui.updateItem;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Locale;
 
@@ -246,13 +248,17 @@ public class banksController {
                 report re = new report();
 
                 try {
-                    JasperViewer.viewReport(re.getBankBranchs(),false);
+                    JasperViewer.viewReport(re.getBankBranchs(view.tableView.getItems()),false);
                 } catch (JRException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                } catch (WriterException e) {
+                    throw new RuntimeException(e);
                 }
                 System.out.println("Done here man . . .");
             }

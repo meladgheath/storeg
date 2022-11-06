@@ -557,6 +557,8 @@ public class DeliverController {
                     e.printStackTrace();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
                 System.out.println("Done here man . . .");
             }

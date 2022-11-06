@@ -1,4 +1,6 @@
 package org.softwareengine.core.controller;
+import com.google.zxing.WriterException;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -9,9 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.stage.FileChooser;
 
 import net.sf.jasperreports.engine.JRException;
@@ -114,6 +114,25 @@ public class noticController {
             view.deleteMenu.setOnAction(onDeleteMenu());
             view.attuchemnt.setOnAction(onAttu());
 
+
+            view.tableView.getItems().addListener(onTableviewChangeReverse());
+
+        }
+
+        private ListChangeListener onTableviewChangeReverse() {
+            return new ListChangeListener() {
+                @Override
+                public void onChanged(Change c) {
+
+              ObservableList<Transaction> transactions = view.tableView.getItems();
+
+              int size = transactions.size();
+              int i = 0 ;
+              while (i < size)
+                  transactions.get(i).setSeq(++i);
+              view.tableView.setItems(transactions);
+                }
+            };
         }
 
         private void getTableColum() throws SQLException {
@@ -204,6 +223,8 @@ public class noticController {
                 @Override
                 public void handle(ActionEvent event) {
 
+
+
                     dialog = new FXDialog(view.pane, "Banks List . . . ",true);
 
 
@@ -221,25 +242,18 @@ public class noticController {
                         while (i < size)
                             dialog.listView.getItems().add(bank.getInfo().get(i++).getName());
 
-
-
                         dialog.show();
                         dialog.listView.setOnKeyPressed(OnListPressed(name));
                         dialog.listView.setOnMouseClicked(OnMouseClick(name));
-
-                        dialog.textField.setOnAction(DialogTextField());
-
+                        dialog.textField.setOnAction(DialogTextField(name));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
                 }
             };
-
-
         }
 
-        private EventHandler<ActionEvent> DialogTextField() {
+        private EventHandler<ActionEvent> DialogTextField(String name ) {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -274,8 +288,8 @@ public class noticController {
                     while (i < size)
                     dialog.listView.getItems().add(list.get(i++).getName());
 
-                    dialog.listView.setOnKeyPressed(OnListPressed("store"));
-                    dialog.listView.setOnMouseClicked(OnMouseClick("store"));
+                    dialog.listView.setOnKeyPressed(OnListPressed(name));
+                    dialog.listView.setOnMouseClicked(OnMouseClick(name));
                 }
             } ;
         }
@@ -389,6 +403,11 @@ public class noticController {
                         view.bank.setText(list.get(index).getName());
 
                         break;
+                    case "onUpdate" :
+                        bank.setReferenceNumber(ref);
+                        bankID = list.get(index).getId();
+                        updateDialog.bank.setText(list.get(index).getName());
+                        break;
                     case "banks" :
                         bankID = bank.getInfoIDs().get(index).getId() ;
                         view.bank.setText(bank.getInfoIDs().get(index).getName());
@@ -423,15 +442,16 @@ public class noticController {
             InputStream inputStream = null;
             try {
                 inputStream = model.getImage();
-                System.out.println("here man ");
+
                 view.imageView.setImage(new Image(inputStream));
+//                view.imageView.setFitWidth(180);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }catch (NullPointerException e) {
                 view.imageView.setImage(null);
-                throw new RuntimeException(e) ;
+//                view.imageView.setFitWidth(0);
             }
 
         }
@@ -452,8 +472,6 @@ public class noticController {
                 }} ;
         }
 
-
-
         private void delelteRecord(int index) {
             Transaction model = new Transaction();
             try {
@@ -466,9 +484,7 @@ public class noticController {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
         }
-
 
         private EventHandler<KeyEvent> onUpdate() {
             return new EventHandler<KeyEvent>() {
@@ -565,10 +581,12 @@ public class noticController {
 
                     } catch (JRException e) {
                         e.printStackTrace();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (WriterException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             };
@@ -592,6 +610,8 @@ public class noticController {
                         e.printStackTrace();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             };
@@ -618,8 +638,6 @@ public class noticController {
                     Transaction model = new Transaction();
                     try {
                         model.setId(model.getInfoTransactionssID().get(index).getId());
-
-                        System.out.println("Error . . . .");
                         System.out.println(index);
                         System.out.println(model.getInfoTransactionssID().get(index).getId());
                         System.out.println(model.getId());
@@ -630,7 +648,7 @@ public class noticController {
 
                     FileChooser file = new FileChooser();
                     file.setInitialFileName("doc.png");
-//                    file.setSelectedExtensionFilter(new FileChooser.ExtensionFilter("*.png"));
+
 
                     try {
 
@@ -652,16 +670,13 @@ public class noticController {
             @Override
             public void handle(ActionEvent event) {
 
-//                String update = {}
-//                UpdateDialog dialog = new UpdateDialog();
-//                dialog.show();
-
                  updateDialog = new UpdateDialog(view.pane,"update :") ;
 
                 updateDialog.Vitem.setOnAction(onItem_V_Action("itemUpdate"));
-                updateDialog.Vbank.setOnAction(onBank_V_Action("bankUpdate"));
+                updateDialog.Vbank.setOnAction(onBank_V_Action("onUpdate"));
 
                 updateDialog.update.setOnAction(onUpdateAction());
+//                dialog.textField.setOnAction(DialogTextField("onUpdate"));
 
                 updateDialog.show();
 
@@ -690,29 +705,26 @@ public class noticController {
                 int index = view.tableView.getSelectionModel().getSelectedIndex();
 
 
+                Transaction transaction = (Transaction) view.tableView.getItems().get(index);
+
+                view.tableView.getItems().remove(transaction);
+
+                transaction.setBankID(bankID);
+                transaction.setItemID(itemID);
+                transaction.setDate(updateDialog.date.getValue().toString());
+                transaction.setNumber(Integer.parseInt(updateDialog.number.getText()));
+
+
+                transaction.setItem(updateDialog.item.getText());
+                transaction.setBank(updateDialog.bank.getText());
+
                 try {
-
-                    Transaction transaction = (Transaction) view.tableView.getItems().get(index);
-                    int id = transaction.getId();
-
-
-                    model.setId(id);
-                    model.setBankID(bankID);
-                    model.setItemID(itemID);
-                    model.setDate(updateDialog.date.getValue().toString());
-                    model.setNumber(Integer.parseInt(updateDialog.number.getText()));
-
-                    model.update();
-
+                    transaction.update();
                     updateDialog.dialog.close();
-                    getTableDetail();
-
+                    view.tableView.getItems().add(transaction);
                 } catch (SQLException e) {
                     throw new RuntimeException(e);
                 }
-
-
-
             }
         };
     }

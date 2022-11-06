@@ -1,8 +1,10 @@
 package org.softwareengine.core.controller;
 
+import com.google.zxing.WriterException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
@@ -38,15 +40,12 @@ public class listController {
         public listController() {
             view = new listview();
 
-
             try {
                 initiate();
                 setupLanguages() ;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
-
-
         }
 
         private void setupLanguages() {
@@ -61,6 +60,9 @@ public class listController {
             view.detailMenu.setText(lang.getWord("detail"));
             view.downloadMenu.setText(lang.getWord("download"));
             view.updateMenu.setText(lang.getWord("update"));
+
+            view.dateToTex.setText(lang.getWord("to"));
+            view.dateFromTex.setText(lang.getWord("from"));
 
             view.reportChanger.getItems().add(lang.getWord("reportBank"));
             view.reportChanger.getItems().add(lang.getWord("reportItem"));
@@ -89,7 +91,11 @@ public class listController {
             view.Vbank.setOnAction(onBank_V_Action("banks"));
             view.tableView.setOnMouseClicked(ontableClick());
 
+            view.dateFrom.setOnAction(onDates());
+            view.dateTo.setOnAction(onDates());
             view.printButton.setOnAction(onPrintButton());
+
+
             view.reportChanger.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
@@ -118,10 +124,49 @@ public class listController {
                 }
             });
 
-//            view.checkBox.setOnAction(onCheck());
-//            view.orderby.setOnAction(onOrderBy());
+
+        }
+
+        private EventHandler<ActionEvent> onDates () {
+            return new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Transaction model = new Transaction();
+
+                    try {
+
+                        if (event.getSource().equals(view.dateTo))
+                            if (view.dateFrom.getEditor().getText().length()==0)
+                            {
+                                model.setDate(view.dateTo.getValue().toString());
+                                model.setItemID(itemID);
+                                view.tableView.setItems(model.getInfoWHEREitemIDWithLastDate());
+                                return;
+                            }
+                        if (event.getSource().equals(view.dateFrom))
+                            if (view.dateTo.getEditor().getText().length()==0){
+                                model.setDate_from(view.dateFrom.getValue().toString());
+                                model.setItemID(itemID);
+                                view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
+                                return;
+                            }
 
 
+                        if (event.getSource().equals(view.dateFrom) || event.getSource().equals(view.dateTo))
+                        if (view.dateFrom.getEditor().getText().length()>0 && view.dateTo.getEditor().getText().length()>0)
+                        {
+                            model.setDate_to(view.dateTo.getValue().toString());
+                            model.setDate_from(view.dateFrom.getValue().toString());
+                            model.setItemID(itemID);
+                            view.tableView.setItems(model.getInfoWHEREitemIDWithTwoDate());
+                            return;
+                        }
+
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            };
         }
 
         private EventHandler<ActionEvent> onOrderBy() {
@@ -216,8 +261,25 @@ public class listController {
 
             switch (name) {
                 case "item" :
+
+//                    boolean isDate = false ;
+//                    if (view.dateFrom.getEditor().getText().length()>0)
+//                        model.setDate_from(view.dateFrom.getEditor().getText());
+//                    if (view.dateTo.getEditor().getText().length()>0)
+//                        model.setDate_to(view.dateTo.getEditor().getText());
+//
+//                    if (view.dateFrom.getEditor().getText().length()>0 && view.dateTo.getEditor().getText().length()>0)
+//                        isDate = true ;
+
                     model.setItemID(itemID);
+//                    if (isDate)
+//                        view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
+//                    else
                     view.tableView.setItems(model.getInfoWHEREitemID());
+
+
+
+
                     break ;
                 case "bank" :
 
@@ -446,13 +508,20 @@ public class listController {
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
 
                     } catch (JRException e) {
-                        e.printStackTrace();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
+                        Alert message = new Alert(Alert.AlertType.ERROR);
+                        message.setContentText(e.getMessage());
+                        message.show();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (WriterException e) {
+                        Alert message = new Alert(Alert.AlertType.ERROR);
+                        message.setContentText( e.getMessage());
+                        message.show();
+
                     }
-                    }
+                }
             };
         }
 
@@ -482,6 +551,8 @@ public class listController {
                         e.printStackTrace();
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             };

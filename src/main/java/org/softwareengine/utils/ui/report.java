@@ -1,19 +1,25 @@
 package org.softwareengine.utils.ui;
 
-import javafx.scene.Node;
-import javafx.scene.layout.StackPane;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
+import javafx.collections.ObservableList;
+
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.type.WhenNoDataTypeEnum;
 import org.softwareengine.config.languages;
-import org.softwareengine.core.model.Amount;
-import org.softwareengine.core.model.Item;
-import org.softwareengine.core.model.Transaction;
-import org.softwareengine.core.model.banks;
+import org.softwareengine.core.model.*;
 import org.softwareengine.utils.service.DatabaseService;
 
 
-import java.io.FileNotFoundException;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,7 +86,7 @@ public class report {
         return print ;
 
     }
-    public JasperPrint getBankBranchs () throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getBankBranchs (ObservableList<banks> bank) throws JRException, IOException, SQLException, WriterException {
 
 
         JasperReport reports = null ;
@@ -93,8 +99,9 @@ public class report {
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
 
         List<banks> list = new ArrayList<banks>();
+        List<banks> list2 = bank ;
 
-        banks model = new banks();
+        /*banks model = new banks();
 
 
         int size = model.getInfo().size();
@@ -103,17 +110,26 @@ public class report {
             banks temp = new banks();
             temp.setName(model.getInfo().get(i).getName());
             temp.setReferenceNumber(model.getInfo().get(i).getReferenceNumber());
-
-
             list.add(temp) ;
-
         }
+*/
+        languages lang = new languages();
 
-        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
+        String data = user.getId()+","+user.getName();
+//        ByteArrayInputStream in = new ByteArrayInputStream(createQR(data).toByteArray());
 
-        JasperPrint print = JasperFillManager.fillReport(reports,null,dataSource);
+//        Image img = ImageIO.read(in) ;
 
-//        JasperViewer.viewReport(print,false);
+        HashMap params = new HashMap();
+        params.put("REPORT_RESOURCE_BUNDLE", lang.get());
+//        params.put("QR",img);
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list2);
+
+        JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
+
+//        in.close();
+
         return print ;
 
     }
@@ -202,7 +218,7 @@ public class report {
 
     }
 
-    public JasperPrint getDistrubumentReport (List<Transaction> lists,String report) throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getDistrubumentReport (List<Transaction> lists,String report) throws JRException, IOException, WriterException {
 
 
         JasperReport reports = null ;
@@ -216,25 +232,33 @@ public class report {
 
         List<Transaction> list = new ArrayList<Transaction>();
 
-        Transaction model = new Transaction();
-
-
-        int size = model.getInfoTransactions().size();
 
 
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lists);
 
+        String data = user.getId()+","+user.getName();
+//        ByteArrayInputStream in = new ByteArrayInputStream(createQR(data).top);
+        File f = createQR(data) ;
+//        InputStream in = new FileInputStream(f);
+
+//        Image img = ImageIO.read(in) ;
+
+//        in.close();
+//        f.delete();
+
         languages lang = new languages();
 
         HashMap params = new HashMap();
         params.put("REPORT_RESOURCE_BUNDLE", lang.get());
+//        params.put("QR",img);
+        params.put("user",user.getName());
 
         JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
 
         return print ;
     }
-    public JasperPrint getCoffee (Transaction model) throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getCoffee (Transaction model) throws JRException, IOException, SQLException {
 
 
         JasperReport reports = null ;
@@ -250,12 +274,34 @@ public class report {
         reports.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
         Map<String,Object> para = new HashMap<>();
 
+        Image i = ImageIO.read(new File("add.png"));
+
         para.put("name","name");
+        para.put("Pimg",i) ;
 
 
 
         JasperPrint print = JasperFillManager.fillReport(reports,para);
         return print ;
 
+    }
+
+//    public ByteArrayOutputStream createQR(String data) throws IOException, WriterException {
+    public File createQR(String data) throws IOException, WriterException {
+//        String path = "demo.png";
+        File f = new File("C:\\Users\\melad\\Desktop\\19\\qr.png");
+        Map<EncodeHintType, ErrorCorrectionLevel> hashMap
+                = new HashMap<EncodeHintType, ErrorCorrectionLevel>();
+        hashMap.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.L);
+
+        BitMatrix matrix = new MultiFormatWriter().encode(
+                new String(data.getBytes("UTF-8"), "UTF-8"),
+                BarcodeFormat.QR_CODE, 200, 200);
+
+        ByteArrayOutputStream b = new ByteArrayOutputStream();
+//        MatrixToImageWriter.writeToStream(matrix,"png",b);
+        MatrixToImageWriter.writeToFile(matrix,"png",f);
+        b.close();
+        return f ;
     }
 }

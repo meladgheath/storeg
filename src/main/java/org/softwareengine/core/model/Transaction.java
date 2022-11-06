@@ -24,10 +24,29 @@ public class Transaction {
     private String bank;
 
     private String date;
+
+    private String date_from ;
+    private String date_to   ;
     private int userid ;
 
     private ByteArrayOutputStream img ;
 
+
+    public String getDate_from() {
+        return date_from;
+    }
+
+    public void setDate_from(String date_from) {
+        this.date_from = date_from;
+    }
+
+    public String getDate_to() {
+        return date_to;
+    }
+
+    public void setDate_to(String date_to) {
+        this.date_to = date_to;
+    }
 
     public int getSeq() {
         return seq;
@@ -455,6 +474,7 @@ public void getImagess(File file) throws SQLException, IOException {
             Transaction one = new Transaction();
 
             one.setId(++i);
+            one.setSeq(i);
             one.setItem(resultSet.getString("item"));
             one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));
@@ -467,7 +487,119 @@ public void getImagess(File file) throws SQLException, IOException {
         DatabaseService.CloseConnection();
         return list;
     }
+    public ObservableList<Transaction> getInfoWHEREitemIDWithDate() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
+                "number , date FROM transactionss where item = "+itemID +" and date = ? " ;
+                //" and date BETWEEN ? AND ?";
 
+//        order by date desc
+
+        DatabaseService.openConnection();
+//        PreparedStatement statement = DatabaseService.connection.createStatement();
+        PreparedStatement statement = DatabaseService.connection.prepareStatement(sql);
+
+        System.out.println(date_from+" here is the date from ");
+        statement.setString(1,this.date_from);
+//        statement.setString(2,date_to);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setSeq(i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
+    public ObservableList<Transaction> getInfoWHEREitemIDWithTwoDate() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
+                "number , date FROM transactionss where item = "+itemID +" and date BETWEEN ? AND ?";
+
+//        order by date desc
+
+        DatabaseService.openConnection();
+//        PreparedStatement statement = DatabaseService.connection.createStatement();
+        PreparedStatement statement = DatabaseService.connection.prepareStatement(sql);
+
+        System.out.println(date_from+" here is the date from ");
+        statement.setString(1,this.date_from);
+        statement.setString(2,this.date_to);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setSeq(i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+    public ObservableList<Transaction> getInfoWHEREitemIDWithLastDate() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
+        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
+                "number , date FROM TRANSACTIONss WHERE item = ? AND (date BETWEEN ? AND (SELECT max(date) FROM transactionss)) order by date";
+
+//        order by date desc
+
+        DatabaseService.openConnection();
+
+        PreparedStatement statement = DatabaseService.connection.prepareStatement(sql);
+
+        statement.setInt(1,this.itemID);
+        statement.setString(2,this.date);
+//        statement.setString(2,this.date_to);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setSeq(i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
     public ObservableList<Transaction> getInfoWHEREbankID() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 

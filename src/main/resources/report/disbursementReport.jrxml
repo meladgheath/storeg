@@ -12,6 +12,8 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="QR" class="java.awt.Image"/>
+	<parameter name="user" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -20,11 +22,12 @@
 	<field name="item" class="java.lang.String"/>
 	<field name="number" class="java.lang.Integer"/>
 	<field name="date" class="java.lang.String"/>
+	<field name="seq" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="176" splitType="Stretch">
+		<band height="206" splitType="Stretch">
 			<frame>
 				<reportElement mode="Opaque" x="0" y="0" width="555" height="95" backcolor="#002300" uuid="6c6ca4e1-17cd-4913-93d6-5e670ea9ae8a"/>
 				<staticText>
@@ -43,7 +46,7 @@
 				</staticText>
 			</frame>
 			<frame>
-				<reportElement mode="Opaque" x="0" y="100" width="451" height="32" forecolor="#000000" backcolor="#CC0000" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
+				<reportElement mode="Opaque" x="0" y="100" width="320" height="32" forecolor="#000000" backcolor="#CC0000" uuid="e3c14156-5b51-4201-918b-97fdc012e5d4"/>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement x="10" y="6" width="144" height="20" forecolor="#FFFFFF" uuid="5c3301e7-a737-4c59-8a2f-a6c79fd1adb8"/>
 					<textElement textAlignment="Left">
@@ -52,6 +55,45 @@
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 			</frame>
+			<image>
+				<reportElement x="474" y="100" width="81" height="84" forecolor="#0062FF" uuid="d44f1a3c-85d7-46fe-98c3-8439e586870b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA[$P{QR}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="5" y="150" width="100" height="30" uuid="152b40a4-f898-49e9-bb6e-b1ba1cc3227c">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0062FF"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{user} ]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="105" y="150" width="100" height="30" uuid="83113988-ca4c-4c20-bd80-1610a7151919">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+				</reportElement>
+				<box>
+					<pen lineColor="#0062FF"/>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Segoe UI" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$R{systemName}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -145,23 +187,6 @@
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout"/>
 			<textField>
-				<reportElement style="Detail" x="525" y="0" width="30" height="20" uuid="3b48dbb3-d6e7-40c7-a388-c48970a19b1d">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b767aae9-979b-4598-91ea-d9c01730a6ba"/>
-					<property name="com.jaspersoft.studio.unit.x" value="px"/>
-					<property name="com.jaspersoft.studio.unit.y" value="px"/>
-					<property name="com.jaspersoft.studio.unit.width" value="px"/>
-					<property name="com.jaspersoft.studio.unit.height" value="px"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#666666"/>
-				</box>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement style="Detail" x="345" y="0" width="180" height="20" uuid="169c5413-a7db-4e5c-a2a8-f4e03680b265">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86f1a049-2e2d-4a41-b4fc-4918ca5171e3"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
@@ -228,6 +253,23 @@
 				</box>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{date}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="Detail" x="525" y="0" width="30" height="20" uuid="d7f17818-a5bb-4f68-8cca-2effbe8864e9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e68e97ae-df5b-44c2-885a-60b15b74bb6e"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{seq}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

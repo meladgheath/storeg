@@ -13,9 +13,11 @@
 		</conditionalStyle>
 	</style>
 	<parameter name="name" class="java.lang.String"/>
+	<parameter name="Pimg" class="java.awt.Image"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
+	<field name="img" class="java.awt.Image"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -32,13 +34,6 @@
 					<font fontName="Times New Roman"/>
 				</textElement>
 				<text><![CDATA[Coffee SubTitle]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="172" y="94" width="383" height="42" uuid="8240065e-64b6-4170-b5d9-6341598e7b35"/>
-				<textElement textAlignment="Right">
-					<font size="10"/>
-				</textElement>
-				<text><![CDATA[Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce auctor purus gravida arcu aliquam mattis. Donec et nulla libero, ut varius massa. Nulla sed turpis elit. Etiam aliquet mauris a ligula hendrerit in auctor leo lobortis.]]></text>
 			</staticText>
 		</band>
 	</title>
@@ -82,6 +77,10 @@
 				<reportElement x="40" y="80" width="100" height="30" uuid="77bf9972-2977-4223-9d6f-c6a377579f73"/>
 				<text><![CDATA[Name : ]]></text>
 			</staticText>
+			<image>
+				<reportElement x="340" y="54" width="310" height="136" uuid="4d51c118-b916-4879-9649-8f827a49272a"/>
+				<imageExpression><![CDATA[$P{Pimg}]]></imageExpression>
+			</image>
 		</band>
 	</pageFooter>
 	<summary>

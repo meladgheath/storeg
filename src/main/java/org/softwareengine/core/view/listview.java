@@ -18,10 +18,11 @@ public class listview {
         public TextField item  ;
         public TextField bank;
 
+        public DatePicker dateFrom;
+        public DatePicker dateTo  ;
 
         public CheckBox checkBox;
         public CheckBox orderby ;
-
 
         public Button Vitem  ;
         public Button Vbank;
@@ -33,6 +34,10 @@ public class listview {
         public TableView tableView ;
         public Text itemTex   ;
         public Text bankTex   ;
+
+        public Text dateFromTex ;
+        public Text dateToTex ;
+
 
         public ComboBox<String> reportChanger ;
 
@@ -55,6 +60,11 @@ public class listview {
 
             itemTex   = new Text();
             bankTex = new Text();
+            dateFromTex = new Text();
+            dateToTex   = new Text();
+
+            dateFrom = new DatePicker();
+            dateTo   = new DatePicker();
 
             printButton = new Button();
             saveButton  = new Button();
@@ -110,6 +120,10 @@ public class listview {
                     top.getChildren().add(itemTex) ;
                     top.getChildren().add(item);
                     top.getChildren().add(Vitem);
+                    top.getChildren().add(dateFromTex);
+                    top.getChildren().add(dateFrom);
+                    top.getChildren().add(dateToTex);
+                    top.getChildren().add(dateTo);
                     top.getChildren().add(printButton);
                     top.setSpacing(6.5);
                     break;
