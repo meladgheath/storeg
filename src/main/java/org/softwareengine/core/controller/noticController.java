@@ -574,6 +574,9 @@ public class noticController {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
+
+
+
                     report re = new report();
 
                     try {
@@ -581,12 +584,6 @@ public class noticController {
 
                     } catch (JRException e) {
                         e.printStackTrace();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (WriterException e) {
-                        throw new RuntimeException(e);
                     }
                 }
             };

@@ -2,7 +2,7 @@ package org.softwareengine.core.model;
 
 import org.softwareengine.utils.service.DatabaseService;
 
-import javax.xml.stream.events.StartElement;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;

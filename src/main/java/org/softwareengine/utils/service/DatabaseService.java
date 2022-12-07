@@ -15,7 +15,7 @@ public class DatabaseService {
             e.printStackTrace();
         }
 //        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"\\db.db");
-        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"/db.db");
+        connection = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+"/Sdb.db");
     }
 
     public static void CloseConnection() throws SQLException {

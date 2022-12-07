@@ -119,6 +119,7 @@ public class noticview {
 
             tableView.setContextMenu(tableMenu);
 
+
             store.setDisable(true);
             item.setDisable (true);
             bank.setDisable(true);

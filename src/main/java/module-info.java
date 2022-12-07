@@ -10,8 +10,13 @@ module storeg {
     requires jasperreports;
 
     requires java.desktop;
+
     requires com.google.zxing;
     requires com.google.zxing.javase;
+
+    requires org.apache.commons.collections4;
+    requires bctsp.jdk14;
+
 
 
     exports org.softwareengine;
@@ -21,6 +26,8 @@ module storeg {
     exports org.softwareengine.config;
     exports org.softwareengine.utils.service;
     exports org.softwareengine.utils.ui;
+
+
 
 
 }

@@ -257,8 +257,6 @@ public class banksController {
                     e.printStackTrace();
                 } catch (IOException e) {
                     throw new RuntimeException(e);
-                } catch (WriterException e) {
-                    throw new RuntimeException(e);
                 }
                 System.out.println("Done here man . . .");
             }

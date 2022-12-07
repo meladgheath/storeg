@@ -1,5 +1,6 @@
 package org.softwareengine.core.controller;
 
+//import com.google.zxing.WriterException;
 import com.google.zxing.WriterException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -511,15 +512,6 @@ public class listController {
                         Alert message = new Alert(Alert.AlertType.ERROR);
                         message.setContentText(e.getMessage());
                         message.show();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (WriterException e) {
-                        Alert message = new Alert(Alert.AlertType.ERROR);
-                        message.setContentText( e.getMessage());
-                        message.show();
-
                     }
                 }
             };
