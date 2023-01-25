@@ -284,7 +284,7 @@ public class report {
 
 
         Alert message = new Alert(Alert.AlertType.ERROR);
-        try {
+      /*  try {
             img = createQR(data) ;
         } catch (IOException e) {
             message.setTitle("Erorr in IOException");
@@ -308,15 +308,15 @@ public class report {
             System.out.println(e.getMessage());
             System.out.println(e.getLocalizedMessage());
         }
-
+*/
 
 
         languages lang = new languages();
 
         HashMap params = new HashMap();
         params.put("REPORT_RESOURCE_BUNDLE", lang.get());
-        if (img != null)
-        params.put("QR",img);
+//        if (img != null)
+//        params.put("QR",img);
         params.put("user",user.getName());
 
         JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
@@ -354,15 +354,14 @@ public class report {
     public BufferedImage createQR(String data) throws IOException,WriterException,UnsupportedCharsetException,ExceptionInInitializerError {
 
         Map<EncodeHintType, Object> hints = new EnumMap<>(EncodeHintType.class);
-        hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+        hints.put(EncodeHintType.CHARACTER_SET, "windows-1252");
         hints.put(EncodeHintType.MARGIN, 2);
         hints.put(EncodeHintType.QR_COMPACT,true);
-        hints.put(EncodeHintType.FORCE_CODE_SET,"UTF-8");
+        hints.put(EncodeHintType.FORCE_CODE_SET,"windows-1252");
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevelEnum.H) ;
-        /*
+
            Hashtable hi = new Hashtable();
            hi.put(EncodeHintType.CHARACTER_SET,Charset.defaultCharset());
-           */
 
             BitMatrix matrix = //new BitMatrix(200,200,data.length(),data.getBytes(StandardCharsets.UTF_8));
                         new MultiFormatWriter().encode(

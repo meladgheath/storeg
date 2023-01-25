@@ -10,12 +10,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import org.softwareengine.core.model.banks;
 
 public class FXDialog {
 
 
     public JFXDialog dialog ;
     public ListView<String> listView ;
+
     public TextField textField ;
     public int valueID ;
 
@@ -27,6 +29,7 @@ public class FXDialog {
 
         listView = new ListView<>() ;
 
+
         VBox body = new VBox();
 
         body.setAlignment(Pos.CENTER);
@@ -34,7 +37,6 @@ public class FXDialog {
 
         if (withTextField)
             body.getChildren().add(textField);
-
 
         body.getChildren().add(listView);
 

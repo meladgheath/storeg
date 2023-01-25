@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
 
+import javafx.scene.control.ListCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,6 +24,7 @@ import org.softwareengine.core.model.*;
 import org.softwareengine.core.view.noticview;
 import org.softwareengine.utils.ui.FXDialog;
 
+import org.softwareengine.utils.ui.FXDialogTest;
 import org.softwareengine.utils.ui.UpdateDialog;
 import org.softwareengine.utils.ui.report;
 
@@ -37,6 +39,7 @@ public class noticController {
 
         public noticview view;
 
+        public FXDialogTest dialogx ;
         public FXDialog dialog ;
 
         public int itemID   ;
@@ -225,7 +228,7 @@ public class noticController {
 
 
 
-                    dialog = new FXDialog(view.pane, "Banks List . . . ",true);
+                    dialogx = new FXDialogTest(view.pane, "Banks List . . . ",true,true);
 
 
                     banks bank  = new banks();
@@ -239,13 +242,26 @@ public class noticController {
                         size = bank.getInfo().size();
                         System.out.println("the size is " + size);
 
-                        while (i < size)
-                            dialog.listView.getItems().add(bank.getInfo().get(i++).getName());
+                        dialogx.banksListView.setItems(bank.getInfoIDs());
+                        dialogx.banksListView.setCellFactory(param -> new ListCell<>(){
+                            @Override
+                            protected void updateItem(banks item, boolean empty) {
+                                super.updateItem(item, empty);
+                                if (empty || item == null) setText(null);
+                                else setText(item.getName());
+                            }
+                        });
 
-                        dialog.show();
-                        dialog.listView.setOnKeyPressed(OnListPressed(name));
-                        dialog.listView.setOnMouseClicked(OnMouseClick(name));
-                        dialog.textField.setOnAction(DialogTextField(name));
+
+
+//                        dialog.listView.setItems(bank.getInfo());
+//                        while (i < size)
+//                            dialog.listView.getItems().add(bank.getInfo().get(i++).getName());
+
+                        dialogx.show();
+                        dialogx.banksListView.setOnKeyPressed(OnListPressed(name));
+                        dialogx.banksListView.setOnMouseClicked(OnMouseClick(name));
+                        dialogx.textField.setOnAction(DialogTextField(name));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
@@ -383,12 +399,10 @@ public class noticController {
 
             try {
 
-
                 switch (thing) {
                     case "item" :
 
                         Item model = new Item();
-
                         itemID = model.getInfoID().get(index).getId() ;
                         view.item.setText(model.getInfoID().get(index).getName());
 
@@ -404,9 +418,16 @@ public class noticController {
 
                         break;
                     case "onUpdate" :
-                        bank.setReferenceNumber(ref);
-                        bankID = list.get(index).getId();
-                        updateDialog.bank.setText(list.get(index).getName());
+                        int inde = dialogx.banksListView.getSelectionModel().getSelectedIndex() ;
+//                        bank.setReferenceNumber(ref);
+//                        bankID = list.get(index).getId();
+
+                        bankID = dialogx.banksListView.getItems().get(inde).getId();
+                        updateDialog.bank.setText(dialogx.banksListView.getItems().get(inde).getName());
+                        dialogx.dialog.close();
+
+                        System.out.println("the bank id is -> "+bankID);
+                        System.out.println("the refer"+dialogx.banksListView.getItems().get(inde).getReferenceNumber());
                         break;
                     case "banks" :
                         bankID = bank.getInfoIDs().get(index).getId() ;

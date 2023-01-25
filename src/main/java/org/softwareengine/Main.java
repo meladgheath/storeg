@@ -51,8 +51,7 @@ public class Main extends Application {
         int i  ;
         byte[] buf = new byte[1024] ;
         while ((i=in.read(buf)) != -1)
-            out.write(buf , 0 , i);
-
+            out.write(buf , 0 , i) ;
         out.close();
         in.close();
     }
