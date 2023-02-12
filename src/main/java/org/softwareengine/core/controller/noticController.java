@@ -275,22 +275,24 @@ public class noticController {
                 public void handle(ActionEvent event) {
 
                     banks model = new banks();
-                    dialog.listView.getItems().removeAll(dialog.listView.getItems());
-
-                    if (Pattern.matches("[0-9]+",dialog.textField.getText())) {
+                    dialogx.banksListView.getItems().removeAll(dialogx.banksListView.getItems());
+                    String str = dialogx.textField.getText();
+                    if (Pattern.matches("[0-9]+",dialogx.textField.getText())) {
                         try {
-                            int id = Integer.parseInt(dialog.textField.getText()) ;
-                            model.setReferenceNumber(dialog.textField.getText());
+                            System.out.println("here");
+                            int id = Integer.parseInt(dialogx.textField.getText()) ;
+                            model.setReferenceNumber(dialogx.textField.getText());
                             list = model.getInfoWHEREref();
                             ref = model.getInfoWHEREref().get(0).getReferenceNumber();
                         } catch (SQLException e) {
                             throw new RuntimeException(e);
                         }
                     }else
-                        if (Pattern.matches("[\\w|\\W]+",dialog.textField.getText()))
+                        if (Pattern.matches("[\\w|\\W]+",dialogx.textField.getText()))
                         {
+                            System.out.println("or here ");
                             try {
-                                model.setName(dialog.textField.getText());
+                                model.setName(dialogx.textField.getText());
                                 list = model.getWHERElike();
                             } catch (SQLException e) {
                                 throw new RuntimeException(e);
@@ -302,10 +304,10 @@ public class noticController {
 
                     int i = 0 ;
                     while (i < size)
-                    dialog.listView.getItems().add(list.get(i++).getName());
+                    dialogx.banksListView.getItems().add(list.get(i++));
 
-                    dialog.listView.setOnKeyPressed(OnListPressed(name));
-                    dialog.listView.setOnMouseClicked(OnMouseClick(name));
+                    dialogx.banksListView.setOnKeyPressed(OnListPressed(name));
+                    dialogx.banksListView.setOnMouseClicked(OnMouseClick(name));
                 }
             } ;
         }
@@ -430,8 +432,12 @@ public class noticController {
                         System.out.println("the refer"+dialogx.banksListView.getItems().get(inde).getReferenceNumber());
                         break;
                     case "banks" :
-                        bankID = bank.getInfoIDs().get(index).getId() ;
-                        view.bank.setText(bank.getInfoIDs().get(index).getName());
+//                        bankID = bank.getInfoIDs().get(index).getId() ;
+                        index = dialogx.banksListView.getSelectionModel().getSelectedIndex() ;
+                        bankID = dialogx.banksListView.getItems().get(index).getId();
+//                        view.bank.setText(bank.getInfoIDs().get(index).getName());
+                        view.bank.setText(dialogx.banksListView.getItems().get(index).getName());
+                        dialogx.dialog.close();
                         break;
                     case "itemUpdate":
                         Item update = new Item();
@@ -578,6 +584,7 @@ public class noticController {
                             view.item.clear();
                             view.bank.clear();
                             view.date.getEditor().clear();
+                            view.date.setValue(null);
 //                            getTableDetail();
                         view.tableView.getItems().add(model);
 
