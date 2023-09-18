@@ -131,73 +131,7 @@ public class listController {
             return new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-                    Transaction model = new Transaction();
-
-
-                    try {
-                        if (event.getSource().equals(view.dateTo)) {
-                            if (view.dateFrom.getEditor().getText().length() == 0)
-                                if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
-                                    System.out.println(bankID);
-                                    model.setDate(view.dateTo.getValue().toString());
-                                    model.setBankID(bankID);
-                                    view.tableView.setItems(model.getInfoWhereBankLastDate());
-                                    return;
-
-                            }
-                            else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
-                                model.setDate(view.dateTo.getValue().toString());
-                                model.setItemID(itemID);
-                                view.tableView.setItems(model.getInfoWHEREitemIDWithLastDate());
-                                    return;
-                            }
-
-
-                        } // end of to date
-
-                        if (event.getSource().equals(view.dateFrom)) {
-
-                            if (view.dateTo.getEditor().getText().length() == 0)
-                                if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0){
-                                    model.setDate_from(view.dateFrom.getValue().toString());
-                                    model.setBankID(bankID);
-                                    view.tableView.setItems(model.getInfoWHEREbankIDWithDate());
-                                    return;
-                                }
-                                else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1){
-                                model.setDate_from(view.dateFrom.getValue().toString());
-                                model.setItemID(itemID);
-                                view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
-                                    return;
-                            }
-
-                        }
-
-
-                        if (event.getSource().equals(view.dateFrom) || event.getSource().equals(view.dateTo))
-                        if (view.dateFrom.getEditor().getText().length()>0 && view.dateTo.getEditor().getText().length()>0)
-                        {
-
-                            if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
-                                model.setDate_to(view.dateTo.getValue().toString());
-                                model.setDate_from(view.dateFrom.getValue().toString());
-                                model.setBankID(bankID);
-                                view.tableView.setItems(model.getInfoWHEREbankIDWithTwoDate());
-                            }
-                            else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
-
-                                model.setDate_to(view.dateTo.getValue().toString());
-                                model.setDate_from(view.dateFrom.getValue().toString());
-                                model.setItemID(itemID);
-                                view.tableView.setItems(model.getInfoWHEREitemIDWithTwoDate());
-
-                            }
-
-                        }
-
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
+                    dates(event);
                 }
             };
         }
@@ -389,13 +323,19 @@ public class listController {
 
 
 
+
                         dialog.show();
                         dialog.listView.setOnKeyPressed(OnListPressed(name));
                         dialog.listView.setOnMouseClicked(OnMouseClick(name));
 
+
+
                     } catch (SQLException e) {
                         e.printStackTrace();
+                    }finally {
+
                     }
+
 
                 }
             };
@@ -513,6 +453,8 @@ public class listController {
                         bankID = bank.getInfoIDs().get(index).getId() ;
                         view.bank.setText(bank.getInfoIDs().get(index).getName());
                         getTableDetail("bank");
+
+                        dates(null);
                         break;
 
                 }
@@ -521,6 +463,79 @@ public class listController {
             }
 
         }
+
+    public void dates (ActionEvent event) {
+        Transaction model = new Transaction();
+
+
+        try {
+            if (event != null)
+            if (event.getSource().equals(view.dateTo)) {
+                if (view.dateFrom.getEditor().getText().length() == 0)
+                    if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
+                        System.out.println(bankID);
+                        model.setDate(view.dateTo.getValue().toString());
+                        model.setBankID(bankID);
+                        view.tableView.setItems(model.getInfoWhereBankLastDate());
+                        return;
+
+                    }
+                    else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
+                        model.setDate(view.dateTo.getValue().toString());
+                        model.setItemID(itemID);
+                        view.tableView.setItems(model.getInfoWHEREitemIDWithLastDate());
+                        return;
+                    }
+
+
+            } // end of to date
+
+            if (event != null)
+            if (event.getSource().equals(view.dateFrom)) {
+
+                if (view.dateTo.getEditor().getText().length() == 0)
+                    if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0){
+                        model.setDate_from(view.dateFrom.getValue().toString());
+                        model.setBankID(bankID);
+                        view.tableView.setItems(model.getInfoWHEREbankIDWithDate());
+                        return;
+                    }
+                    else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1){
+                        model.setDate_from(view.dateFrom.getValue().toString());
+                        model.setItemID(itemID);
+                        view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
+                        return;
+                    }
+
+            }
+
+//                        if (event.getSource().equals(view.dateFrom) || event.getSource().equals(view.dateTo))
+            if (view.dateFrom.getEditor().getText().length()>0 && view.dateTo.getEditor().getText().length()>0)
+            {
+                System.out.println("we are here know"+ model.getBank());
+
+                if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
+                    model.setDate_to(view.dateTo.getValue().toString());
+                    model.setDate_from(view.dateFrom.getValue().toString());
+                    model.setBankID(bankID);
+                    view.tableView.setItems(model.getInfoWHEREbankIDWithTwoDate());
+                }
+                else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
+
+                    model.setDate_to(view.dateTo.getValue().toString());
+                    model.setDate_from(view.dateFrom.getValue().toString());
+                    model.setItemID(itemID);
+                    view.tableView.setItems(model.getInfoWHEREitemIDWithTwoDate());
+
+                }
+
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 
          private boolean get() {
             Amount amount = new Amount() ;
