@@ -1,7 +1,5 @@
 package org.softwareengine.core.controller;
 
-//import com.google.zxing.WriterException;
-import com.google.zxing.WriterException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.NodeOrientation;
@@ -22,6 +20,7 @@ import org.softwareengine.utils.ui.report;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class listController {
@@ -134,33 +133,66 @@ public class listController {
                 public void handle(ActionEvent event) {
                     Transaction model = new Transaction();
 
-                    try {
 
-                        if (event.getSource().equals(view.dateTo))
-                            if (view.dateFrom.getEditor().getText().length()==0)
-                            {
+                    try {
+                        if (event.getSource().equals(view.dateTo)) {
+                            if (view.dateFrom.getEditor().getText().length() == 0)
+                                if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
+                                    System.out.println(bankID);
+                                    model.setDate(view.dateTo.getValue().toString());
+                                    model.setBankID(bankID);
+                                    view.tableView.setItems(model.getInfoWhereBankLastDate());
+                                    return;
+
+                            }
+                            else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
                                 model.setDate(view.dateTo.getValue().toString());
                                 model.setItemID(itemID);
                                 view.tableView.setItems(model.getInfoWHEREitemIDWithLastDate());
-                                return;
+                                    return;
                             }
-                        if (event.getSource().equals(view.dateFrom))
-                            if (view.dateTo.getEditor().getText().length()==0){
+
+
+                        } // end of to date
+
+                        if (event.getSource().equals(view.dateFrom)) {
+
+                            if (view.dateTo.getEditor().getText().length() == 0)
+                                if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0){
+                                    model.setDate_from(view.dateFrom.getValue().toString());
+                                    model.setBankID(bankID);
+                                    view.tableView.setItems(model.getInfoWHEREbankIDWithDate());
+                                    return;
+                                }
+                                else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1){
                                 model.setDate_from(view.dateFrom.getValue().toString());
                                 model.setItemID(itemID);
                                 view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
-                                return;
+                                    return;
                             }
+
+                        }
 
 
                         if (event.getSource().equals(view.dateFrom) || event.getSource().equals(view.dateTo))
                         if (view.dateFrom.getEditor().getText().length()>0 && view.dateTo.getEditor().getText().length()>0)
                         {
-                            model.setDate_to(view.dateTo.getValue().toString());
-                            model.setDate_from(view.dateFrom.getValue().toString());
-                            model.setItemID(itemID);
-                            view.tableView.setItems(model.getInfoWHEREitemIDWithTwoDate());
-                            return;
+
+                            if (view.reportChanger.getSelectionModel().getSelectedIndex() == 0) {
+                                model.setDate_to(view.dateTo.getValue().toString());
+                                model.setDate_from(view.dateFrom.getValue().toString());
+                                model.setBankID(bankID);
+                                view.tableView.setItems(model.getInfoWHEREbankIDWithTwoDate());
+                            }
+                            else if (view.reportChanger.getSelectionModel().getSelectedIndex() == 1) {
+
+                                model.setDate_to(view.dateTo.getValue().toString());
+                                model.setDate_from(view.dateFrom.getValue().toString());
+                                model.setItemID(itemID);
+                                view.tableView.setItems(model.getInfoWHEREitemIDWithTwoDate());
+
+                            }
+
                         }
 
                     } catch (SQLException e) {

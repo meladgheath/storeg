@@ -126,6 +126,27 @@ public class banks {
         }
         return list ;
     }
+
+    public ObservableList<org.softwareengine.core.model.banks> getInfoWhereInSpiceDate() throws SQLException {
+        ObservableList<banks> list = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM banks WHERE id ="+this.id+" and ";
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0 ;
+        while (resultSet.next()) {
+            banks one = new banks() ;
+
+            one.setId(resultSet.getInt("id"));
+            one.setName(resultSet.getString("name"));
+            one.setReferenceNumber(resultSet.getString("ref"));
+
+            list.add(one);
+        }
+        return list ;
+    }
     public ObservableList<org.softwareengine.core.model.banks> getInfoWHEREref() throws SQLException {
         ObservableList<banks> list = FXCollections.observableArrayList();
         String sql = "SELECT * FROM banks WHERE ref ='"+this.referenceNumber+"'";

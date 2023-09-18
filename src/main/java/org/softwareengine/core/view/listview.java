@@ -131,6 +131,10 @@ public class listview {
                     top.getChildren().add(bankTex) ;
                     top.getChildren().add(bank);
                     top.getChildren().add(Vbank);
+                    top.getChildren().add(dateFromTex);
+                    top.getChildren().add(dateFrom);
+                    top.getChildren().add(dateToTex);
+                    top.getChildren().add(dateTo);
                     top.getChildren().add(printButton);
                     top.setSpacing(6.5);
                     break;
