@@ -16,7 +16,10 @@ import org.softwareengine.core.view.loginView;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
+import java.util.Properties;
 
 
 public class loginController {
@@ -33,10 +36,17 @@ public class loginController {
         }
         public void initiate () throws FileNotFoundException {
 
-
+            InputStream in = getClass().getResourceAsStream("/version.properties");
+            Properties ps = new Properties();
+            try {
+                ps.load(in);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             view = new loginView();
+
+            view.appVersion.setText("Version : "+ps.getProperty("application.version"));
             view.lock.setImage(new Image(getClass().getResourceAsStream(Paths.LOCK.getPath())));
-//            view.password.setVisible(false);
 
             primaryStage.setScene(view.getScene());
             primaryStage.show();
@@ -61,8 +71,10 @@ public class loginController {
 
                     if (view.userName.getText().equalsIgnoreCase(user.getId()+"")) {
                         if (!view.root.getChildren().contains(view.password))
+                            view.root.getChildren().remove(view.pane);
                         view.root.getChildren().add(view.password) ;
                         view.password.requestFocus();
+                        view.root.getChildren().add(view.pane);
                     }
                     else {
                         view.root.getChildren().remove(view.password);

@@ -15,6 +15,7 @@ import org.softwareengine.core.controller.HomeController;
 import java.io.*;
 import java.time.InstantSource;
 import java.util.Objects;
+import java.util.Properties;
 
 
 public class Main extends Application {
@@ -25,6 +26,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws FileNotFoundException {
+
+
+
 
         if (!checkDB()) {
             try {
