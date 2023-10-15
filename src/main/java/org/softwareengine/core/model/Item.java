@@ -80,7 +80,7 @@ import java.sql.Statement;
         }
 
         public void save() throws SQLException {
-            String sql = "INSERT INTO item (name , code, type) VALUES (?,?,?)" ;
+            String sql = "INSERT INTO wahdabank.item (name , code, type) VALUES (?,?,?)" ;
 
             DatabaseService.openConnection();
             PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -98,7 +98,7 @@ import java.sql.Statement;
         }
 
         public void delete() throws SQLException {
-            String sql = "DELETE FROM item WHERE id = "+ this.id;
+            String sql = "DELETE FROM wahdabank.item WHERE id = "+ this.id;
 
             DatabaseService.openConnection();
             Statement stat = DatabaseService.connection.createStatement();
@@ -112,8 +112,8 @@ import java.sql.Statement;
         public ObservableList<Item> getInfo() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
-            String sql = "select  name , code , (SELECT name from type where id = item.type) as type\n" +
-                    " from item  " ;
+            String sql = "select  name , code , (SELECT name from wahdabank.type where id = item.type) as type\n" +
+                    " from wahdabank.item  " ;
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -138,7 +138,7 @@ import java.sql.Statement;
         public ObservableList<Item> getInfoIDs() throws SQLException {
             ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
-            String sql = "select  * from item  " ;
+            String sql = "select  * from wahdabank.item  " ;
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -198,8 +198,8 @@ import java.sql.Statement;
 
                 ObservableList<Item> list = FXCollections.observableArrayList();
 //            String sql = "SELECT * FROM item ORDER BY id";
-                String sql = "select  id ,name , code , (SELECT name from type where id = item.type) as type\n" +
-                        " from item  " ;
+                String sql = "select  id ,name , code , (SELECT name from wahdabank.type where id = item.type) as type\n" +
+                        " from wahdabank.item  " ;
 
                 DatabaseService.openConnection();
                 Statement statement = DatabaseService.connection.createStatement();

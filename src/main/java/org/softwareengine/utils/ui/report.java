@@ -204,7 +204,7 @@ public class report {
 
     }
 
-    public JasperPrint getDistrubumentReport () throws JRException, FileNotFoundException, SQLException {
+    public JasperPrint getDistrubumentReport (List<Transaction> list) throws JRException, FileNotFoundException, SQLException {
 
 
         JasperReport reports = null ;
@@ -216,14 +216,14 @@ public class report {
 
         jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
 
-        List<Transaction> list = new ArrayList<Transaction>();
+//        List<Transaction> list = new ArrayList<Transaction>();
 
-        Transaction model = new Transaction();
+//        Transaction model = new Transaction();
 
 
-        int size = model.getInfoTransactions().size();
+//        int size = model.getInfoTransactions().size();
 
-        for (int i=0 ; i < size ; i++) {
+      /*  for (int i=0 ; i < size ; i++) {
             Transaction temp = new Transaction();
 
             temp.setId(model.getInfoTransactions().get(i).getId());
@@ -236,7 +236,8 @@ public class report {
 
             list.add(temp) ;
 
-        }
+        }*/
+
 
         JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(list);
 
@@ -246,7 +247,82 @@ public class report {
         return print ;
 
     }
+    public JasperPrint getSarfReport (List<Transaction> lists) throws JRException {
 
+
+        JasperReport reports = null ;
+        JasperPrint jp = null ;
+
+        reports = JasperCompileManager.compileReport(
+                getClass().getResourceAsStream("/report/Saref.jrxml")
+        );
+
+        jp = JasperFillManager.fillReport(reports,null, DatabaseService.connection);
+
+        List<Transaction> list = new ArrayList<Transaction>();
+
+
+
+
+        JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(lists);
+
+
+//        String data = user.getId()+","+user.getName();
+
+//        String data = "ميادة الدلح تقدم . . . " ;
+
+//        ByteArrayInputStream in = new ByteArrayInputStream(QRCode.from(data).stream().);
+
+//        Image img = ImageIO.read() ;
+
+        System.out.println("Default : "+Charset.defaultCharset());
+        System.setProperty("file.encoding","UTF-8") ;
+        System.out.println("Default : "+Charset.defaultCharset());
+        System.out.println(System.getProperty("file.encoding"));
+
+        Image img = null ;
+
+
+        Alert message = new Alert(Alert.AlertType.ERROR);
+      /*  try {
+            img = createQR(data) ;
+        } catch (IOException e) {
+            message.setTitle("Erorr in IOException");
+            message.setContentText(e.getMessage());
+            message.show();
+//            throw new RuntimeException(e);
+        } catch (WriterException e) {
+            message.setTitle("Error in WriterException");
+            message.setContentText(e.getMessage());
+            message.show();
+//            throw new RuntimeException(e);
+        }catch (UnsupportedCharsetException e) {
+            message.setTitle("Error in UnsupportedCharsetException");
+            message.setContentText(e.getMessage());
+            message.show();
+            System.out.println(e.getMessage());
+        }catch (ExceptionInInitializerError e) {
+            message.setTitle("Error in ExceptionInInitializerError");
+            message.setContentText(e.getMessage()+" , "+e.getLocalizedMessage());
+            message.show();
+            System.out.println(e.getMessage());
+            System.out.println(e.getLocalizedMessage());
+        }
+*/
+
+
+        languages lang = new languages();
+
+        HashMap params = new HashMap();
+        params.put("REPORT_RESOURCE_BUNDLE", lang.get());
+//        if (img != null)
+//        params.put("QR",img);
+        params.put("user",user.getName());
+
+        JasperPrint print = JasperFillManager.fillReport(reports,params,dataSource);
+
+        return print ;
+    }
     public JasperPrint getDistrubumentReport (List<Transaction> lists,String report) throws JRException {
 
 

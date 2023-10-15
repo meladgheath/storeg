@@ -9,6 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 public class Transaction {
 
@@ -29,8 +32,19 @@ public class Transaction {
     private String date_to   ;
     private int userid ;
 
+    private String refID ;
+
+
     private ByteArrayOutputStream img ;
 
+
+    public String getRefID() {
+        return refID;
+    }
+
+    public void setRefID(String refID) {
+        this.refID = refID;
+    }
 
     public String getDate_from() {
         return date_from;
@@ -184,17 +198,21 @@ public class Transaction {
     }
 
     public void saves() throws SQLException {
-        String sql = "INSERT INTO transactionss ( item , bank,  number , date ,img,userid ) VALUES (?,?,?,?,?,?)";
+        String sql = "INSERT INTO wahdabank.transactions ( item , bank,  number , date ,userid,\"refID\" ) VALUES (?,?,?,?,?,?)";
 
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
 
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy") ;
+//        LocalDate dd = LocalDate.parse(date,formatter);
+
         ps.setInt(1, this.itemID);
         ps.setInt(2, this.bankID);
         ps.setInt(3, this.number);
-        ps.setString(4, this.date);
-        ps.setBytes(5,(this.img != null ) ? this.img.toByteArray() : null);
-        ps.setInt(6,user.getId());
+        ps.setString(4, this.date.toString());
+//        ps.setBytes(5,(this.img != null ) ? this.img.toByteArray() : null);
+        ps.setInt(5,user.getId());
+        ps.setString(6,this.refID);
 
         ps.executeUpdate();
 
@@ -363,10 +381,10 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoTransactionssORDERBY() throws SQLException {
 
         ObservableList<Transaction> list = FXCollections.observableArrayList();
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , " +
-                "                (SELECT name FROM item WHERE id = item ) as item , " +
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , " +
+                "                (SELECT name FROM wahdabank.item WHERE id = item ) as item , " +
                 "                 sum(number) as number  " +
-                "                 FROM transactionss " +
+                "                 FROM wahdabank.transactions " +
                 " GROUP by bank , item " ;
 
         DatabaseService.openConnection();
@@ -427,10 +445,10 @@ public void getImagess(File file) throws SQLException, IOException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
         String sql = """
-                SELECT id , (SELECT name FROM banks WHERE id = bank) as bank ,
-                (SELECT name FROM item WHERE id = item ) as item ,
-                 number , date
-                 FROM transactionss ORDER BY date
+                SELECT id , (SELECT name FROM wahdabank.banks WHERE id = bank) as bank ,
+                (SELECT name FROM wahdabank.item WHERE id = item ) as item ,
+                 number , date, "refID"
+                 FROM wahdabank.transactions ORDER BY date
                  """;
 //        order by date desc
 
@@ -448,7 +466,7 @@ public void getImagess(File file) throws SQLException, IOException {
             one.setBank(resultSet.getString("bank"));
             one.setNumber(resultSet.getInt("number"));
             one.setDate(resultSet.getString("date"));
-
+            one.setRefID(resultSet.getString("refID"));
             list.add(one);
         }
         resultSet.close();
@@ -460,8 +478,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoWHEREitemID() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where item = "+itemID ;
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where item = "+itemID ;
 
 //        order by date desc
 
@@ -491,8 +509,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoWHEREbankIDWithDate() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where bank = "+bankID +" and date = ? " ;
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where bank = "+bankID +" and date = ? " ;
 
         DatabaseService.openConnection();
 
@@ -525,8 +543,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoWHEREitemIDWithDate() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where item = "+itemID +" and date = ? " ;
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where item = "+itemID +" and date = ? " ;
                 //" and date BETWEEN ? AND ?";
 
 //        order by date desc
@@ -563,14 +581,12 @@ public void getImagess(File file) throws SQLException, IOException {
 
     public ObservableList<Transaction> getInfoWHEREitemIDWithTwoDate() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
-//            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where item = "+itemID +" and date BETWEEN ? AND ?";
 
-//        order by date desc
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where item = "+itemID +" and date BETWEEN ? AND ?";
 
         DatabaseService.openConnection();
-//        PreparedStatement statement = DatabaseService.connection.createStatement();
+
         PreparedStatement statement = DatabaseService.connection.prepareStatement(sql);
 
         System.out.println(date_from+" here is the date from ");
@@ -602,8 +618,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoWHEREbankIDWithTwoDate() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where bank = "+bankID +" and date BETWEEN ? AND ?";
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where bank = "+bankID +" and date BETWEEN ? AND ?";
 
 
         DatabaseService.openConnection();
@@ -641,8 +657,8 @@ public void getImagess(File file) throws SQLException, IOException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
 //        String sql = "select  * from transactionss where bank = ? and date =  ?";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item , " +
-                " number , date FROM TRANSACTIONss WHERE bank = ? AND (date BETWEEN ? AND (SELECT max(date) FROM transactionss)) order by date" ;
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item , " +
+                " number , date FROM wahdabank.TRANSACTIONs WHERE bank = ? AND (date BETWEEN ? AND (SELECT max(date) FROM wahdabank.transactions)) order by date" ;
 //        order by date desc
 
         DatabaseService.openConnection();
@@ -678,8 +694,8 @@ public void getImagess(File file) throws SQLException, IOException {
     public ObservableList<Transaction> getInfoWHEREitemIDWithLastDate() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 //            String sql = "SELECT  (SELECT name FROM item where id = itemid) as item , (SELECT name FROM store where id = storeid) as store , num FROM amount";
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM TRANSACTIONss WHERE item = ? AND (date BETWEEN ? AND (SELECT max(date) FROM transactionss)) order by date";
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.TRANSACTIONs WHERE item = ? AND (date BETWEEN ? AND (SELECT max(date) FROM wahdabank.transactions)) order by date";
 
 //        order by date desc
 
@@ -712,11 +728,42 @@ public void getImagess(File file) throws SQLException, IOException {
         DatabaseService.CloseConnection();
         return list;
     }
+
+    public ObservableList<Transaction> getInfoWHERErefID() throws SQLException {
+        ObservableList<Transaction> list = FXCollections.observableArrayList();
+
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ,\n" +
+                " number , date FROM wahdabank.transactions where \"refID\"  = '"+refID.trim()+"'" ;
+
+//        order by date desc
+
+        DatabaseService.openConnection();
+        Statement statement = DatabaseService.connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        int i = 0;
+        while (resultSet.next()) {
+            Transaction one = new Transaction();
+
+            one.setId(++i);
+            one.setItem(resultSet.getString("item"));
+            one.setBank(resultSet.getString("bank"));
+            one.setNumber(resultSet.getInt("number"));
+            one.setDate(resultSet.getString("date"));
+
+            list.add(one);
+        }
+        resultSet.close();
+        statement.close();
+        DatabaseService.CloseConnection();
+        return list;
+    }
+
     public ObservableList<Transaction> getInfoWHEREbankID() throws SQLException {
         ObservableList<Transaction> list = FXCollections.observableArrayList();
 
-        String sql = "SELECT (SELECT name FROM banks WHERE id = bank) as bank , (SELECT name FROM item WHERE id = item ) as item ," +
-                "number , date FROM transactionss where bank = "+bankID ;
+        String sql = "SELECT (SELECT name FROM wahdabank.banks WHERE id = bank) as bank , (SELECT name FROM wahdabank.item WHERE id = item ) as item ," +
+                "number , date FROM wahdabank.transactions where bank = "+bankID ;
 
 //        order by date desc
 

@@ -16,7 +16,7 @@ public class user {
 
 
     public static String getLang() throws SQLException {
-        String sql = "SELECT lang FROM setting" ;
+        String sql = "SELECT lang FROM wahdabank.setting" ;
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();
@@ -60,7 +60,7 @@ public class user {
         user.password = password;
     }
     public static void getUser() throws SQLException {
-        String sql = "SELECT * FROM  USER WHERE id = "+user.id;
+        String sql = "SELECT * FROM  wahdabank.USER WHERE id = "+user.id;
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();

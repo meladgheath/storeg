@@ -48,7 +48,7 @@ public class banks {
     }
 
     public void save() throws SQLException {
-            String sql = "INSERT INTO banks (name,ref) VALUES (?,?)" ;
+            String sql = "INSERT INTO wahdabank.banks (name,ref) VALUES (?,?)" ;
 
             DatabaseService.openConnection();
             PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
@@ -66,7 +66,7 @@ public class banks {
 
         public ObservableList<org.softwareengine.core.model.banks> getInfo() throws SQLException {
             ObservableList<banks> list = FXCollections.observableArrayList();
-            String sql = "SELECT * FROM banks ORDER BY id";
+            String sql = "SELECT * FROM wahdabank.banks ORDER BY id";
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -87,7 +87,7 @@ public class banks {
 
     public ObservableList<org.softwareengine.core.model.banks> getInfoIDs() throws SQLException {
         ObservableList<banks> list = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM banks ORDER BY id";
+        String sql = "SELECT * FROM wahdabank.banks ORDER BY id";
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();
@@ -149,7 +149,7 @@ public class banks {
     }
     public ObservableList<org.softwareengine.core.model.banks> getInfoWHEREref() throws SQLException {
         ObservableList<banks> list = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM banks WHERE ref ='"+this.referenceNumber+"'";
+        String sql = "SELECT * FROM wahdabank.banks WHERE ref ='"+this.referenceNumber+"'";
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();
@@ -190,7 +190,7 @@ public class banks {
     }
     public void  delete() throws SQLException {
             ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
-            String sql = "DELETE FROM banks WHERE id = "+this.id;
+            String sql = "DELETE FROM wahdabank.banks WHERE id = "+this.id;
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();
@@ -217,7 +217,7 @@ public class banks {
 
         public ObservableList<org.softwareengine.core.model.Item> getInfoID() throws SQLException {
             ObservableList<org.softwareengine.core.model.Item> list = FXCollections.observableArrayList();
-            String sql = "SELECT id FROM banks ORDER BY id";
+            String sql = "SELECT id FROM wahdabank.banks ORDER BY id";
 
             DatabaseService.openConnection();
             Statement statement = DatabaseService.connection.createStatement();

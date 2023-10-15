@@ -27,7 +27,7 @@ public class noticview {
 
 //        public Spinner<Integer> num ;
         public TextField num ;
-
+        public TextField refID ;
 
         public Button Vstore ;
         public Button Vitem  ;
@@ -72,6 +72,7 @@ public class noticview {
             dateTex   = new Text();
 
             num = new TextField();
+            refID = new TextField();
 
             num.getStyleClass().add(Spinner.STYLE_CLASS_SPLIT_ARROWS_HORIZONTAL);
 
@@ -138,7 +139,8 @@ public class noticview {
             top.getChildren().add(num);
             top.getChildren().add(dateTex);
             top.getChildren().add(date);
-            top.getChildren().add(attuchemnt);
+//            top.getChildren().add(attuchemnt);
+            top.getChildren().add(refID);
             top.getChildren().add(saveButton);
             top.getChildren().add(printButton);
 

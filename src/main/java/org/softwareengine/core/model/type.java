@@ -38,7 +38,7 @@ public class type {
 
     public void save() throws SQLException, FileNotFoundException {
 //        String sql = "" ;
-        String sql = "INSERT  INTO  type ( name  ) values (?)" ;
+        String sql = "INSERT  INTO  wahdabank.type ( name  ) values (?)" ;
         DatabaseService.openConnection();
         PreparedStatement ps = DatabaseService.connection.prepareStatement(sql);
 
@@ -53,7 +53,7 @@ public class type {
 
     public ObservableList<type> getInfo() throws SQLException {
         ObservableList<type> list = FXCollections.observableArrayList();
-        String sql = "SELECT * FROM type ORDER BY id";
+        String sql = "SELECT * FROM wahdabank.type ORDER BY id";
 
         DatabaseService.openConnection();
         Statement statement = DatabaseService.connection.createStatement();

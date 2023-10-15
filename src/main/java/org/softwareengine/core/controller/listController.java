@@ -63,10 +63,12 @@ public class listController {
 
             view.dateToTex.setText(lang.getWord("to"));
             view.dateFromTex.setText(lang.getWord("from"));
+            view.refIdTex.setText(lang.getWord("refID"));
 
             view.reportChanger.getItems().add(lang.getWord("reportBank"));
             view.reportChanger.getItems().add(lang.getWord("reportItem"));
             view.reportChanger.getItems().add(lang.getWord("reportGroupby"));
+            view.reportChanger.getItems().add(lang.getWord("refID")) ;
 
 //            reportChanger.getItems().add("report with BrnID");
 //            reportChanger.getItems().add("report with itemID");
@@ -94,6 +96,18 @@ public class listController {
             view.dateFrom.setOnAction(onDates());
             view.dateTo.setOnAction(onDates());
             view.printButton.setOnAction(onPrintButton());
+            view.reportSarf.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent event) {
+                    Transaction model = new Transaction();
+                    model.setRefID(view.reportSarf.getText().trim());
+                    try {
+                        view.tableView.setItems(model.getInfoWHERErefID());
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            });
 
 
             view.reportChanger.setOnAction(new EventHandler<ActionEvent>() {
@@ -120,6 +134,8 @@ public class listController {
                                 throw new RuntimeException(e);
                             }
                             break;
+                        case 3 :
+                            view.getTop("sarf");
                     }
                 }
             });
@@ -243,10 +259,6 @@ public class listController {
 //                        view.tableView.setItems(model.getInfoWHEREitemIDWithDate());
 //                    else
                     view.tableView.setItems(model.getInfoWHEREitemID());
-
-
-
-
                     break ;
                 case "bank" :
 
@@ -550,11 +562,18 @@ public class listController {
 
                     try {
 
+                        System.out.println("what the result here . . .");
+
+
+
                         if (view.top.getChildren().size()==1)
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport2.jrxml"),false);
+//                            JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"test.jrxml"),false);
+                        else if (view.top.getChildren().get(1).equals(view.reportSarf))
+                            JasperViewer.viewReport(re.getSarfReport(view.tableView.getItems()),false);
                         else
                         JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"disbursementReport.jrxml"),false);
-
+//                            JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems(),"test.jrxml"),false);
                     } catch (JRException e) {
                         Alert message = new Alert(Alert.AlertType.ERROR);
                         message.setContentText(e.getMessage());

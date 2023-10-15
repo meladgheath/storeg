@@ -44,7 +44,6 @@ public class loginController {
                 throw new RuntimeException(e);
             }
             view = new loginView();
-
             view.appVersion.setText("Version : "+ps.getProperty("application.version"));
             view.lock.setImage(new Image(getClass().getResourceAsStream(Paths.LOCK.getPath())));
 
@@ -101,8 +100,6 @@ public class loginController {
                             }
                         });
 
-
-                        System.out.println("done ! ");
                     }
                 }
             };

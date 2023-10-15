@@ -30,6 +30,8 @@ import org.softwareengine.utils.ui.report;
 
 import java.io.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DeliverController {
@@ -468,6 +470,8 @@ public class DeliverController {
                     e.printStackTrace();
                 }
 
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate dates = LocalDate.parse(view.date.getValue().toString(),formatter);
 
                 Transaction model = new Transaction();
                 model.setItemID(itemID);
@@ -517,7 +521,7 @@ public class DeliverController {
 
                 try {
 //                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
-                    JasperViewer.viewReport(re.getDistrubumentReport(),false);
+                    JasperViewer.viewReport(re.getDistrubumentReport(view.tableView.getItems()),false);
                 } catch (JRException e) {
                     e.printStackTrace();
                 } catch (SQLException e) {

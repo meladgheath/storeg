@@ -9,10 +9,11 @@ import javafx.stage.Stage;
 import org.softwareengine.core.controller.loginController;
 import org.softwareengine.core.model.Paths;
 import org.softwareengine.core.controller.HomeController;
-
+import org.softwareengine.utils.service.DatabaseService;
 
 
 import java.io.*;
+import java.sql.SQLException;
 import java.time.InstantSource;
 import java.util.Objects;
 import java.util.Properties;
@@ -28,16 +29,14 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws FileNotFoundException {
 
 
-
-
-        if (!checkDB()) {
+    /*    if (!checkDB()) {
             try {
                 putItThere();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
+*/
 
         loginController control = new loginController(primaryStage);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream(Paths.ICONS.getPath()))));

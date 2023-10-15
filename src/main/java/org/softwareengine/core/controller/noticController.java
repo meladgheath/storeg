@@ -1,5 +1,5 @@
 package org.softwareengine.core.controller;
-import com.google.zxing.WriterException;
+
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -89,6 +89,7 @@ public class noticController {
             ((TableColumn) view.tableView.getColumns().get(2)).setText(lang.getWord("bank"));//driver
             ((TableColumn) view.tableView.getColumns().get(3)).setText(lang.getWord("number"));//num
             ((TableColumn) view.tableView.getColumns().get(4)).setText(lang.getWord("date"));//date
+            ((TableColumn) view.tableView.getColumns().get(5)).setText(lang.getWord("refID"));
 
             if (Locale.getDefault().getLanguage().equalsIgnoreCase("ar"))
                 view.root.setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
@@ -146,6 +147,7 @@ public class noticController {
             TableColumn<String, Transaction> bank = new TableColumn<>();
             TableColumn<String, Transaction> num = new TableColumn<>();
             TableColumn<String, Transaction> date = new TableColumn<>();
+            TableColumn<String, Transaction> refID = new TableColumn<>();
 
 
             id.setCellValueFactory(new PropertyValueFactory<>("seq"));
@@ -153,16 +155,18 @@ public class noticController {
             num.setCellValueFactory(new PropertyValueFactory<>("number"));
             bank.setCellValueFactory(new PropertyValueFactory<>("bank"));
             date.setCellValueFactory(new PropertyValueFactory<>("date"));
+            refID.setCellValueFactory(new PropertyValueFactory<>("refID"));
 
 
-            id.setMaxWidth(50);
-            id.setMinWidth(25);
+            id.setMaxWidth(75);
+            id.setMinWidth(50);
 
             view.tableView.getColumns().add(id);
             view.tableView.getColumns().add(item);
             view.tableView.getColumns().add(bank);
             view.tableView.getColumns().add(num);
             view.tableView.getColumns().add(date);
+            view.tableView.getColumns().add(refID);
 
             getTableDetail();
 
@@ -550,14 +554,14 @@ public class noticController {
 
                     amount.setItemID(itemID);
                     amount.setStoreID(storeID);
-
+/*
                     int amountNumber = 0 ;
                     try {
                         amountNumber = amount.getInfoNumber().getNum() ;
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-
+                    */
 
                     Transaction model = new Transaction();
 
@@ -566,12 +570,14 @@ public class noticController {
                     model.setItem(view.item.getText());
                     model.setStoreID(storeID);
                     model.setBankID(bankID);
+
                     model.setDate(view.date.getValue().toString());
                     model.setBank(view.bank.getText());
 
                     model.setSeq(view.tableView.getItems().size()+1) ;
 
-                    model.setImg((bos == null) ? null : bos);
+//                    model.setImg((bos == null) ? null : bos);
+                    model.setRefID(view.refID.getText());
 
                     int num = Integer.parseInt(view.num.getText());
                     model.setNumber(num);

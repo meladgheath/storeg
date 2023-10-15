@@ -49,7 +49,8 @@ public class listview {
         public MenuItem detailMenu   ;
         public MenuItem updateMenu   ;
 
-
+        public Text refIdTex ;
+        public TextField reportSarf ;
         public listview() {
 
             root = new VBox();
@@ -57,11 +58,13 @@ public class listview {
 
             item    = new TextField();
             bank = new TextField();
+            reportSarf = new TextField();
 
             itemTex   = new Text();
             bankTex = new Text();
             dateFromTex = new Text();
             dateToTex   = new Text();
+            refIdTex = new Text();
 
             dateFrom = new DatePicker();
             dateTo   = new DatePicker();
@@ -141,9 +144,14 @@ public class listview {
                 case "group" :
                     top.getChildren().add(printButton);
                     break;
-
+                case "sarf":
+                    top.getChildren().add(refIdTex);
+                    top.getChildren().add(reportSarf);
+                    top.getChildren().add(printButton);
+                    break;
 
             }
+
         }
 
     public void removeall() {
